@@ -4,6 +4,8 @@ import { useHistory } from 'react-router-dom';
 import NewGameForm from 'components/codenames/NewGameForm';
 import GridContainer from 'components/codenames/GridContainer';
 
+import HeroBanner from 'components/global/HeroBanner';
+
 import { HOME } from 'constants/routes';
 
 const styles = {
@@ -20,6 +22,7 @@ const styles = {
 const CodenamesHome = () => {
   const history = useHistory();
 
+  const [refreshGame, setRefresh] = useState(false);
   const [firstPlayer, setFirstPlayer] = useState(null);
 
   return (
@@ -27,10 +30,14 @@ const CodenamesHome = () => {
       <p style={{ cursor: 'pointer' }} onMouseDown={() => history.push(HOME)}>
         Home
       </p>
-      <div style={styles.heroContainer}>
+      <HeroBanner background="orange">
         <h1>Codenames Generator</h1>
-      </div>
-      <NewGameForm setfirst={setFirstPlayer} />
+      </HeroBanner>
+      {!refreshGame ? (
+        <button onMouseDown={() => setRefresh(true)}>Refresh Board</button>
+      ) : (
+        <NewGameForm setfirst={setFirstPlayer} changerefresh={setRefresh} />
+      )}
       <GridContainer firstplayer={firstPlayer} />
     </div>
   );

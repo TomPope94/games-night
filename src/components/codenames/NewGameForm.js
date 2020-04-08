@@ -1,9 +1,16 @@
 import React from 'react';
 
-const NewGameForm = () => {
+const NewGameForm = ({ setfirst, changerefresh }) => {
+  const handleClick = (team) => {
+    setfirst(team);
+    changerefresh(false);
+  };
+
   return (
     <div>
-      <h1>New game form will go here!</h1>
+      <p>Which Team Goes First?</p>
+      <button onMouseDown={() => handleClick('red')}>Red</button>
+      <button onMouseDown={() => handleClick('blue')}>Blue</button>
     </div>
   );
 };
