@@ -1,26 +1,25 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Router, Route, Switch } from 'react-router-dom';
+import history from './history';
 
-function App() {
+import Home from 'components/Home';
+import CodenamesHome from 'components/codenames/CodenamesHome';
+import ArticulateHome from 'components/articulate/AriculateHome';
+import FiveSecondsHome from 'components/fiveseconds/FiveSecondsHome';
+
+import { HOME, CODENAMES, ARTICULATE, FIVESECONDS } from 'constants/routes';
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router history={history}>
+      <Switch>
+        <Route exact path={HOME} component={Home} />
+        <Route exact path={CODENAMES} component={CodenamesHome} />
+        <Route exact path={ARTICULATE} component={ArticulateHome} />
+        <Route exact path={FIVESECONDS} component={FiveSecondsHome} />
+      </Switch>
+    </Router>
   );
-}
+};
 
 export default App;
