@@ -8,6 +8,7 @@ const GameButton = ({ children, ...props }) => {
       background: props.background,
       boxShadow: '0 2px 5px rgba(1,1,1,0.3)',
       cursor: 'pointer',
+      color: props.color ? props.color : 'white',
     },
   };
 

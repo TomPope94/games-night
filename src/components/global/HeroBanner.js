@@ -9,6 +9,7 @@ const HeroBanner = ({ children, ...props }) => {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
+      color: 'white',
     },
   };
 

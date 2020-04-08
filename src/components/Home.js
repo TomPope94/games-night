@@ -27,13 +27,13 @@ const Home = () => {
       <div style={styles.buttonsContainer}>
         <GameButton
           onMouseDown={() => history.push(CODENAMES)}
-          background="orange"
+          background="#da6026"
         >
           <h1>Codenames</h1>
         </GameButton>
         <GameButton
           onMouseDown={() => history.push(ARTICULATE)}
-          background="red"
+          background="#8a0b0b"
         >
           <h1>Articulate</h1>
         </GameButton>
