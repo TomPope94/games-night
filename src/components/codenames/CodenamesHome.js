@@ -30,7 +30,7 @@ const CodenamesHome = () => {
       <p style={{ cursor: 'pointer' }} onMouseDown={() => history.push(HOME)}>
         Home
       </p>
-      <HeroBanner background="#da6026">
+      <HeroBanner background='radial-gradient(#FFD10A,#7C134B)'>
         <h1>Codenames Generator</h1>
       </HeroBanner>
       {!refreshGame ? (

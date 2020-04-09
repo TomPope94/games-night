@@ -2,6 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { CODENAMES, ARTICULATE, FIVESECONDS } from 'constants/routes';
+import logo from '../s10Icon.png';
 
 import GameButton from 'components/global/GameButton';
 import HeroBanner from 'components/global/HeroBanner';
@@ -19,27 +20,39 @@ const Home = () => {
   const history = useHistory();
 
   return (
-    <div>
-      <HeroBanner background="rgba(1, 1, 1, 0.25)">
-        <h1>Welcome to Station 10 Games Night!</h1>
+    <div style={{ background: 'rgba(0,0,0,.03)', height: '100vh' }}>
+      <div>
+        <img
+          src={logo}
+          style={{
+            position: 'absolute',
+            height: 25,
+            top: 0,
+            left: 0,
+            margin: 25,
+          }}
+        />
+      </div>
+      <HeroBanner background='rgba(0,0,0,0)'>
+        <h1 style={{ color: 'black' }}>Welcome to Games Night!</h1>
       </HeroBanner>
       <h2>Please choose a game...</h2>
       <div style={styles.buttonsContainer}>
         <GameButton
           onMouseDown={() => history.push(CODENAMES)}
-          background="#da6026"
+          background='radial-gradient(#FFD10A,#7C134B)'
         >
           <h1>Codenames</h1>
         </GameButton>
         <GameButton
           onMouseDown={() => history.push(ARTICULATE)}
-          background="#8a0b0b"
+          background='radial-gradient(#fff, #069732, #F3B637, #D43426)'
         >
-          <h1>Articulate</h1>
+          <h1>Articulate!</h1>
         </GameButton>
         <GameButton
           onMouseDown={() => history.push(FIVESECONDS)}
-          background="blue"
+          background='blue'
         >
           <h1>5 Second Rule</h1>
         </GameButton>

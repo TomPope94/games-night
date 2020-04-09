@@ -4,17 +4,17 @@ const GridBox = ({ background, ...props }) => {
   const styles = {
     gridBox: {
       flexGrow: 1,
-      boxShadow: '0 2px 5px rbga(1,1,1,0.3)',
+      boxShadow: '0 2px 5px rgba(1,1,1,0.3)',
       borderRadius: 10,
       background:
         background === 'reds'
-          ? 'red'
+          ? '#F20732'
           : background === 'blues'
-          ? 'blue'
+          ? '#0439D9'
           : background === 'agent'
           ? 'black'
-          : 'grey',
-      height: 75,
+          : '#D9D9D9',
+      height: 150,
       margin: 15,
     },
   };
