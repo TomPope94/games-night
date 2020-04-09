@@ -7,15 +7,11 @@ import GridContainer from 'components/codenames/GridContainer';
 import HeroBanner from 'components/global/HeroBanner';
 
 import { HOME } from 'constants/routes';
+import GameButton from 'components/global/GameButton';
 
 const styles = {
-  heroContainer: {
-    width: '100%',
-    height: 150,
-    background: 'orange',
+  refreshContainer: {
     display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center ',
   },
 };
 
@@ -30,11 +26,17 @@ const CodenamesHome = () => {
       <p style={{ cursor: 'pointer' }} onMouseDown={() => history.push(HOME)}>
         Home
       </p>
-      <HeroBanner background='radial-gradient(#FFD10A,#7C134B)'>
-        <h1>Codenames Generator</h1>
+      <HeroBanner background='#fff'>
+        <h1 style={{ color: 'black' }}>Codenames Generator</h1>
       </HeroBanner>
       {!refreshGame ? (
-        <button onMouseDown={() => setRefresh(true)}>Refresh Board</button>
+        <div style={styles.refreshContainer}>
+          <GameButton onMouseDown={() => setRefresh(true)}>
+            <p style={{ color: 'black' }}>
+              <em>Refresh</em>
+            </p>
+          </GameButton>
+        </div>
       ) : (
         <NewGameForm setfirst={setFirstPlayer} changerefresh={setRefresh} />
       )}

@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const GameButton = ({ children, ...props }) => {
+  const [hover, setHover] = useState(false);
+
   const styles = {
     buttonContainer: {
       padding: 25,
@@ -9,11 +11,18 @@ const GameButton = ({ children, ...props }) => {
       boxShadow: '0 2px 5px rgba(1,1,1,0.3)',
       cursor: 'pointer',
       color: props.color ? props.color : 'white',
+      transform: hover ? 'scale(1.1, 1.1)' : 'scale(1, 1)',
+      transition: '0.2s linear',
     },
   };
 
   return (
-    <div style={styles.buttonContainer} {...props}>
+    <div
+      onMouseOver={() => setHover(true)}
+      onMouseOut={() => setHover(false)}
+      style={styles.buttonContainer}
+      {...props}
+    >
       {children}
     </div>
   );

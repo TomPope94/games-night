@@ -1,6 +1,8 @@
 import React, { useState, Fragment } from 'react';
 import ArticulateRound from 'components/articulate/ArticulateRound';
 
+import GameButton from 'components/global/GameButton';
+
 const styles = {
   gameContainer: {
     position: 'absolute',
@@ -21,12 +23,14 @@ const ArticulateGame = ({ gamestate, setgamestate, category, ...props }) => {
       {gameStart ? (
         <Fragment>
           <ArticulateRound category={category} />
-          <button
-            onMouseDown={() => setGameStart(false)}
-            style={{ zIndex: 999, position: 'absolute' }}
-          >
-            Stop
-          </button>
+          <div style={{ display: 'flex' }}>
+            <GameButton
+              background='#fff'
+              onMouseDown={() => setGameStart(false)}
+            >
+              <p style={{ color: 'black' }}>Stop</p>
+            </GameButton>
+          </div>
         </Fragment>
       ) : (
         <Fragment>
@@ -41,7 +45,11 @@ const ArticulateGame = ({ gamestate, setgamestate, category, ...props }) => {
             When ready, press begin and start articulating... You will have ONE
             minute.
           </h3>
-          <button onMouseDown={() => setGameStart(true)}>Begin!</button>
+          <div style={{ display: 'flex' }}>
+            <GameButton onMouseDown={() => setGameStart(true)}>
+              <p style={{ color: 'black' }}>Begin!</p>
+            </GameButton>
+          </div>
         </Fragment>
       )}
     </div>

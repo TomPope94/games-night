@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import GameButton from 'components/global/GameButton';
 
-const FiveSecondsGame = ({ word, ...props }) => {
+const FiveSecondsGame = ({ setgameactive, word, ...props }) => {
   const [timerStarted, setTimerStarted] = useState(false);
   const [timeLeft, setTimeLeft] = useState(0);
 
@@ -60,6 +60,7 @@ const FiveSecondsGame = ({ word, ...props }) => {
           onMouseDown={() => {
             setTimerStarted(false);
             setTimeLeft(0);
+            setgameactive(false);
           }}
           background='#fff'
           color='black'

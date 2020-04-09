@@ -29,6 +29,7 @@ const ArticulateRound = ({ category, ...props }) => {
       justifyContent: 'center',
       alignItems: 'center',
       flexDirection: 'column',
+      pointerEvents: timeLeft <= 0 ? 'none' : 'all',
     },
     correctButton: {
       background: timeLeft > 0 ? 'green' : 'red',
@@ -53,6 +54,12 @@ const ArticulateRound = ({ category, ...props }) => {
       background: '#fff',
       borderRadius: 10,
       boxShadow: '0 2px 5px rgba(1,1,1,0.5)',
+      position: 'relative',
+    },
+    discardButton: {
+      position: 'absolute',
+      top: 0,
+      right: 20,
     },
   };
 
@@ -113,13 +120,7 @@ const ArticulateRound = ({ category, ...props }) => {
         <div
           style={{ ...styles.bigButton, ...styles.passButton }}
           onMouseDown={() => pass()}
-        >
-          {/* {passedWords.map((word) => (
-              <PassedWord correct={correct} word={word}>
-                <p style={{ fontSize: '2rem' }}>{word}</p>
-              </PassedWord>
-            ))} */}
-        </div>
+        ></div>
         <div
           style={{ ...styles.bigButton, ...styles.correctButton }}
           onMouseDown={() => correct(gameWord)}
@@ -134,6 +135,9 @@ const ArticulateRound = ({ category, ...props }) => {
             <div style={styles.wordInnerContainer}>
               <h1>{gameWord}</h1>
               <h4>{timeLeft}</h4>
+              <p style={styles.discardButton} onMouseDown={() => getNewWord()}>
+                <em>X</em>
+              </p>
             </div>
           </div>
         ) : null}

@@ -60,7 +60,9 @@ const FiveSecondsHome = () => {
         <GameButton onMouseDown={() => refresh()} color='black'>
           <p>Refresh</p>
         </GameButton>
-        {gameActive ? <FiveSecondsGame word={gameWord} /> : null}
+        {gameActive ? (
+          <FiveSecondsGame setgameactive={setGameActive} word={gameWord} />
+        ) : null}
       </div>
     </div>
   );
