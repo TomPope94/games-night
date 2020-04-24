@@ -1,7 +1,4 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-
-import { HOME } from 'constants/routes';
 
 import ArticulateGame from 'components/articulate/ArticulateGame';
 
@@ -22,8 +19,6 @@ const styles = {
 };
 
 const ArticulateHome = () => {
-  const history = useHistory();
-
   const categories = ['people', 'world', 'object', 'actions', 'nature'];
 
   const [gameState, setGameState] = useState({
@@ -50,10 +45,7 @@ const ArticulateHome = () => {
 
   return (
     <div>
-      <p style={{ cursor: 'pointer' }} onMouseDown={() => history.push(HOME)}>
-        Home
-      </p>
-      <HeroBanner background='#fff'>
+      <HeroBanner background="#fff">
         <h1 style={{ color: 'black' }}>Articulate!</h1>
       </HeroBanner>
       <div style={styles.articulateContainer}>
@@ -63,43 +55,43 @@ const ArticulateHome = () => {
         <div style={styles.buttonsContainer}>
           <GameButton
             onMouseDown={() => handleClick('people')}
-            background='yellow'
-            color='black'
+            background="yellow"
+            color="black"
           >
             People
           </GameButton>
           <GameButton
             onMouseDown={() => handleClick('world')}
-            background='teal'
-            color='black'
+            background="teal"
+            color="black"
           >
             World
           </GameButton>
           <GameButton
             onMouseDown={() => handleClick('object')}
-            background='silver'
-            color='black'
+            background="silver"
+            color="black"
           >
             Object
           </GameButton>
           <GameButton
             onMouseDown={() => handleClick('actions')}
-            background='orange'
-            color='black'
+            background="orange"
+            color="black"
           >
             Action
           </GameButton>
           <GameButton
             onMouseDown={() => handleClick('nature')}
-            background='green'
-            color='black'
+            background="green"
+            color="black"
           >
             Nature
           </GameButton>
           <GameButton
             onMouseDown={() => handleClick('random')}
-            background='#8a0b0b'
-            color='black'
+            background="#8a0b0b"
+            color="black"
           >
             Random
           </GameButton>

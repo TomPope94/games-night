@@ -2,4 +2,5 @@ body {
   font-family: 'Roboto Mono', monospace;
   font-weight: 200;
   margin: 0;
+  overflow: hidden;
 }

@@ -7,6 +7,7 @@ const GameButton = ({ children, ...props }) => {
     buttonContainer: {
       padding: 25,
       borderRadius: 10,
+      margin: 25,
       background: props.background,
       boxShadow: '0 2px 5px rgba(1,1,1,0.3)',
       cursor: 'pointer',

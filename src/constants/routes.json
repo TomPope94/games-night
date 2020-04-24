@@ -1,6 +1,7 @@
 {
   "HOME": "/",
-  "CODENAMES": "/codenames",
-  "ARTICULATE": "/articulate",
-  "FIVESECONDS": "/fiveseconds"
+  "LIBRARY": "/games",
+  "CODENAMES": "/games/codenames",
+  "ARTICULATE": "/games/articulate",
+  "FIVESECONDS": "/games/fiveseconds"
 }

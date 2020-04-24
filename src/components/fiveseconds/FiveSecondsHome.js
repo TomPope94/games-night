@@ -1,7 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
-
-import { HOME } from 'constants/routes';
 
 import FiveSecondsGame from 'components/fiveseconds/FiveSecondsGame';
 
@@ -20,8 +17,6 @@ const styles = {
 };
 
 const FiveSecondsHome = () => {
-  const history = useHistory();
-
   const data = FiveSecondsData.cards;
 
   const [gameActive, setGameActive] = useState(false);
@@ -47,17 +42,14 @@ const FiveSecondsHome = () => {
 
   return (
     <div>
-      <p style={{ cursor: 'pointer' }} onMouseDown={() => history.push(HOME)}>
-        Home
-      </p>
-      <HeroBanner background='blue'>
+      <HeroBanner background="blue">
         <h1>Five Second Rule</h1>
       </HeroBanner>
       <div style={styles.gameContainer}>
         <h3>
           <em>Name 3 things within 5 seconds... that's the rule!</em>
         </h3>
-        <GameButton onMouseDown={() => refresh()} color='black'>
+        <GameButton onMouseDown={() => refresh()} color="black">
           <p>Refresh</p>
         </GameButton>
         {gameActive ? (
