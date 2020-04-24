@@ -2,13 +2,24 @@ import React from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
 import history from './history';
 
-import Nav from 'components/global/Nav';
-import GamesHome from 'components/GamesHome';
-import CodenamesHome from 'components/codenames/CodenamesHome';
-import ArticulateHome from 'components/articulate/AriculateHome';
-import FiveSecondsHome from 'components/fiveseconds/FiveSecondsHome';
+import Nav from 'components/global/nav/Nav';
+import GamesHome from 'components/Home';
+import Join from 'components/serverPages/Join';
+import Host from 'components/serverPages/Host';
+import Library from 'components/games/Library';
+import CodenamesHome from 'components/games/codenames/CodenamesHome';
+import ArticulateHome from 'components/games/articulate/AriculateHome';
+import FiveSecondsHome from 'components/games/fiveseconds/FiveSecondsHome';
 
-import { HOME, CODENAMES, ARTICULATE, FIVESECONDS } from 'constants/routes';
+import {
+  HOME,
+  JOIN,
+  HOST,
+  LIBRARY,
+  CODENAMES,
+  ARTICULATE,
+  FIVESECONDS,
+} from 'constants/routes';
 
 import { Provider } from 'react-redux';
 import store from 'store';
@@ -32,6 +43,9 @@ const App = () => {
         <div style={styles.appContainer}>
           <Switch>
             <Route exact path={HOME} component={GamesHome} />
+            <Route exact path={JOIN} component={Join} />
+            <Route exact path={HOST} component={Host} />
+            <Route exact path={LIBRARY} component={Library} />
             <Route exact path={CODENAMES} component={CodenamesHome} />
             <Route exact path={ARTICULATE} component={ArticulateHome} />
             <Route exact path={FIVESECONDS} component={FiveSecondsHome} />

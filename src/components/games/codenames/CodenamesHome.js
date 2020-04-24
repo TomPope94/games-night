@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-import NewGameForm from 'components/codenames/NewGameForm';
-import GridContainer from 'components/codenames/GridContainer';
+import NewGameForm from 'components/games/codenames/NewGameForm';
+import GridContainer from 'components/games/codenames/GridContainer';
 
 import HeroBanner from 'components/global/HeroBanner';
 

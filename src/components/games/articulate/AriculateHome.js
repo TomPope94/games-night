@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import ArticulateGame from 'components/articulate/ArticulateGame';
+import ArticulateGame from 'components/games/articulate/ArticulateGame';
 
 import GameButton from 'components/global/GameButton';
 import HeroBanner from 'components/global/HeroBanner';

@@ -4,7 +4,6 @@ import { useHistory } from 'react-router-dom';
 import { CODENAMES, ARTICULATE, FIVESECONDS } from 'constants/routes';
 
 import GameButton from 'components/global/GameButton';
-import HeroBanner from 'components/global/HeroBanner';
 
 const styles = {
   buttonsContainer: {
@@ -16,14 +15,10 @@ const styles = {
   },
 };
 
-const Home = () => {
+const Library = () => {
   const history = useHistory();
-
   return (
     <div>
-      <HeroBanner background="rgba(0,0,0,0)">
-        <h1 style={{ color: 'black' }}>Welcome to Games Night!</h1>
-      </HeroBanner>
       <h2>Please choose a game...</h2>
       <div style={styles.buttonsContainer}>
         <GameButton
@@ -55,4 +50,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Library;

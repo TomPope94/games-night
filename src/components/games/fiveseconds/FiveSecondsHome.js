@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import FiveSecondsGame from 'components/fiveseconds/FiveSecondsGame';
+import FiveSecondsGame from 'components/games/fiveseconds/FiveSecondsGame';
 
 import HeroBanner from 'components/global/HeroBanner';
 import GameButton from 'components/global/GameButton';

@@ -1,8 +1,11 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
+
 import logo from 'components/imageAssets/s10Icon.png';
 
 import { HOME } from 'constants/routes';
+import GuestNavButtons from 'components/global/nav/GuestNavButtons';
 
 const styles = {
   navContainer: {
@@ -19,7 +22,7 @@ const styles = {
   },
 };
 
-const Nav = () => {
+const Nav = ({ server }) => {
   const history = useHistory();
   return (
     <div style={styles.navContainer}>
@@ -35,11 +38,20 @@ const Nav = () => {
         />
       </div>
       <div style={{ paddingRight: 20 }}>
-        <div>Join</div>
-        <div>Players</div>
+        {server.inGame ? (
+          <div>
+            <h1>IN GAME</h1>
+          </div>
+        ) : (
+          <GuestNavButtons />
+        )}
       </div>
     </div>
   );
 };
 
-export default Nav;
+const mapStateToProps = (state) => ({
+  server: state.server,
+});
+
+export default connect(mapStateToProps)(Nav);

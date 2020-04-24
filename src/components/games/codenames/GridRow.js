@@ -1,5 +1,5 @@
 import React from 'react';
-import GridBox from 'components/codenames/GridBox';
+import GridBox from 'components/games/codenames/GridBox';
 
 const styles = {
   rowContainer: {

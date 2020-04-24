@@ -1,5 +1,5 @@
 import React, { useState, Fragment } from 'react';
-import ArticulateRound from 'components/articulate/ArticulateRound';
+import ArticulateRound from 'components/games/articulate/ArticulateRound';
 
 import GameButton from 'components/global/GameButton';
 
@@ -25,7 +25,7 @@ const ArticulateGame = ({ gamestate, setgamestate, category, ...props }) => {
           <ArticulateRound category={category} />
           <div style={{ display: 'flex' }}>
             <GameButton
-              background='#fff'
+              background="#fff"
               onMouseDown={() => setGameStart(false)}
             >
               <p style={{ color: 'black' }}>Stop</p>

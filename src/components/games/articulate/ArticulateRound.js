@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import ArticulateData from 'constants/ArticulateData';
 
-import PassedWord from 'components/articulate/PassedWord';
+import PassedWord from 'components/games/articulate/PassedWord';
 
 const ArticulateRound = ({ category, ...props }) => {
   const data = ArticulateData[category];

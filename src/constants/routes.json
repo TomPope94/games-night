@@ -1,5 +1,7 @@
 {
   "HOME": "/",
+  "JOIN": "/join",
+  "HOST": "/host",
   "LIBRARY": "/games",
   "CODENAMES": "/games/codenames",
   "ARTICULATE": "/games/articulate",

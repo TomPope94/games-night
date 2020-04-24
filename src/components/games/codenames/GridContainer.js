@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import GridRow from 'components/codenames/GridRow';
+import GridRow from 'components/games/codenames/GridRow';
 
 const styles = {
   gridContainer: {
