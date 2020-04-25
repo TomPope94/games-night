@@ -25,10 +25,10 @@ const Home = () => {
         <h1 style={{ color: 'black' }}>Welcome to Games Night!</h1>
       </HeroBanner>
       <div style={styles.buttonsContainer}>
-        <GameButton onMouseDown={() => history.push(JOIN)}>
+        <GameButton onMouseDown={() => history.push(JOIN)} color="#d66e31">
           <h1>Join</h1>
         </GameButton>
-        <GameButton onMouseDown={() => history.push(HOST)}>
+        <GameButton onMouseDown={() => history.push(HOST)} color="#d66e31">
           <h1>Host</h1>
         </GameButton>
       </div>
