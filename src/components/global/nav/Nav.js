@@ -7,6 +7,9 @@ import logo from 'components/imageAssets/s10Icon.png';
 import { HOME } from 'constants/routes';
 import ServerConnectButtons from 'components/global/nav/ServerConnectButtons';
 import GuestNavButtons from 'components/global/nav/GuestNavButtons';
+import Username from './Username';
+import SessionNav from './SessionNav';
+import PlayersDropdown from './PlayersDropdown';
 
 const styles = {
   navContainer: {
@@ -25,30 +28,32 @@ const styles = {
 
 const Nav = ({ server }) => {
   const history = useHistory();
-  // debugger;
+
   return (
     <div style={styles.navContainer}>
-      <div onMouseDown={() => history.push(HOME)} style={{ cursor: 'pointer' }}>
+      <div style={{ display: 'flex' }}>
         <img
+          onMouseDown={() => history.push(HOME)}
           src={logo}
           style={{
             height: 25,
             top: 0,
             left: 0,
             margin: 25,
+            cursor: 'pointer',
           }}
           alt="Station 10 Company Logo"
         />
+        {server.inGame ? <SessionNav /> : null}
       </div>
-      <div style={{ paddingRight: 20 }}>
+      <div style={{ display: 'flex', paddingRight: 20, alignItems: 'center' }}>
+        <Username />
         {!server.onServer ? (
           <ServerConnectButtons />
         ) : !server.inGame ? (
           <GuestNavButtons />
         ) : (
-          <div>
-            <h1>IN GAME</h1>
-          </div>
+          <PlayersDropdown />
         )}
       </div>
     </div>

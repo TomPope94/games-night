@@ -5,6 +5,8 @@ import {
   SERVER_CONNECT_SUCCESS,
   HOST_SESSION_SUCCESS,
   HOST_SESSION_SEND,
+  SERVER_USERNAME_SEND,
+  SERVER_USERNAME_SUCCESS,
 } from 'actions/types';
 
 const handleMessage = (data) => async (dispatch) => {
@@ -13,8 +15,13 @@ const handleMessage = (data) => async (dispatch) => {
   if (dataArr[0].includes('host')) {
     const messageArr = dataArr.filter((val) => val.includes('message'));
     const value = messageArr[0].split(': ');
-    console.log(value[1]);
+
     await dispatch(connectSession(value[1]));
+  } else if (dataArr[0].includes('username')) {
+    const messageArr = dataArr.filter((val) => val.includes('message'));
+    const value = messageArr[0].split(': ');
+
+    await dispatch(changeUsername(value[1]));
   }
 };
 
@@ -46,5 +53,23 @@ export const connectSession = (sessionId) => async (dispatch) => {
   await dispatch({
     type: HOST_SESSION_SUCCESS,
     payload: sessionId,
+  });
+};
+
+export const sendChangeUsername = (socket, username) => async (dispatch) => {
+  await socket.json({
+    action: 'username',
+    data: username,
+  });
+
+  await dispatch({
+    type: SERVER_USERNAME_SEND,
+  });
+};
+
+export const changeUsername = (username) => async (dispatch) => {
+  await dispatch({
+    type: SERVER_USERNAME_SUCCESS,
+    payload: username,
   });
 };

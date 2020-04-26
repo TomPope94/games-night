@@ -3,12 +3,14 @@ import {
   SERVER_DISCONNECT_SUCCESS,
   HOST_SESSION_SEND,
   HOST_SESSION_SUCCESS,
+  SERVER_USERNAME_SEND,
+  SERVER_USERNAME_SUCCESS,
 } from 'actions/types';
 
 const initialState = {
   onServer: false,
   inGame: false,
-  sessionId: '',
+  username: '',
   wsConnection: null,
   loading: true,
 };
@@ -22,9 +24,11 @@ export default function (state = initialState, action) {
         ...state,
         wsConnection: { ...payload },
         onServer: true,
+        username: 'Guest',
         loading: false,
       };
     case HOST_SESSION_SEND:
+    case SERVER_USERNAME_SEND:
       return {
         ...state,
         loading: true,
@@ -33,8 +37,13 @@ export default function (state = initialState, action) {
       return {
         ...state,
         loading: false,
-        sessionId: payload,
         inGame: true,
+      };
+    case SERVER_USERNAME_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        username: payload,
       };
     default:
       return state;
