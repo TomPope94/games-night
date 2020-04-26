@@ -1,8 +1,9 @@
-import React from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { connect } from 'react-redux';
 
 import GameButton from 'components/global/GameButton';
 
+import { hostSession } from 'actions/server';
 import { LIBRARY } from 'constants/routes';
 
 const styles = {
@@ -21,9 +22,7 @@ const styles = {
   },
 };
 
-const Host = () => {
-  const history = useHistory();
-
+const Host = ({ server, hostSession }) => {
   return (
     <div>
       <h1>Host a Server.</h1>
@@ -31,7 +30,9 @@ const Host = () => {
       <form>
         <div style={styles.inputContainer}>
           <GameButton
-            onMouseDown={() => history.push(LIBRARY)}
+            onMouseDown={() => {
+              hostSession(server.wsConnection);
+            }}
             background="#d66e31"
           >
             <h2>Create Server.</h2>
@@ -42,4 +43,8 @@ const Host = () => {
   );
 };
 
-export default Host;
+const mapStateToProps = (state) => ({
+  server: state.server,
+});
+
+export default connect(mapStateToProps, { hostSession })(Host);

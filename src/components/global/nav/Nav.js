@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import logo from 'components/imageAssets/s10Icon.png';
 
 import { HOME } from 'constants/routes';
+import ServerConnectButtons from 'components/global/nav/ServerConnectButtons';
 import GuestNavButtons from 'components/global/nav/GuestNavButtons';
 
 const styles = {
@@ -24,6 +25,7 @@ const styles = {
 
 const Nav = ({ server }) => {
   const history = useHistory();
+  // debugger;
   return (
     <div style={styles.navContainer}>
       <div onMouseDown={() => history.push(HOME)} style={{ cursor: 'pointer' }}>
@@ -35,15 +37,18 @@ const Nav = ({ server }) => {
             left: 0,
             margin: 25,
           }}
+          alt="Station 10 Company Logo"
         />
       </div>
       <div style={{ paddingRight: 20 }}>
-        {server.inGame ? (
+        {!server.onServer ? (
+          <ServerConnectButtons />
+        ) : !server.inGame ? (
+          <GuestNavButtons />
+        ) : (
           <div>
             <h1>IN GAME</h1>
           </div>
-        ) : (
-          <GuestNavButtons />
         )}
       </div>
     </div>

@@ -88,7 +88,7 @@ const ArticulateRound = ({ category, ...props }) => {
 
   useEffect(() => {
     getNewWord();
-  }, []);
+  }, [getNewWord]);
 
   useEffect(() => {
     // exit early when we reach 0

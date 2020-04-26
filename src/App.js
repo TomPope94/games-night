@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
 import history from './history';
 
@@ -21,6 +21,7 @@ import {
   FIVESECONDS,
 } from 'constants/routes';
 
+import { connectServer } from 'actions/server';
 import { Provider } from 'react-redux';
 import store from 'store';
 
@@ -36,6 +37,10 @@ const styles = {
 };
 
 const App = () => {
+  useEffect(() => {
+    store.dispatch(connectServer());
+  }, []);
+
   return (
     <Provider store={store}>
       <Router history={history}>

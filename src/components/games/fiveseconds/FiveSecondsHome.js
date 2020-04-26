@@ -38,7 +38,7 @@ const FiveSecondsHome = () => {
 
   useEffect(() => {
     getNewWord();
-  }, []);
+  }, [getNewWord]);
 
   return (
     <div>
