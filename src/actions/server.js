@@ -10,6 +10,7 @@ import {
   JOIN_SESSION_SEND,
   JOIN_SESSION_SUCCESS,
   NEW_PLAYER_JOINED,
+  PLAYER_LEFT,
 } from 'actions/types';
 
 const handleMessage = (data) => async (dispatch) => {
@@ -32,6 +33,12 @@ const handleMessage = (data) => async (dispatch) => {
     const messageDataStr = dataArr[1].substring(9, dataArr[1].length);
     const messageData = JSON.parse(messageDataStr);
     await dispatch(joinSession(messageData[0]));
+  } else if (dataArr[0].includes('player_left')) {
+    const messageDataStr = dataArr[1].substring(9, dataArr[1].length);
+    const messageData = JSON.parse(messageDataStr);
+
+    // debugger;
+    await dispatch(playerLeft(messageData[0]));
   }
 };
 
@@ -91,6 +98,13 @@ export const newPlayerJoin = (newPlayer) => async (dispatch) => {
   await dispatch({
     type: NEW_PLAYER_JOINED,
     payload: newPlayer,
+  });
+};
+
+export const playerLeft = (playerDetails) => async (dispatch) => {
+  await dispatch({
+    type: PLAYER_LEFT,
+    payload: playerDetails,
   });
 };
 

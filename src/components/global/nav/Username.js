@@ -21,6 +21,7 @@ const Username = ({ server, sendChangeUsername }) => {
       <input
         type="text"
         value={state}
+        style={{ fontSize: '1.5rem', padding: 10 }}
         onChange={(e) => setState(e.target.value)}
         onBlur={(e) => handleSubmit(e)}
       />
