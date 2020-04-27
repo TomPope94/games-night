@@ -3,6 +3,7 @@ import {
   SERVER_DISCONNECT_SUCCESS,
   HOST_SESSION_SEND,
   HOST_SESSION_SUCCESS,
+  JOIN_SESSION_SUCCESS,
   SERVER_USERNAME_SEND,
   SERVER_USERNAME_SUCCESS,
 } from 'actions/types';
@@ -34,6 +35,7 @@ export default function (state = initialState, action) {
         loading: true,
       };
     case HOST_SESSION_SUCCESS:
+    case JOIN_SESSION_SUCCESS:
       return {
         ...state,
         loading: false,

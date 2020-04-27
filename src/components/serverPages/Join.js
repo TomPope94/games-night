@@ -1,9 +1,9 @@
-import React from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+
+import { sendJoinSession } from 'actions/server';
 
 import GameButton from 'components/global/GameButton';
-
-import { LIBRARY } from 'constants/routes';
 
 const styles = {
   inputContainer: {
@@ -21,8 +21,8 @@ const styles = {
   },
 };
 
-const Join = () => {
-  const history = useHistory();
+const Join = ({ server, sendJoinSession }) => {
+  const [session, setSession] = useState('');
 
   return (
     <div>
@@ -32,9 +32,14 @@ const Join = () => {
       </h4>
       <form>
         <div style={styles.inputContainer}>
-          <input style={styles.textInput} type="text" />
+          <input
+            style={styles.textInput}
+            type="text"
+            value={session}
+            onChange={(e) => setSession(e.target.value)}
+          />
           <GameButton
-            onMouseDown={() => history.push(LIBRARY)}
+            onMouseDown={() => sendJoinSession(server.wsConnection, session)}
             background="#d66e31"
           >
             <h2>Join.</h2>
@@ -45,4 +50,8 @@ const Join = () => {
   );
 };
 
-export default Join;
+const mapStateToProps = (state) => ({
+  server: state.server,
+});
+
+export default connect(mapStateToProps, { sendJoinSession })(Join);
