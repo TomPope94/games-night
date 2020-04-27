@@ -29,7 +29,7 @@ import store from 'store';
 
 const styles = {
   appContainer: {
-    marginTop: 75,
+    marginTop: 80,
     paddingLeft: 50,
     paddingRight: 50,
     background: 'rgba(0,0,0,.03)',
@@ -54,7 +54,7 @@ const App = () => {
             <Route exact path={HOST} component={Host} />
             <GameRoute exact path={LIBRARY} component={Library} />
             <GameRoute exact path={CODENAMES} component={CodenamesHome} />
-            <GameRoute exact path={ARTICULATE} component={ArticulateHome} />
+            <Route exact path={ARTICULATE} component={ArticulateHome} />
             <GameRoute exact path={FIVESECONDS} component={FiveSecondsHome} />
           </Switch>
         </div>

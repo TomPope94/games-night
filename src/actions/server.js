@@ -13,32 +13,38 @@ import {
   PLAYER_LEFT,
 } from 'actions/types';
 
+import { handleArticulateMessage } from 'actions/articulate';
+
+export const extractMessage = (data) => {
+  const messageDataStr = data.substring(9, data.length);
+  const messageData = JSON.parse(messageDataStr);
+
+  return messageData[0];
+};
+
 const handleMessage = (data) => async (dispatch) => {
   const dataArr = data.split(';');
   console.log(dataArr[0]);
   if (dataArr[0].includes('host')) {
-    const messageDataStr = dataArr[1].substring(9, dataArr[1].length);
-    const messageData = JSON.parse(messageDataStr);
-    await dispatch(connectSession(messageData[0]));
+    const messageData = extractMessage(dataArr[1]);
+    await dispatch(connectSession(messageData));
   } else if (dataArr[0].includes('username')) {
     const messageArr = dataArr.filter((val) => val.includes('message'));
     const value = messageArr[0].split(': ');
 
     await dispatch(changeUsername(value[1]));
   } else if (dataArr[0].includes('player_join')) {
-    const messageDataStr = dataArr[1].substring(9, dataArr[1].length);
-    const messageData = JSON.parse(messageDataStr);
-    await dispatch(newPlayerJoin(messageData[0]));
+    const messageData = extractMessage(dataArr[1]);
+    await dispatch(newPlayerJoin(messageData));
   } else if (dataArr[0].includes('server_join')) {
-    const messageDataStr = dataArr[1].substring(9, dataArr[1].length);
-    const messageData = JSON.parse(messageDataStr);
-    await dispatch(joinSession(messageData[0]));
-  } else if (dataArr[0].includes('player_left')) {
-    const messageDataStr = dataArr[1].substring(9, dataArr[1].length);
-    const messageData = JSON.parse(messageDataStr);
+    const messageData = extractMessage(dataArr[1]);
 
-    // debugger;
-    await dispatch(playerLeft(messageData[0]));
+    await dispatch(joinSession(messageData));
+  } else if (dataArr[0].includes('player_left')) {
+    const messageData = extractMessage(dataArr[1]);
+    await dispatch(playerLeft(messageData));
+  } else if (dataArr[0].includes('articulate')) {
+    await dispatch(handleArticulateMessage(dataArr));
   }
 };
 
