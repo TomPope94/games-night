@@ -4,6 +4,7 @@ import {
   HOST_SESSION_SEND,
   HOST_SESSION_SUCCESS,
   JOIN_SESSION_SUCCESS,
+  JOIN_SESSION_SEND,
   SERVER_USERNAME_SEND,
   SERVER_USERNAME_SUCCESS,
 } from 'actions/types';
@@ -30,6 +31,7 @@ export default function (state = initialState, action) {
       };
     case HOST_SESSION_SEND:
     case SERVER_USERNAME_SEND:
+    case JOIN_SESSION_SEND:
       return {
         ...state,
         loading: true,

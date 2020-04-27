@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import logo from 'components/imageAssets/s10Icon.png';
 
-import { HOME } from 'constants/routes';
+import { HOME, LIBRARY } from 'constants/routes';
 import ServerConnectButtons from 'components/global/nav/ServerConnectButtons';
 import GuestNavButtons from 'components/global/nav/GuestNavButtons';
 import Username from './Username';
@@ -33,7 +33,9 @@ const Nav = ({ server }) => {
     <div style={styles.navContainer}>
       <div style={{ display: 'flex' }}>
         <img
-          onMouseDown={() => history.push(HOME)}
+          onMouseDown={() =>
+            server.inGame ? history.push(LIBRARY) : history.push(HOME)
+          }
           src={logo}
           style={{
             height: 25,

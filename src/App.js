@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
 import history from './history';
 
+import GameRoute from 'components/routing/GameRoute';
+
 import Nav from 'components/global/nav/Nav';
 import GamesHome from 'components/Home';
 import Join from 'components/serverPages/Join';
@@ -50,10 +52,10 @@ const App = () => {
             <Route exact path={HOME} component={GamesHome} />
             <Route exact path={JOIN} component={Join} />
             <Route exact path={HOST} component={Host} />
-            <Route exact path={LIBRARY} component={Library} />
-            <Route exact path={CODENAMES} component={CodenamesHome} />
-            <Route exact path={ARTICULATE} component={ArticulateHome} />
-            <Route exact path={FIVESECONDS} component={FiveSecondsHome} />
+            <GameRoute exact path={LIBRARY} component={Library} />
+            <GameRoute exact path={CODENAMES} component={CodenamesHome} />
+            <GameRoute exact path={ARTICULATE} component={ArticulateHome} />
+            <GameRoute exact path={FIVESECONDS} component={FiveSecondsHome} />
           </Switch>
         </div>
       </Router>

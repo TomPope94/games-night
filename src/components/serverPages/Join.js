@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { sendJoinSession } from 'actions/server';
+import { LIBRARY } from 'constants/routes';
 
 import GameButton from 'components/global/GameButton';
 
@@ -22,6 +24,7 @@ const styles = {
 };
 
 const Join = ({ server, sendJoinSession }) => {
+  const history = useHistory();
   const [session, setSession] = useState('');
 
   return (
@@ -39,7 +42,10 @@ const Join = ({ server, sendJoinSession }) => {
             onChange={(e) => setSession(e.target.value)}
           />
           <GameButton
-            onMouseDown={() => sendJoinSession(server.wsConnection, session)}
+            onMouseDown={async () => {
+              await sendJoinSession(server.wsConnection, session);
+              history.push(LIBRARY);
+            }}
             background="#d66e31"
           >
             <h2>Join.</h2>

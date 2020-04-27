@@ -1,4 +1,5 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import GameButton from 'components/global/GameButton';
@@ -23,6 +24,8 @@ const styles = {
 };
 
 const Host = ({ server, hostSession }) => {
+  const history = useHistory();
+
   return (
     <div>
       <h1>Host a Server.</h1>
@@ -30,8 +33,9 @@ const Host = ({ server, hostSession }) => {
       <form>
         <div style={styles.inputContainer}>
           <GameButton
-            onMouseDown={() => {
-              hostSession(server.wsConnection);
+            onMouseDown={async () => {
+              await hostSession(server.wsConnection);
+              history.push(LIBRARY);
             }}
             background="#d66e31"
           >
