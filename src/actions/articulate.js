@@ -3,6 +3,8 @@ import {
   ARTICULATE_PLAYER_TEAM_SELECT,
   ARTICULATE_SEND_STATE_CHANGE,
   ARTICULATE_STATE_CHANGE_SUCCESS,
+  ARTICULATE_SEND_MODE_CHANGE,
+  ARTICULATE_MODE_CHANGE_SUCCESS,
 } from 'actions/types';
 import { extractMessage } from 'actions/server';
 
@@ -13,6 +15,9 @@ export const handleArticulateMessage = (dataArr) => async (dispatch) => {
   } else if (dataArr[0].includes('_state_change')) {
     const message = extractMessage(dataArr[1]);
     await dispatch(changeState(message));
+  } else if (dataArr[0].includes('_mode_change')) {
+    const message = extractMessage(dataArr[1]);
+    await dispatch(changeMode(message));
   }
 };
 
@@ -58,6 +63,27 @@ export const sendStateChange = (socket, sessionId, state) => async (
 export const changeState = (data) => async (dispatch) => {
   await dispatch({
     type: ARTICULATE_STATE_CHANGE_SUCCESS,
+    payload: data,
+  });
+};
+
+export const sendModeChange = (socket, sessionId, mode) => async (dispatch) => {
+  await socket.json({
+    action: 'articulatemodechange',
+    data: {
+      sessionId: sessionId,
+      mode: mode,
+    },
+  });
+
+  await dispatch({
+    type: ARTICULATE_SEND_MODE_CHANGE,
+  });
+};
+
+export const changeMode = (data) => async (dispatch) => {
+  await dispatch({
+    type: ARTICULATE_MODE_CHANGE_SUCCESS,
     payload: data,
   });
 };

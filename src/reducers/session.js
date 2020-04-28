@@ -11,6 +11,7 @@ const initialState = {
   sessionId: '',
   players: [],
   loading: true,
+  isHost: false,
 };
 
 export default function (state = initialState, action) {
@@ -18,6 +19,13 @@ export default function (state = initialState, action) {
 
   switch (type) {
     case HOST_SESSION_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        sessionId: payload.SessionID,
+        players: payload.Players,
+        isHost: true,
+      };
     case JOIN_SESSION_SUCCESS:
       return {
         ...state,

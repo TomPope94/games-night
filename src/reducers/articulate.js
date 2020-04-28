@@ -3,12 +3,15 @@ import {
   ARTICULATE_PLAYER_TEAM_SELECT,
   JOIN_SESSION_SUCCESS,
   ARTICULATE_STATE_CHANGE_SUCCESS,
+  HOST_SESSION_SUCCESS,
+  ARTICULATE_MODE_CHANGE_SUCCESS,
 } from 'actions/types';
 
 const initialState = {
   loading: false,
   gameStarted: false,
   teamChosen: false,
+  gameMode: '',
   gameState: 'TeamSelect',
   gameTeams: {
     Red: {
@@ -43,9 +46,11 @@ export default function (state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
+    case HOST_SESSION_SUCCESS:
     case JOIN_SESSION_SUCCESS:
       return {
         ...state,
+        gameMode: payload.GameData.Articulate.gameMode,
         gameTeams: payload.GameData.Articulate.gameTeams,
       };
     case ARTICULATE_SEND_TEAM_SELECT:
@@ -74,6 +79,12 @@ export default function (state = initialState, action) {
         ...state,
         loading: false,
         gameState: payload.state,
+      };
+    case ARTICULATE_MODE_CHANGE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        gameMode: payload.mode,
       };
     default:
       return state;

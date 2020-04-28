@@ -14,6 +14,7 @@ const GameButton = ({ children, ...props }) => {
       color: props.color ? props.color : 'white',
       transform: hover ? 'scale(1.1, 1.1)' : 'scale(1, 1)',
       transition: '0.2s linear',
+      ...props.styling,
     },
   };
 
