@@ -13,6 +13,7 @@ import {
   PLAYER_LEFT,
 } from 'actions/types';
 
+import { setAlert } from 'actions/alert';
 import { handleArticulateMessage } from 'actions/articulate';
 
 export const extractMessage = (data) => {
@@ -76,6 +77,8 @@ export const hostSession = (socket) => async (dispatch) => {
 };
 
 export const connectSession = (sessionData) => async (dispatch) => {
+  await dispatch(setAlert('Welcome to the game!', 'positive'));
+
   await dispatch({
     type: HOST_SESSION_SUCCESS,
     payload: sessionData,
@@ -94,6 +97,8 @@ export const sendJoinSession = (socket, sessionId) => async (dispatch) => {
 };
 
 export const joinSession = (newPlayer) => async (dispatch) => {
+  await dispatch(setAlert('Welcome to the game!', 'positive'));
+
   await dispatch({
     type: JOIN_SESSION_SUCCESS,
     payload: newPlayer,
@@ -101,6 +106,10 @@ export const joinSession = (newPlayer) => async (dispatch) => {
 };
 
 export const newPlayerJoin = (newPlayer) => async (dispatch) => {
+  await dispatch(
+    setAlert(`${newPlayer.Username} has joined the game!`, 'positive')
+  );
+
   await dispatch({
     type: NEW_PLAYER_JOINED,
     payload: newPlayer,
@@ -126,6 +135,8 @@ export const sendChangeUsername = (socket, username) => async (dispatch) => {
 };
 
 export const changeUsername = (username) => async (dispatch) => {
+  await dispatch(setAlert('Username changed', 'positive'));
+
   await dispatch({
     type: SERVER_USERNAME_SUCCESS,
     payload: username,

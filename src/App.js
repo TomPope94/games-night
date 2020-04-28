@@ -5,6 +5,7 @@ import history from './history';
 import GameRoute from 'components/routing/GameRoute';
 
 import Nav from 'components/global/nav/Nav';
+import Alert from 'components/global/Alert';
 import GamesHome from 'components/Home';
 import Join from 'components/serverPages/Join';
 import Host from 'components/serverPages/Host';
@@ -47,6 +48,7 @@ const App = () => {
     <Provider store={store}>
       <Router history={history}>
         <Nav />
+        <Alert />
         <div style={styles.appContainer}>
           <Switch>
             <Route exact path={HOME} component={GamesHome} />
