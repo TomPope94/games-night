@@ -86,8 +86,10 @@ const ArticulateTeams = ({
       setAlert('Only the host can start games...', 'neutral');
     } else if (!check) {
       setAlert('Teams playing need at least 2 players', 'negative');
+    } else if (Object.values(articulate.gameData).length < 1) {
+      setAlert('Need to reset the cards before playing', 'neutral');
     } else {
-      sendStateChange(server.wsConnection, session.sessionId, 'GameInProgress');
+      sendStateChange(server.wsConnection, session.sessionId, 'GameBegin');
     }
   };
 

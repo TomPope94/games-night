@@ -8,7 +8,6 @@ const styles = {
     borderRadius: 10,
     cursor: 'pointer',
     color: 'black',
-    zIndex: 999,
     pointerEvents: 'all',
   },
 };

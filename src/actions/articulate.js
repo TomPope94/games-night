@@ -11,6 +11,12 @@ import {
   ARTICULATE_NEXT_ROUND_SUCCESS,
   ARTICULATE_SEND_ROTA,
   ARTICULATE_ROTA_SUCCESS,
+  ARTICULATE_SCORE_SEND,
+  ARTICULATE_SCORE_SUCCESS,
+  ARTICULATE_ROUND_START_SUCCESS,
+  ARTICULATE_SEND_ROUND_START,
+  ARTICULATE_SEND_SUMMARY,
+  ARTICULATE_SUMMARY_SUCCESS,
 } from 'actions/types';
 import { extractMessage } from 'actions/server';
 
@@ -30,6 +36,14 @@ export const handleArticulateMessage = (dataArr) => async (dispatch) => {
   } else if (dataArr[0].includes('_next_round')) {
     const message = extractMessage(dataArr[1]);
     await dispatch(moveToNextRound(message));
+  } else if (dataArr[0].includes('_start_round')) {
+    await dispatch(startRound());
+  } else if (dataArr[0].includes('_score_update')) {
+    const message = extractMessage(dataArr[1]);
+    await dispatch(roundScoreUpdate(message));
+  } else if (dataArr[0].includes('_summary')) {
+    const message = extractMessage(dataArr[1]);
+    await dispatch(toSummary(message));
   }
 };
 
@@ -149,5 +163,81 @@ export const addRota = (rota) => async (dispatch) => {
   await dispatch({
     type: ARTICULATE_ROTA_SUCCESS,
     payload: rota,
+  });
+};
+
+export const sendStartRound = (socket, sessionId) => async (dispatch) => {
+  await socket.json({
+    action: 'articulateroundstart',
+    data: {
+      sessionId: sessionId,
+      roundStart: true,
+    },
+  });
+
+  await dispatch({
+    type: ARTICULATE_SEND_ROUND_START,
+  });
+};
+
+export const startRound = () => async (dispatch) => {
+  await dispatch({
+    type: ARTICULATE_ROUND_START_SUCCESS,
+  });
+};
+
+export const sendRoundScoreUpdate = (
+  socket,
+  sessionId,
+  newScore,
+  words
+) => async (dispatch) => {
+  await socket.json({
+    action: 'articulatescoreupdate',
+    data: {
+      sessionId: sessionId,
+      score: newScore,
+      words: words,
+    },
+  });
+
+  await dispatch({
+    type: ARTICULATE_SCORE_SEND,
+  });
+};
+
+export const roundScoreUpdate = (data) => async (dispatch) => {
+  await dispatch({
+    type: ARTICULATE_SCORE_SUCCESS,
+    payload: data,
+  });
+};
+
+export const sendToSummary = (
+  socket,
+  sessionId,
+  passed,
+  data,
+  category
+) => async (dispatch) => {
+  await socket.json({
+    action: 'articulatetosummary',
+    data: {
+      sessionId: sessionId,
+      passed: passed,
+      data: data,
+      category: category,
+    },
+  });
+
+  await dispatch({
+    type: ARTICULATE_SEND_SUMMARY,
+  });
+};
+
+export const toSummary = (data) => async (dispatch) => {
+  await dispatch({
+    type: ARTICULATE_SUMMARY_SUCCESS,
+    payload: data,
   });
 };

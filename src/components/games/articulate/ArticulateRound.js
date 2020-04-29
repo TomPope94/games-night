@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { connect } from 'react-redux';
-import YourTurn from './YourTurn';
+import YourTurnReady from 'components/games/articulate/YourTurnReady';
+import ArticulateSummary from 'components/games/articulate/ArticulateSummary';
+import YourTurnRound from './YourTurnRound';
 
 const ArticulateRound = ({ session, server, articulate }) => {
   const [cat, setCat] = useState('');
@@ -36,12 +38,38 @@ const ArticulateRound = ({ session, server, articulate }) => {
     },
   };
 
-  return (
-    <div>
-      <div style={styles.teamIndicator} />
-      <h1>{articulate.playerTurn}! It's your turn!</h1>
-      {articulate.yourTurn ? <YourTurn /> : <h2>The category: {cat}</h2>}
-    </div>
+  return !articulate.roundComplete && !articulate.roundStart ? (
+    <Fragment>
+      {articulate.yourTurn && !articulate.roundComplete ? (
+        <YourTurnReady category={cat} />
+      ) : (
+        <div>
+          <div style={styles.teamIndicator} />
+          <h1>
+            {articulate.playerTurn} is about to go! Get your game faces on!
+          </h1>
+          <h2>The category is: {cat}</h2>
+        </div>
+      )}
+    </Fragment>
+  ) : !articulate.roundComplete && articulate.roundStart ? (
+    <Fragment>
+      {articulate.yourTurn && !articulate.roundComplete ? (
+        <YourTurnRound category={cat} />
+      ) : (
+        <div>
+          <h1>Current Score: {articulate.roundScore}</h1>
+          <h2>Correct Words: </h2>
+          <ol>
+            {articulate.wordsCorrect.map((word) => (
+              <li>{word}</li>
+            ))}
+          </ol>
+        </div>
+      )}
+    </Fragment>
+  ) : (
+    <ArticulateSummary />
   );
 };
 

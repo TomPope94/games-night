@@ -6,18 +6,16 @@ import YourTurnReady from './YourTurnReady';
 import YourTurnRound from './YourTurnRound';
 import YourTurnSummary from './YourTurnSummary';
 
-const YourTurn = () => {
+const YourTurn = ({ category }) => {
   const [gameState, setGameState] = useState('Ready');
 
   return (
     <Fragment>
       {gameState === 'Ready' ? (
-        <YourTurnReady changestate={setGameState} />
+        <YourTurnReady category={category} changestate={setGameState} />
       ) : gameState === 'Round' ? (
         <YourTurnRound changestate={setGameState} />
-      ) : (
-        <YourTurnSummary />
-      )}
+      ) : null}
     </Fragment>
   );
 };

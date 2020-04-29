@@ -8,6 +8,9 @@ import {
   ARTICULATE_DATA_RESET_SUCCESS,
   ARTICULATE_NEXT_ROUND_SUCCESS,
   ARTICULATE_ROTA_SUCCESS,
+  ARTICULATE_ROUND_START_SUCCESS,
+  ARTICULATE_SCORE_SUCCESS,
+  ARTICULATE_SUMMARY_SUCCESS,
 } from 'actions/types';
 
 const initialState = {
@@ -16,24 +19,23 @@ const initialState = {
   teamChosen: false,
   gameStarter: -1,
   gameRound: -1,
+  roundScore: 0,
+  roundComplete: false,
+  roundStart: false,
+  wordsPassed: [],
+  wordsCorrect: [],
   gameMode: '',
   gameState: 'TeamSelect',
   teamTurn: '',
   playerTurn: '',
-  yourTurn: false,
+  yourTurn: true,
   gameRota: [],
   gameTeams: {
     Red: {
       Pos: 0,
-      Players: [
-        // { Username: 'Guest', ID: 'asgasgsa' },
-        // { Username: 'Guest', ID: 'asgasgsa' },
-      ],
+      Players: [],
       PlayersGone: [],
-      PlayersLeft: [
-        // { Username: 'Guest', ID: 'asgasgsa' },
-        // { Username: 'Guest', ID: 'asgasgsa' },
-      ],
+      PlayersLeft: [],
     },
     Blue: {
       Pos: 0,
@@ -115,9 +117,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         loading: false,
-        gameState: payload.state,
-        gameStarter: payload.starterIndex,
-        gameRound: payload.gameRound,
+        ...payload.gameData.Articulate,
         gameStarted: true,
       };
     case ARTICULATE_MODE_CHANGE_SUCCESS:
@@ -146,6 +146,25 @@ export default function (state = initialState, action) {
         ...state,
         loading: false,
         gameRota: payload,
+      };
+    case ARTICULATE_ROUND_START_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        roundStart: true,
+      };
+    case ARTICULATE_SCORE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        roundScore: payload.score,
+        wordsCorrect: payload.words,
+      };
+    case ARTICULATE_SUMMARY_SUCCESS:
+      return {
+        ...state,
+        ...payload.data.Articulate,
+        loading: false,
       };
     default:
       return state;

@@ -1,15 +1,24 @@
 import React, { useState, useEffect, Fragment } from 'react';
+import { connect } from 'react-redux';
 import PassedWord from 'components/games/articulate/PassedWord';
-import ArticulateData from 'constants/ArticulateData';
+import GameButton from 'components/global/GameButton';
 
-const YourTurnRound = ({ changestate }) => {
-  const data = ArticulateData['people'];
+import { sendRoundScoreUpdate, sendToSummary } from 'actions/articulate';
+
+const YourTurnRound = ({
+  articulate,
+  server,
+  session,
+  sendRoundScoreUpdate,
+  sendToSummary,
+  category,
+}) => {
+  const data = articulate.gameData[category];
 
   const [gameWord, setGameWord] = useState(null);
-  const [score, setScore] = useState(0);
   const [passedWords, setPassedWords] = useState([]);
   const [correctWords, setCorrectWords] = useState([]);
-  const [timeLeft, setTimeLeft] = useState(60);
+  const [timeLeft, setTimeLeft] = useState(5);
 
   const styles = {
     roundContainer: {
@@ -19,7 +28,7 @@ const YourTurnRound = ({ changestate }) => {
       width: '100vw',
       height: '100vh',
       display: 'flex',
-      zIndex: 9999,
+      // zIndex: 9999,
     },
     bigButton: {
       height: '100%',
@@ -71,7 +80,12 @@ const YourTurnRound = ({ changestate }) => {
   };
   const correct = (word) => {
     setCorrectWords([...correctWords, word]);
-    setScore(score + 1);
+    sendRoundScoreUpdate(
+      server.wsConnection,
+      session.sessionId,
+      articulate.roundScore + 1,
+      [...correctWords, word]
+    );
     if (word === gameWord) {
       getNewWord();
     } else {
@@ -88,7 +102,7 @@ const YourTurnRound = ({ changestate }) => {
 
   useEffect(() => {
     getNewWord();
-  }, [getNewWord]);
+  }, []);
 
   useEffect(() => {
     // exit early when we reach 0
@@ -107,25 +121,52 @@ const YourTurnRound = ({ changestate }) => {
   }, [timeLeft]);
   return (
     <Fragment>
-      <div style={styles.roundContainer}>
-        <div style={{ ...styles.bigButton, pointerEvents: 'none' }}>
-          {passedWords.map((word) => (
-            <PassedWord correct={correct} word={word}>
-              <p style={{ fontSize: '2rem' }}>{word}</p>
-            </PassedWord>
-          ))}
+      <div style={{ ...styles.roundContainer }}>
+        <div
+          style={{
+            ...styles.bigButton,
+            pointerEvents: !timeLeft ? 'all' : 'none',
+            zIndex: 999999,
+          }}
+        >
+          {!timeLeft ? (
+            <GameButton
+              background="#fff"
+              color="red"
+              onMouseDown={async () =>
+                await sendToSummary(
+                  server.wsConnection,
+                  session.sessionId,
+                  passedWords,
+                  data,
+                  category
+                )
+              }
+            >
+              <h1>To Summary</h1>
+            </GameButton>
+          ) : (
+            passedWords.map((word) => (
+              <PassedWord correct={correct} word={word}>
+                <p style={{ fontSize: '2rem' }}>{word}</p>
+              </PassedWord>
+            ))
+          )}
         </div>
       </div>
-      <div style={styles.roundContainer}>
+      <div style={{ ...styles.roundContainer, zIndex: 99999 }}>
         <div
           style={{ ...styles.bigButton, ...styles.passButton }}
           onMouseDown={() => pass()}
         ></div>
         <div
-          style={{ ...styles.bigButton, ...styles.correctButton }}
+          style={{
+            ...styles.bigButton,
+            ...styles.correctButton,
+          }}
           onMouseDown={() => correct(gameWord)}
         >
-          <p style={styles.score}>{score}</p>
+          <p style={styles.score}>{articulate.roundScore}</p>
           {correctWords.map((word) => (
             <p style={{ color: 'white' }}>{word}</p>
           ))}
@@ -146,4 +187,13 @@ const YourTurnRound = ({ changestate }) => {
   );
 };
 
-export default YourTurnRound;
+const mapStateToProps = (state) => ({
+  server: state.server,
+  session: state.session,
+  articulate: state.articulate,
+});
+
+export default connect(mapStateToProps, {
+  sendRoundScoreUpdate,
+  sendToSummary,
+})(YourTurnRound);

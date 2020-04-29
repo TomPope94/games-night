@@ -78,7 +78,7 @@ const ArticulateBoard = ({
       const player = await choosePlayer(rota, articulate.gameRound);
       await addRota(rota);
 
-      debugger;
+      // debugger;
       await sendNextRound(
         server.wsConnection,
         session.sessionId,
@@ -95,7 +95,9 @@ const ArticulateBoard = ({
         await sendNextRound(
           server.wsConnection,
           session.sessionId,
-          teamState[articulate.gameStarter],
+          articulate.gameRota[
+            articulate.gameRound % articulate.gameRota.length
+          ],
           player
         );
       }

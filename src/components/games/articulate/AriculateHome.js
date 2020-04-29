@@ -15,7 +15,7 @@ const ArticulateHome = ({ articulate }) => {
       <ArticulateHeader />
       {gameState === 'TeamSelect' ? (
         <ArticulateTeams />
-      ) : gameState === 'GameInProgress' ? (
+      ) : gameState === 'GameInProgress' || gameState === 'GameBegin' ? (
         <ArticulateBoard />
       ) : gameState === 'RoundInProgress' ? (
         <ArticulateRound />

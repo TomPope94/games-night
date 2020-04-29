@@ -1,11 +1,18 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-const YourTurnSummary = () => {
+const YourTurnSummary = ({ articulate, server, session }) => {
   return (
     <div>
-      <h1>Heres how you did:</h1>
+      <h1>Your team scored: {articulate.roundScore}</h1>
     </div>
   );
 };
 
-export default YourTurnSummary;
+const mapStateToProps = (state) => ({
+  articulate: state.articulate,
+  server: state.server,
+  session: state.session,
+});
+
+export default connect(mapStateToProps)(YourTurnSummary);
