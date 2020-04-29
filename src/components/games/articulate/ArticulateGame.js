@@ -1,5 +1,5 @@
 import React, { useState, Fragment } from 'react';
-import ArticulateRound from 'components/games/articulate/ArticulateRound';
+import ArticulateRound from 'components/games/articulate/ArticulateRound22';
 
 import GameButton from 'components/global/GameButton';
 

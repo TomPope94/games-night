@@ -7,6 +7,8 @@ import {
   sendModeChange,
 } from 'actions/articulate';
 
+import { setAlert } from 'actions/alert';
+
 import HeroBanner from 'components/global/HeroBanner';
 import TeamPicker from 'components/games/TeamPicker';
 import GameButton from 'components/global/GameButton';
@@ -19,6 +21,7 @@ const ArticulateTeams = ({
   sendTeamSelect,
   sendStateChange,
   sendModeChange,
+  setAlert,
 }) => {
   const styles = {
     articulateContainer: {
@@ -48,28 +51,42 @@ const ArticulateTeams = ({
 
   const checkTeamValid = () => {
     const arr = Object.values(articulate.gameTeams);
+    const validArr = [];
     for (let i = 0; i < arr.length; i++) {
       const players = arr[i].Players;
 
       if (players.length === 1) {
         return false;
       }
+
+      validArr.push(players.length);
     }
 
-    return true;
+    const check = validArr.reduce((acc, val) => acc + val);
+    if (check === 0) {
+      return false;
+    } else {
+      return true;
+    }
   };
 
   const handleModeChange = async (mode) => {
     if (session.isHost && mode !== articulate.gameMode) {
       await sendModeChange(server.wsConnection, session.sessionId, mode);
+    } else {
+      setAlert('Only the host can change modes...', 'neutral');
     }
   };
 
   const handleBegin = async () => {
     //check that all teams with >0 people has >1
     const check = await checkTeamValid();
-    debugger;
-    if (check) {
+    // debugger;
+    if (!session.isHost) {
+      setAlert('Only the host can start games...', 'neutral');
+    } else if (!check) {
+      setAlert('Teams playing need at least 2 players', 'negative');
+    } else {
       sendStateChange(server.wsConnection, session.sessionId, 'GameInProgress');
     }
   };
@@ -162,4 +179,5 @@ export default connect(mapStateToProps, {
   sendTeamSelect,
   sendStateChange,
   sendModeChange,
+  setAlert,
 })(ArticulateTeams);

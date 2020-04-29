@@ -5,37 +5,70 @@ import {
   ARTICULATE_STATE_CHANGE_SUCCESS,
   HOST_SESSION_SUCCESS,
   ARTICULATE_MODE_CHANGE_SUCCESS,
+  ARTICULATE_DATA_RESET_SUCCESS,
+  ARTICULATE_NEXT_ROUND_SUCCESS,
+  ARTICULATE_ROTA_SUCCESS,
 } from 'actions/types';
 
 const initialState = {
   loading: false,
   gameStarted: false,
   teamChosen: false,
+  gameStarter: -1,
+  gameRound: -1,
   gameMode: '',
   gameState: 'TeamSelect',
+  teamTurn: '',
+  playerTurn: '',
+  yourTurn: false,
+  gameRota: [],
   gameTeams: {
     Red: {
-      Pos: 1,
-      Players: [],
+      Pos: 0,
+      Players: [
+        // { Username: 'Guest', ID: 'asgasgsa' },
+        // { Username: 'Guest', ID: 'asgasgsa' },
+      ],
       PlayersGone: [],
-      PlayersLeft: [],
+      PlayersLeft: [
+        // { Username: 'Guest', ID: 'asgasgsa' },
+        // { Username: 'Guest', ID: 'asgasgsa' },
+      ],
     },
     Blue: {
-      Pos: 1,
-      Players: [],
+      Pos: 0,
+      Players: [
+        // { Username: 'Guest', ID: 'asgasgsa' },
+        // { Username: 'Guest', ID: 'asgasgsa' },
+      ],
       PlayersGone: [],
-      PlayersLeft: [],
+      PlayersLeft: [
+        // { Username: 'Guest', ID: 'asgasgsa' },
+        // { Username: 'Guest', ID: 'asgasgsa' },
+      ],
     },
     Orange: {
-      Pos: 1,
-      Players: [],
+      Pos: 0,
+      Players: [
+        // { Username: 'Guest', ID: 'asgasgsa' },
+        // { Username: 'Guest', ID: 'asgasgsa' },
+      ],
       PlayersGone: [],
-      PlayersLeft: [],
+      PlayersLeft: [
+        // { Username: 'Guest', ID: 'asgasgsa' },
+        // { Username: 'Guest', ID: 'asgasgsa' },
+      ],
     },
     Green: {
-      Pos: 1,
-      Players: [],
-      PlayersGone: [],
+      Pos: 0,
+      Players: [
+        // { Username: 'Guest', ID: 'asgasgsa' },
+        // { Username: 'Guest', ID: 'asgasgsa' },
+      ],
+      PlayersGone: [
+        // { Username: 'Guest', ID: 'asgasgsa' },
+        // { Username: 'Guest', ID: 'asgasgsa' },
+      ],
       PlayersLeft: [],
     },
   },
@@ -71,6 +104,10 @@ export default function (state = initialState, action) {
               ...state.gameTeams[payload.Team].Players,
               { ID: payload.ID, Username: payload.Username },
             ],
+            PlayersLeft: [
+              ...state.gameTeams[payload.Team].PlayersLeft,
+              { ID: payload.ID, Username: payload.Username },
+            ],
           },
         },
       };
@@ -79,12 +116,36 @@ export default function (state = initialState, action) {
         ...state,
         loading: false,
         gameState: payload.state,
+        gameStarter: payload.starterIndex,
+        gameRound: payload.gameRound,
+        gameStarted: true,
       };
     case ARTICULATE_MODE_CHANGE_SUCCESS:
       return {
         ...state,
         loading: false,
         gameMode: payload.mode,
+      };
+    case ARTICULATE_DATA_RESET_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        gameData: payload.gameData.Articulate.gameData,
+      };
+    case ARTICULATE_NEXT_ROUND_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        gameState: payload.gameState,
+        teamTurn: payload.team,
+        playerTurn: payload.player,
+        yourTurn: payload.yourTurn,
+      };
+    case ARTICULATE_ROTA_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        gameRota: payload,
       };
     default:
       return state;

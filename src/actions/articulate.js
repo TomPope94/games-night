@@ -5,6 +5,12 @@ import {
   ARTICULATE_STATE_CHANGE_SUCCESS,
   ARTICULATE_SEND_MODE_CHANGE,
   ARTICULATE_MODE_CHANGE_SUCCESS,
+  ARTICULATE_SEND_DATA_RESET,
+  ARTICULATE_DATA_RESET_SUCCESS,
+  ARTICULATE_SEND_NEXT_ROUND,
+  ARTICULATE_NEXT_ROUND_SUCCESS,
+  ARTICULATE_SEND_ROTA,
+  ARTICULATE_ROTA_SUCCESS,
 } from 'actions/types';
 import { extractMessage } from 'actions/server';
 
@@ -18,6 +24,12 @@ export const handleArticulateMessage = (dataArr) => async (dispatch) => {
   } else if (dataArr[0].includes('_mode_change')) {
     const message = extractMessage(dataArr[1]);
     await dispatch(changeMode(message));
+  } else if (dataArr[0].includes('_data_reset')) {
+    const message = extractMessage(dataArr[1]);
+    await dispatch(refreshData(message));
+  } else if (dataArr[0].includes('_next_round')) {
+    const message = extractMessage(dataArr[1]);
+    await dispatch(moveToNextRound(message));
   }
 };
 
@@ -85,5 +97,57 @@ export const changeMode = (data) => async (dispatch) => {
   await dispatch({
     type: ARTICULATE_MODE_CHANGE_SUCCESS,
     payload: data,
+  });
+};
+
+export const sendRefreshData = (socket, sessionId) => async (dispatch) => {
+  await socket.json({
+    action: 'articulatedatafetch',
+    data: {
+      sessionId: sessionId,
+    },
+  });
+
+  await dispatch({
+    type: ARTICULATE_SEND_DATA_RESET,
+  });
+};
+
+export const refreshData = (data) => async (dispatch) => {
+  await dispatch({
+    type: ARTICULATE_DATA_RESET_SUCCESS,
+    payload: data,
+  });
+};
+
+export const sendNextRound = (socket, sessionId, team, player) => async (
+  dispatch
+) => {
+  // debugger;
+  await socket.json({
+    action: 'articulatenextround',
+    data: {
+      sessionId: sessionId,
+      team: team,
+      player: player,
+    },
+  });
+
+  await dispatch({
+    type: ARTICULATE_SEND_NEXT_ROUND,
+  });
+};
+
+export const moveToNextRound = (data) => async (dispatch) => {
+  await dispatch({
+    type: ARTICULATE_NEXT_ROUND_SUCCESS,
+    payload: data,
+  });
+};
+
+export const addRota = (rota) => async (dispatch) => {
+  await dispatch({
+    type: ARTICULATE_ROTA_SUCCESS,
+    payload: rota,
   });
 };

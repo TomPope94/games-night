@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
-import ArticulateTeams from 'components/games/articulate/ArticulateTeams';
 import ArticulateHeader from 'components/games/articulate/ArticulateHeader';
+import ArticulateTeams from 'components/games/articulate/ArticulateTeams';
+import ArticulateBoard from 'components/games/articulate/ArticulateBoard';
+import ArticulateRound from 'components/games/articulate/ArticulateRound';
 
 const ArticulateHome = ({ articulate }) => {
   // const categories = ['people', 'world', 'object', 'actions', 'nature'];
@@ -11,7 +13,13 @@ const ArticulateHome = ({ articulate }) => {
   return (
     <div>
       <ArticulateHeader />
-      {gameState === 'TeamSelect' ? <ArticulateTeams /> : null}
+      {gameState === 'TeamSelect' ? (
+        <ArticulateTeams />
+      ) : gameState === 'GameInProgress' ? (
+        <ArticulateBoard />
+      ) : gameState === 'RoundInProgress' ? (
+        <ArticulateRound />
+      ) : null}
     </div>
   );
 };
