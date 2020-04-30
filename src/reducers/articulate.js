@@ -87,8 +87,7 @@ export default function (state = initialState, action) {
     case JOIN_SESSION_SUCCESS:
       return {
         ...state,
-        gameMode: payload.GameData.Articulate.gameMode,
-        gameTeams: payload.GameData.Articulate.gameTeams,
+        ...payload.GameData.Articulate,
       };
     case PLAYER_LEFT:
       return {

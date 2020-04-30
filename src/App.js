@@ -73,7 +73,7 @@ const App = () => {
             <Route exact path={HOST} component={Host} />
             <GameRoute exact path={LIBRARY} component={Library} />
             <Route exact path={CODENAMES} component={CodenamesHome} />
-            <Route exact path={ARTICULATE} component={ArticulateHome} />
+            <GameRoute exact path={ARTICULATE} component={ArticulateHome} />
             <GameRoute exact path={FIVESECONDS} component={FiveSecondsHome} />
           </Switch>
         </div>
