@@ -11,6 +11,8 @@ import {
   JOIN_SESSION_SUCCESS,
   NEW_PLAYER_JOINED,
   PLAYER_LEFT,
+  PING,
+  PONG,
 } from 'actions/types';
 
 import { setAlert } from 'actions/alert';
@@ -46,17 +48,22 @@ const handleMessage = (data) => async (dispatch) => {
     await dispatch(playerLeft(messageData));
   } else if (dataArr[0].includes('articulate')) {
     await dispatch(handleArticulateMessage(dataArr));
+  } else if (dataArr[0].includes('pong')) {
+    await dispatch(pong());
   }
 };
 
 export const connectServer = () => async (dispatch) => {
   const ws = await new Sockette(config.socket.URL, {
-    timeout: 5e3,
-    maxAttempts: 1,
+    timeout: 1000,
+    maxAttempts: 5,
     onopen: (e) => console.log('connected:', e),
     onmessage: (e) => {
       console.log('message: ', e);
       dispatch(handleMessage(e.data));
+    },
+    onmaximum: (e) => {
+      console.log('max reached: ', e);
     },
   });
 
@@ -64,6 +71,22 @@ export const connectServer = () => async (dispatch) => {
   await dispatch({
     type: SERVER_CONNECT_SUCCESS,
     payload: ws,
+  });
+};
+
+export const ping = (socket) => async (dispatch) => {
+  await socket.json({
+    action: 'ping',
+  });
+
+  await dispatch({
+    type: PING,
+  });
+};
+
+export const pong = () => async (dispatch) => {
+  await dispatch({
+    type: PONG,
   });
 };
 
@@ -117,6 +140,10 @@ export const newPlayerJoin = (newPlayer) => async (dispatch) => {
 };
 
 export const playerLeft = (playerDetails) => async (dispatch) => {
+  await dispatch(
+    setAlert(`${playerDetails.Username} has left the game`, 'neutral')
+  );
+
   await dispatch({
     type: PLAYER_LEFT,
     payload: playerDetails,

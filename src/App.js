@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
 import history from './history';
 
@@ -24,7 +24,7 @@ import {
   FIVESECONDS,
 } from 'constants/routes';
 
-import { connectServer } from 'actions/server';
+import { connectServer, ping } from 'actions/server';
 import { Provider } from 'react-redux';
 import store from 'store';
 
@@ -40,9 +40,26 @@ const styles = {
 };
 
 const App = () => {
+  const [timeActive, setTimeActive] = useState(0);
+
   useEffect(() => {
     store.dispatch(connectServer());
   }, []);
+
+  useEffect(() => {
+    if (timeActive % 120 === 0 && timeActive !== 0) {
+      const state = store.getState();
+      store.dispatch(ping(state.server.wsConnection));
+    }
+    // save intervalId to clear the interval when the
+    // component re-renders
+    const intervalId = setInterval(() => {
+      setTimeActive(timeActive + 1);
+    }, 1000);
+
+    // clear interval on re-render to avoid memory leaks
+    return () => clearInterval(intervalId);
+  }, [timeActive]);
 
   return (
     <Provider store={store}>
