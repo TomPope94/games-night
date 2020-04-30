@@ -12,7 +12,24 @@ import {
 } from 'actions/types';
 import { extractMessage } from 'actions/server';
 
-export const handleFivesecondsMessage = (dataArr) => async (dispatch) => {};
+export const handleFivesecondsMessage = (dataArr) => async (dispatch) => {
+  if (dataArr[0].includes('_join')) {
+    const message = extractMessage(dataArr[1]);
+    await dispatch(playerJoin(message));
+  } else if (dataArr[0].includes('_lives_change')) {
+    const message = extractMessage(dataArr[1]);
+    await dispatch(livesChange(message));
+  } else if (dataArr[0].includes('_data_reset')) {
+    const message = extractMessage(dataArr[1]);
+    await dispatch(dataReset(message));
+  } else if (dataArr[0].includes('_end_game')) {
+    const message = extractMessage(dataArr[1]);
+    await dispatch(endGame(message));
+  } else if (dataArr[0].includes('_state_change')) {
+    const message = extractMessage(dataArr[1]);
+    await dispatch(stateChange(message));
+  }
+};
 
 export const sendPlayerJoin = (socket, sessionId) => async (dispatch) => {
   await socket.json({
@@ -28,6 +45,7 @@ export const sendPlayerJoin = (socket, sessionId) => async (dispatch) => {
 };
 
 export const playerJoin = (data) => async (dispatch) => {
+  // debugger;
   await dispatch({
     type: FIVESECONDS_PLAYER_JOIN,
     payload: data,
@@ -113,8 +131,9 @@ export const sendEndGame = (socket, sessionId) => async (dispatch) => {
   });
 };
 
-export const endGame = () => async (dispatch) => {
+export const endGame = (data) => async (dispatch) => {
   await dispatch({
     type: FIVESECONDS_END_GAME,
+    payload: data,
   });
 };

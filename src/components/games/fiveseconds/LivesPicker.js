@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { sendLivesChange } from 'actions/fiveSeconds';
 
 import GameButton from 'components/global/GameButton';
+import { setAlert } from 'actions/alert';
 
 const styles = {
   livesContainer: {
@@ -24,13 +25,23 @@ const styles = {
   },
 };
 
-const LivesPicker = ({ server, session, fiveSeconds, sendLivesChange }) => {
+const LivesPicker = ({
+  server,
+  session,
+  fiveSeconds,
+  sendLivesChange,
+  setAlert,
+}) => {
   const handleLivesChange = async (positive) => {
-    await sendLivesChange(
-      server.wsConnection,
-      session.sessionId,
-      positive ? fiveSeconds.numLives + 1 : fiveSeconds.numLives - 1
-    );
+    if (session.isHost) {
+      await sendLivesChange(
+        server.wsConnection,
+        session.sessionId,
+        positive ? fiveSeconds.numLives + 1 : fiveSeconds.numLives - 1
+      );
+    } else {
+      setAlert('Only the host can change the game settings...', 'neutral');
+    }
   };
 
   return (
@@ -63,4 +74,6 @@ const mapStateToProps = (state) => ({
   fiveSeconds: state.fiveSeconds,
 });
 
-export default connect(mapStateToProps, { sendLivesChange })(LivesPicker);
+export default connect(mapStateToProps, { sendLivesChange, setAlert })(
+  LivesPicker
+);

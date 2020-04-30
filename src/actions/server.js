@@ -17,6 +17,7 @@ import {
 
 import { setAlert } from 'actions/alert';
 import { handleArticulateMessage } from 'actions/articulate';
+import { handleFivesecondsMessage } from 'actions/fiveSeconds';
 
 export const extractMessage = (data) => {
   const messageDataStr = data.substring(9, data.length);
@@ -28,7 +29,11 @@ export const extractMessage = (data) => {
 const handleMessage = (data) => async (dispatch) => {
   const dataArr = data.split(';');
   console.log(dataArr[0]);
-  if (dataArr[0].includes('host')) {
+  if (dataArr[0].includes('articulate')) {
+    await dispatch(handleArticulateMessage(dataArr));
+  } else if (dataArr[0].includes('fiveseconds')) {
+    await dispatch(handleFivesecondsMessage(dataArr));
+  } else if (dataArr[0].includes('host')) {
     const messageData = extractMessage(dataArr[1]);
     await dispatch(connectSession(messageData));
   } else if (dataArr[0].includes('username')) {
@@ -46,8 +51,6 @@ const handleMessage = (data) => async (dispatch) => {
   } else if (dataArr[0].includes('player_left')) {
     const messageData = extractMessage(dataArr[1]);
     await dispatch(playerLeft(messageData));
-  } else if (dataArr[0].includes('articulate')) {
-    await dispatch(handleArticulateMessage(dataArr));
   } else if (dataArr[0].includes('pong')) {
     await dispatch(pong());
   }

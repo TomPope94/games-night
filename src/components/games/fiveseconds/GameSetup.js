@@ -1,13 +1,13 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 
-import { sendPlayerJoin } from 'actions/fiveSeconds';
+import { sendPlayerJoin, sendStateChange } from 'actions/fiveSeconds';
+import { setAlert } from 'actions/alert';
 
 import ModePicker from 'components/games/ModePicker';
 import PlayersList from 'components/games/PlayersList';
 import GameButton from 'components/global/GameButton';
 import LivesPicker from 'components/games/fiveseconds/LivesPicker';
-import { sendStateChange } from 'actions/articulate';
 
 const styles = {
   gameContainer: {
@@ -30,9 +30,26 @@ const styles = {
   },
 };
 
-const GameSetup = ({ fiveSeconds, server, session, sendPlayerJoin }) => {
+const GameSetup = ({
+  fiveSeconds,
+  server,
+  session,
+  sendPlayerJoin,
+  sendStateChange,
+  setAlert,
+}) => {
   const handleBegin = async () => {
-    await sendStateChange(server.wsConnection, session.sessionId, 'BeginGame');
+    if (Object.values(fiveSeconds.gameData).length < 1) {
+      setAlert('Need to reset the cards before playing', 'neutral');
+    } else if (fiveSeconds.players.length < 1) {
+      setAlert('Need at least one player to play...', 'neutral');
+    } else {
+      await sendStateChange(
+        server.wsConnection,
+        session.sessionId,
+        'BeginGame'
+      );
+    }
   };
 
   return (
@@ -46,9 +63,11 @@ const GameSetup = ({ fiveSeconds, server, session, sendPlayerJoin }) => {
         </ModePicker>
         <PlayersList
           styling={{ width: '25%' }}
-          onMouseDown={async () =>
-            await sendPlayerJoin(server.wsConnection, session.sessionId)
-          }
+          onMouseDown={async () => {
+            if (!fiveSeconds.inPool) {
+              await sendPlayerJoin(server.wsConnection, session.sessionId);
+            }
+          }}
         >
           {fiveSeconds.players.map((player) => (
             <h4>{player.Username}</h4>
@@ -72,4 +91,8 @@ const mapStateToProps = (state) => ({
   session: state.session,
 });
 
-export default connect(mapStateToProps, { sendPlayerJoin })(GameSetup);
+export default connect(mapStateToProps, {
+  sendPlayerJoin,
+  sendStateChange,
+  setAlert,
+})(GameSetup);

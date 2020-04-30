@@ -1,5 +1,8 @@
 import {
+  HOST_SESSION_SUCCESS,
+  JOIN_SESSION_SUCCESS,
   FIVESECONDS_PLAYER_JOIN,
+  FIVESECONDS_SEND_PLAYER_JOIN,
   FIVESECONDS_LIVES_CHANGE,
   FIVESECONDS_DATA_RESET,
   FIVESECONDS_STATE_CHANGE,
@@ -20,14 +23,15 @@ const initialState = {
   voteStarted: false,
   voteCompleted: false,
   playerPassed: false,
+  inPool: false,
   gameMode: '',
   gameState: 'setup',
   playerTurn: '',
   yourTurn: false,
   roundRota: [],
   players: [
-    { ID: 'adgasdg', Username: 'Tom', lives: 2, voted: false },
-    { ID: 'asdgasg', Username: 'Claudia', lives: 2, voted: false },
+    // { ID: 'adgasdg', Username: 'Tom', lives: 2, voted: false },
+    // { ID: 'asdgasg', Username: 'Claudia', lives: 2, voted: false },
   ],
   gameData: [],
 };
@@ -36,15 +40,26 @@ export default function (state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
+    case HOST_SESSION_SUCCESS:
+    case JOIN_SESSION_SUCCESS:
+      return {
+        ...state,
+        ...payload.GameData.FiveSeconds,
+      };
     case FIVESECONDS_PLAYER_JOIN:
       return {
         ...state,
-        players: [...state.players, payload.data],
+        players: [...state.players, payload],
+      };
+    case FIVESECONDS_SEND_PLAYER_JOIN:
+      return {
+        ...state,
+        inPool: true,
       };
     case FIVESECONDS_LIVES_CHANGE:
       return {
         ...state,
-        numLives: payload.data,
+        numLives: payload.lives,
       };
     case FIVESECONDS_DATA_RESET:
       return {
@@ -56,13 +71,13 @@ export default function (state = initialState, action) {
       return {
         ...state,
         loading: false,
-        ...payload.gameData.Articulate,
+        ...payload.gameData.FiveSeconds,
         gameStarted: true,
       };
     case FIVESECONDS_END_GAME:
       return {
         ...initialState,
-        ...payload.Data.Articulate,
+        ...payload.Data.FiveSeconds,
       };
     default:
       return state;
