@@ -17,6 +17,8 @@ import {
   ARTICULATE_SEND_ROUND_START,
   ARTICULATE_SEND_SUMMARY,
   ARTICULATE_SUMMARY_SUCCESS,
+  ARTICULATE_SEND_END_GAME,
+  ARTICULATE_END_GAME_SUCCESS,
 } from 'actions/types';
 import { extractMessage } from 'actions/server';
 
@@ -44,6 +46,9 @@ export const handleArticulateMessage = (dataArr) => async (dispatch) => {
   } else if (dataArr[0].includes('_summary')) {
     const message = extractMessage(dataArr[1]);
     await dispatch(toSummary(message));
+  } else if (dataArr[0].includes('_end_game')) {
+    const message = extractMessage(dataArr[1]);
+    await dispatch(endGame(message));
   }
 };
 
@@ -110,6 +115,26 @@ export const sendModeChange = (socket, sessionId, mode) => async (dispatch) => {
 export const changeMode = (data) => async (dispatch) => {
   await dispatch({
     type: ARTICULATE_MODE_CHANGE_SUCCESS,
+    payload: data,
+  });
+};
+
+export const sendEndGame = (socket, sessionId) => async (dispatch) => {
+  await socket.json({
+    action: 'articulateendgame',
+    data: {
+      sessionId: sessionId,
+    },
+  });
+
+  await dispatch({
+    type: ARTICULATE_SEND_END_GAME,
+  });
+};
+
+export const endGame = (data) => async (dispatch) => {
+  await dispatch({
+    type: ARTICULATE_END_GAME_SUCCESS,
     payload: data,
   });
 };

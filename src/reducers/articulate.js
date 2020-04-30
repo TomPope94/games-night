@@ -1,4 +1,5 @@
 import {
+  PLAYER_LEFT,
   ARTICULATE_SEND_TEAM_SELECT,
   ARTICULATE_PLAYER_TEAM_SELECT,
   JOIN_SESSION_SUCCESS,
@@ -11,6 +12,7 @@ import {
   ARTICULATE_ROUND_START_SUCCESS,
   ARTICULATE_SCORE_SUCCESS,
   ARTICULATE_SUMMARY_SUCCESS,
+  ARTICULATE_END_GAME_SUCCESS,
 } from 'actions/types';
 
 const initialState = {
@@ -87,6 +89,16 @@ export default function (state = initialState, action) {
         ...state,
         gameMode: payload.GameData.Articulate.gameMode,
         gameTeams: payload.GameData.Articulate.gameTeams,
+      };
+    case PLAYER_LEFT:
+      return {
+        ...state,
+        ...payload.Data.Articulate,
+      };
+    case ARTICULATE_END_GAME_SUCCESS:
+      return {
+        ...initialState,
+        ...payload.Data.Articulate,
       };
     case ARTICULATE_SEND_TEAM_SELECT:
       return {

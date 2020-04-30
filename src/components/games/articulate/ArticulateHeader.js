@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import HeroBanner from 'components/global/HeroBanner';
 import GameButton from 'components/global/GameButton';
 
-import { sendRefreshData } from 'actions/articulate';
+import { sendRefreshData, sendEndGame } from 'actions/articulate';
 
 const styles = {
   headerContainer: {
@@ -12,9 +12,25 @@ const styles = {
   },
 };
 
-const ArticulateHeader = ({ server, session, sendRefreshData }) => {
+const ArticulateHeader = ({
+  server,
+  session,
+  sendRefreshData,
+  sendEndGame,
+}) => {
   return (
     <div style={styles.headerContainer}>
+      {session.isHost ? (
+        <GameButton
+          styling={{ position: 'absolute', left: 0, top: 10 }}
+          color="#d66e31"
+          onMouseDown={() =>
+            sendEndGame(server.wsConnection, session.sessionId)
+          }
+        >
+          <p>End Game</p>
+        </GameButton>
+      ) : null}
       {session.isHost ? (
         <GameButton
           styling={{ position: 'absolute', right: 0, top: 10 }}
@@ -38,4 +54,6 @@ const mapStateToProps = (state) => ({
   session: state.session,
 });
 
-export default connect(mapStateToProps, { sendRefreshData })(ArticulateHeader);
+export default connect(mapStateToProps, { sendRefreshData, sendEndGame })(
+  ArticulateHeader
+);

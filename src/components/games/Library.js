@@ -28,12 +28,6 @@ const Library = ({ server }) => {
           <h2>Please choose a game...</h2>
           <div style={styles.buttonsContainer}>
             <GameButton
-              onMouseDown={() => history.push(CODENAMES)}
-              background="#7C134B"
-            >
-              <h1>Codenames</h1>
-            </GameButton>
-            <GameButton
               onMouseDown={() => history.push(ARTICULATE)}
               background="#D43426"
             >
