@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const ModePicker = ({ modename, active, ...props }) => {
+const ModePicker = ({ modename, active, hovereffect = true, ...props }) => {
   const [hover, setHover] = useState(false);
 
   const styles = {
@@ -12,7 +12,7 @@ const ModePicker = ({ modename, active, ...props }) => {
       boxShadow: '0px 3px 5px rgba(1,1,1,0.5)',
       borderRadius: 10,
       cursor: 'pointer',
-      transform: hover ? 'scale(1.015,1.015)' : 'scale(1,1)',
+      transform: hover && hovereffect ? 'scale(1.015,1.015)' : 'scale(1,1)',
       transition: '0.1s linear',
       color: 'black',
       display: 'flex',

@@ -11,7 +11,7 @@ const initialState = {
   sessionId: '',
   players: [],
   loading: true,
-  isHost: false,
+  isHost: true,
 };
 
 export default function (state = initialState, action) {

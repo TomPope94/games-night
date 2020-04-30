@@ -30,7 +30,7 @@ const initialState = {
   gameState: 'TeamSelect',
   teamTurn: '',
   playerTurn: '',
-  yourTurn: true,
+  yourTurn: false,
   gameRota: [],
   gameTeams: {
     Red: {
@@ -41,38 +41,20 @@ const initialState = {
     },
     Blue: {
       Pos: 0,
-      Players: [
-        // { Username: 'Guest', ID: 'asgasgsa' },
-        // { Username: 'Guest', ID: 'asgasgsa' },
-      ],
+      Players: [],
       PlayersGone: [],
-      PlayersLeft: [
-        // { Username: 'Guest', ID: 'asgasgsa' },
-        // { Username: 'Guest', ID: 'asgasgsa' },
-      ],
+      PlayersLeft: [],
     },
     Orange: {
       Pos: 0,
-      Players: [
-        // { Username: 'Guest', ID: 'asgasgsa' },
-        // { Username: 'Guest', ID: 'asgasgsa' },
-      ],
+      Players: [],
       PlayersGone: [],
-      PlayersLeft: [
-        // { Username: 'Guest', ID: 'asgasgsa' },
-        // { Username: 'Guest', ID: 'asgasgsa' },
-      ],
+      PlayersLeft: [],
     },
     Green: {
       Pos: 0,
-      Players: [
-        // { Username: 'Guest', ID: 'asgasgsa' },
-        // { Username: 'Guest', ID: 'asgasgsa' },
-      ],
-      PlayersGone: [
-        // { Username: 'Guest', ID: 'asgasgsa' },
-        // { Username: 'Guest', ID: 'asgasgsa' },
-      ],
+      Players: [],
+      PlayersGone: [],
       PlayersLeft: [],
     },
   },
