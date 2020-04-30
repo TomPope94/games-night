@@ -9,6 +9,14 @@ import {
   FIVESECONDS_STATE_CHANGE,
   FIVESECONDS_SEND_END_GAME,
   FIVESECONDS_END_GAME,
+  FIVESECONDS_ROUND_START,
+  ARTICULATE_SEND_ROUND_START,
+  FIVESECONDS_SEND_QUESTION_END,
+  FIVESECONDS_QUESTION_END,
+  FIVESECONDS_VOTE_SEND,
+  FIVESECONDS_VOTE_RECEIVE,
+  FIVESECONDS_RESULT_SEND,
+  FIVESECONDS_RESULT,
 } from 'actions/types';
 import { extractMessage } from 'actions/server';
 
@@ -28,6 +36,17 @@ export const handleFivesecondsMessage = (dataArr) => async (dispatch) => {
   } else if (dataArr[0].includes('_state_change')) {
     const message = extractMessage(dataArr[1]);
     await dispatch(stateChange(message));
+  } else if (dataArr[0].includes('_start_round')) {
+    const message = extractMessage(dataArr[1]);
+    await dispatch(startRound(message));
+  } else if (dataArr[0].includes('_end_question')) {
+    await dispatch(endQuestion());
+  } else if (dataArr[0].includes('_vote')) {
+    const message = extractMessage(dataArr[1]);
+    await dispatch(receiveVote(message));
+  } else if (dataArr[0].includes('_result')) {
+    const message = extractMessage(dataArr[1]);
+    await dispatch(result(message));
   }
 };
 
@@ -134,6 +153,94 @@ export const sendEndGame = (socket, sessionId) => async (dispatch) => {
 export const endGame = (data) => async (dispatch) => {
   await dispatch({
     type: FIVESECONDS_END_GAME,
+    payload: data,
+  });
+};
+
+export const sendStartRound = (
+  socket,
+  sessionId,
+  nextPlayer,
+  gameQuestion
+) => async (dispatch) => {
+  await socket.json({
+    action: 'fivesecondstartround',
+    data: {
+      sessionId,
+      nextPlayer,
+      gameQuestion,
+    },
+  });
+
+  await dispatch({
+    type: ARTICULATE_SEND_ROUND_START,
+  });
+};
+
+export const startRound = (data) => async (dispatch) => {
+  await dispatch({
+    type: FIVESECONDS_ROUND_START,
+    payload: data,
+  });
+};
+
+export const sendEndQuestion = (socket, sessionId) => async (dispatch) => {
+  await socket.json({
+    action: 'fivesecondendquestion',
+    data: {
+      sessionId,
+    },
+  });
+
+  await dispatch({
+    type: FIVESECONDS_SEND_QUESTION_END,
+  });
+};
+
+export const endQuestion = () => async (dispatch) => {
+  await dispatch({
+    type: FIVESECONDS_QUESTION_END,
+  });
+};
+
+export const sendVote = (socket, sessionId, vote) => async (dispatch) => {
+  await socket.json({
+    action: 'fivesecondvote',
+    data: {
+      sessionId,
+      vote,
+    },
+  });
+
+  await dispatch({
+    type: FIVESECONDS_VOTE_SEND,
+  });
+};
+
+export const receiveVote = (data) => async (dispatch) => {
+  await dispatch({
+    type: FIVESECONDS_VOTE_RECEIVE,
+    payload: data,
+  });
+};
+
+export const sendResult = (socket, sessionId, result) => async (dispatch) => {
+  await socket.json({
+    action: 'fivesecondresult',
+    data: {
+      sessionId,
+      result,
+    },
+  });
+
+  await dispatch({
+    type: FIVESECONDS_RESULT_SEND,
+  });
+};
+
+export const result = (data) => async (dispatch) => {
+  await dispatch({
+    type: FIVESECONDS_RESULT,
     payload: data,
   });
 };

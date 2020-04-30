@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import FiveSecondsGame from 'components/games/fiveseconds/FiveSecondsGame';
+import GameRound from 'components/games/fiveseconds/GameRound';
 
 import HeroBanner from 'components/global/HeroBanner';
 import GameButton from 'components/global/GameButton';
@@ -26,39 +27,17 @@ const styles = {
   },
 };
 
-const FiveSecondsHome = ({ fiveSeconds, server, session }) => {
-  const data = FiveSecondsData.cards;
-
-  const [gameActive, setGameActive] = useState(false);
-  const [gameWord, setGameWord] = useState(null);
-
-  const getNewWord = () => {
-    const randomNum = Math.floor(Math.random() * data.length);
-    setGameWord(data[randomNum]);
-    data.splice(randomNum, 1); // Stops you from getting the same word twice
-    return data[randomNum];
-  };
-
-  const refresh = () => {
-    if (!gameActive) {
-      setGameActive(true);
-    }
-    getNewWord();
-  };
-
-  useEffect(() => {
-    getNewWord();
-  }, [getNewWord]);
-
+const FiveSecondsHome = ({ fiveSeconds }) => {
   return (
     <div>
       <Header />
       <div style={styles.gameContainer}>
         {fiveSeconds.gameState === 'setup' ? (
           <GameSetup />
-        ) : (
-          <FiveSecondsGame setgameactive={setGameActive} word={gameWord} />
-        )}
+        ) : fiveSeconds.gameState === 'BeginGame' ||
+          fiveSeconds.gameState === 'GameInProgress' ? (
+          <GameRound />
+        ) : null}
       </div>
     </div>
   );
@@ -66,8 +45,6 @@ const FiveSecondsHome = ({ fiveSeconds, server, session }) => {
 
 const mapStateToProps = (state) => ({
   fiveSeconds: state.fiveSeconds,
-  server: state.server,
-  session: state.session,
 });
 
 export default connect(mapStateToProps)(FiveSecondsHome);

@@ -7,31 +7,66 @@ import {
   FIVESECONDS_DATA_RESET,
   FIVESECONDS_STATE_CHANGE,
   FIVESECONDS_END_GAME,
+  FIVESECONDS_QUESTION_END,
+  FIVESECONDS_VOTE_SEND,
+  FIVESECONDS_VOTE_RECEIVE,
+  FIVESECONDS_ROUND_START,
+  FIVESECONDS_RESULT,
 } from 'actions/types';
 
 const initialState = {
   loading: false,
-  gameStarted: false,
+  gameStarted: true,
   numLives: 2,
   gameStarter: -1,
   gameRound: -1,
   roundRound: -1,
   roundComplete: false,
-  roundStarted: false,
-  roundRoundStarted: false,
-  roundRoundComplete: false,
+  roundStarted: true,
+  roundRoundStarted: true,
+  roundRoundComplete: true,
   voteStarted: false,
   voteCompleted: false,
   playerPassed: false,
   inPool: false,
   gameMode: '',
-  gameState: 'setup',
-  playerTurn: '',
+  gameState: 'BeginGame',
+  playerTurn: 'Tom',
+  voted: false,
   yourTurn: false,
+  pass: 0,
+  fail: 0,
   roundRota: [],
+  gameQuestion: '',
   players: [
-    // { ID: 'adgasdg', Username: 'Tom', lives: 2, voted: false },
-    // { ID: 'asdgasg', Username: 'Claudia', lives: 2, voted: false },
+    // {
+    //   ID: 'adgasdg',
+    //   Username: 'Tom',
+    //   lives: 2,
+    //   voted: false,
+    //   completed: true,
+    // },
+    // {
+    //   ID: 'adgasdg',
+    //   Username: 'Tom',
+    //   lives: 0,
+    //   voted: false,
+    //   completed: true,
+    // },
+    // {
+    //   ID: 'adgasdg',
+    //   Username: 'Tom',
+    //   lives: 0,
+    //   voted: false,
+    //   completed: false,
+    // },
+    // {
+    //   ID: 'asdgasg',
+    //   Username: 'Claudia',
+    //   lives: 2,
+    //   voted: false,
+    //   completed: false,
+    // },
   ],
   gameData: [],
 };
@@ -78,6 +113,46 @@ export default function (state = initialState, action) {
       return {
         ...initialState,
         ...payload.Data.FiveSeconds,
+      };
+    case FIVESECONDS_ROUND_START:
+      return {
+        ...state,
+        roundStarted: true,
+        roundRoundStarted: true,
+        playerTurn: payload.nextPlayer,
+        gameQuestion: payload.gameQuestion,
+      };
+    case FIVESECONDS_QUESTION_END:
+      return {
+        ...state,
+        roundRoundComplete: true,
+      };
+    case FIVESECONDS_VOTE_SEND:
+      return {
+        ...state,
+        voted: true,
+      };
+    case FIVESECONDS_VOTE_RECEIVE:
+      return {
+        ...state,
+        pass: payload.passes,
+        fail: payload.fails,
+      };
+    case FIVESECONDS_RESULT:
+      return {
+        ...state,
+        players: [
+          ...state.players.filter(
+            (player) => player.ID !== state.playerTurn.ID
+          ),
+          {
+            ...state.playerTurn,
+            completed: true,
+            lives: payload.result
+              ? state.playerTurn.lives
+              : state.playerTurn.lives - 1,
+          },
+        ],
       };
     default:
       return state;
