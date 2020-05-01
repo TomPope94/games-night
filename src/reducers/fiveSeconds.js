@@ -16,7 +16,7 @@ import {
 
 const initialState = {
   loading: false,
-  gameStarted: true,
+  gameStarted: false,
   numLives: 2,
   gameStarter: -1,
   gameRound: -1,

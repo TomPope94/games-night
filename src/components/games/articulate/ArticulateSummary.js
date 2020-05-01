@@ -26,6 +26,18 @@ const ArticulateSummary = ({
       ) : (
         <h2>No words passed!</h2>
       )}
+      {articulate.wordsCorrect.length > 0 ? (
+        <div>
+          <h2>Words Answered:</h2>
+          <ul>
+            {articulate.wordsCorrect.map((word) => (
+              <li>{word}</li>
+            ))}
+          </ul>
+        </div>
+      ) : (
+        <h2>You didn't get ONE?! WoW..... good job.......</h2>
+      )}
       {session.isHost ? (
         <GameButton
           color="#d66e31"

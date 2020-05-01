@@ -13,6 +13,7 @@ import Library from 'components/games/Library';
 import CodenamesHome from 'components/games/codenames/CodenamesHome';
 import ArticulateHome from 'components/games/articulate/AriculateHome';
 import FiveSecondsHome from 'components/games/fiveseconds/FiveSecondsHome';
+import GuessPeopleHome from 'components/games/guessPeople/GuessPeopleHome';
 
 import {
   HOME,
@@ -22,6 +23,7 @@ import {
   CODENAMES,
   ARTICULATE,
   FIVESECONDS,
+  GUESSPEOPLE,
 } from 'constants/routes';
 
 import { connectServer, ping } from 'actions/server';
@@ -75,6 +77,7 @@ const App = () => {
             <Route exact path={CODENAMES} component={CodenamesHome} />
             <GameRoute exact path={ARTICULATE} component={ArticulateHome} />
             <GameRoute exact path={FIVESECONDS} component={FiveSecondsHome} />
+            <GameRoute exact path={GUESSPEOPLE} component={GuessPeopleHome} />
           </Switch>
         </div>
       </Router>

@@ -1,16 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
-import FiveSecondsGame from 'components/games/fiveseconds/FiveSecondsGame';
 import GameRound from 'components/games/fiveseconds/GameRound';
 
-import HeroBanner from 'components/global/HeroBanner';
-import GameButton from 'components/global/GameButton';
 import Header from 'components/games/fiveseconds/Header';
 
-import FiveSecondsData from 'constants/FiveSecondData';
-import ModePicker from '../ModePicker';
-import PlayersList from '../PlayersList';
 import GameSetup from './GameSetup';
 
 const styles = {

@@ -2,7 +2,12 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { CODENAMES, ARTICULATE, FIVESECONDS } from 'constants/routes';
+import {
+  CODENAMES,
+  ARTICULATE,
+  FIVESECONDS,
+  GUESSPEOPLE,
+} from 'constants/routes';
 
 import GameButton from 'components/global/GameButton';
 import Loader from 'components/global/Loader';
@@ -39,8 +44,11 @@ const Library = ({ server }) => {
             >
               <h1>5 Second Rule</h1>
             </GameButton>
-            <GameButton>
-              <h1>Guess the People</h1>
+            <GameButton
+              onMouseDown={() => history.push(GUESSPEOPLE)}
+              background="orange"
+            >
+              <h1>Guess the Names</h1>
             </GameButton>
             <GameButton>
               <h1>Names of...Types of...</h1>

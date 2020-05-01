@@ -15,10 +15,15 @@ const YourTurnRound = ({
 }) => {
   const data = articulate.gameData[category];
 
+  // const [data, setData]= useState([])
   const [gameWord, setGameWord] = useState(null);
   const [passedWords, setPassedWords] = useState([]);
   const [correctWords, setCorrectWords] = useState([]);
-  const [timeLeft, setTimeLeft] = useState(60);
+  const [timeLeft, setTimeLeft] = useState(5);
+
+  // useEffect(() => {
+  //   setData
+  // }, [articulate.gameData])
 
   const styles = {
     roundContainer: {
