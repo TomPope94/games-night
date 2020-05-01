@@ -19,7 +19,7 @@ const YourTurnRound = ({
   const [gameWord, setGameWord] = useState(null);
   const [passedWords, setPassedWords] = useState([]);
   const [correctWords, setCorrectWords] = useState([]);
-  const [timeLeft, setTimeLeft] = useState(5);
+  const [timeLeft, setTimeLeft] = useState(60);
 
   // useEffect(() => {
   //   setData
