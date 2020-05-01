@@ -38,7 +38,8 @@ const GameQuestion = ({ server, session, fiveSeconds, sendEndQuestion }) => {
 
   useEffect(() => {
     // exit early when we reach 0
-    if (!timeLeft) sendEndQuestion(server.wsConnection, session.sessionId);
+    if (!timeLeft && session.isHost)
+      sendEndQuestion(server.wsConnection, session.sessionId);
     if (timeLeft === 4) {
       setStart(true);
     }

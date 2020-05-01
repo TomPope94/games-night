@@ -22,9 +22,9 @@ const initialState = {
   gameRound: -1,
   roundRound: -1,
   roundComplete: false,
-  roundStarted: true,
-  roundRoundStarted: true,
-  roundRoundComplete: true,
+  roundStarted: false,
+  roundRoundStarted: false,
+  roundRoundComplete: false,
   voteStarted: false,
   voteCompleted: false,
   playerPassed: false,
@@ -38,36 +38,7 @@ const initialState = {
   fail: 0,
   roundRota: [],
   gameQuestion: '',
-  players: [
-    // {
-    //   ID: 'adgasdg',
-    //   Username: 'Tom',
-    //   lives: 2,
-    //   voted: false,
-    //   completed: true,
-    // },
-    // {
-    //   ID: 'adgasdg',
-    //   Username: 'Tom',
-    //   lives: 0,
-    //   voted: false,
-    //   completed: true,
-    // },
-    // {
-    //   ID: 'adgasdg',
-    //   Username: 'Tom',
-    //   lives: 0,
-    //   voted: false,
-    //   completed: false,
-    // },
-    // {
-    //   ID: 'asdgasg',
-    //   Username: 'Claudia',
-    //   lives: 2,
-    //   voted: false,
-    //   completed: false,
-    // },
-  ],
+  players: [],
   gameData: [],
 };
 
@@ -121,6 +92,7 @@ export default function (state = initialState, action) {
         roundRoundStarted: true,
         playerTurn: payload.nextPlayer,
         gameQuestion: payload.gameQuestion,
+        ...payload.gameData.FiveSeconds,
       };
     case FIVESECONDS_QUESTION_END:
       return {
@@ -153,6 +125,14 @@ export default function (state = initialState, action) {
               : state.playerTurn.lives - 1,
           },
         ],
+        pass: 0,
+        fail: 0,
+        voted: false,
+        roundRoundComplete: false,
+        roundComplete: payload.roundComplete,
+        playerTurn: payload.nextPlayer,
+        gameQuestion: payload.nextWord,
+        gameData: { cards: payload.dataset },
       };
     default:
       return state;

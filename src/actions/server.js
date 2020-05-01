@@ -20,6 +20,7 @@ import { handleArticulateMessage } from 'actions/articulate';
 import { handleFivesecondsMessage } from 'actions/fiveSeconds';
 
 export const extractMessage = (data) => {
+  // debugger;
   const messageDataStr = data.substring(9, data.length);
   const messageData = JSON.parse(messageDataStr);
 

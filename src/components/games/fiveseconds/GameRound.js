@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import GameButton from 'components/global/GameButton';
 
-import { sendStartRound, sendDataReset } from 'actions/fiveSeconds';
+import { sendStartRound } from 'actions/fiveSeconds';
+import { setAlert } from 'actions/alert';
 import GameVote from './GameVote';
 import GameQuestion from './GameQuestion';
 
@@ -31,19 +32,20 @@ const styles = {
   },
 };
 
-const GameRound = ({ server, session, fiveSeconds, sendStartRound }) => {
+const GameRound = ({
+  server,
+  session,
+  fiveSeconds,
+  sendStartRound,
+  setAlert,
+}) => {
   const data = fiveSeconds.gameData.cards;
-  const [gameWord, setGameWord] = useState(null);
 
   const getNewWord = () => {
     const randomNum = Math.floor(Math.random() * data.length);
-    setGameWord(data[randomNum]);
     data.splice(randomNum, 1); // Stops you from getting the same word twice
     return data[randomNum];
   };
-  useEffect(() => {
-    getNewWord();
-  }, []);
 
   const deadPlayers = fiveSeconds.players.filter((player) => player.lives <= 0);
   const livePlayers = fiveSeconds.players.filter(
@@ -60,15 +62,62 @@ const GameRound = ({ server, session, fiveSeconds, sendStartRound }) => {
     return nextTurn;
   };
 
-  const handleBegin = async () => {
-    const nextPlayer = await getNextPlayer(livePlayers);
+  useEffect(() => {
+    async function nextUp() {
+      const nextPlayer = await getNextPlayer(livePlayers);
+      const gameWord = await getNewWord();
 
-    await sendStartRound(
-      server.wsConnection,
-      session.sessionId,
-      nextPlayer,
-      gameWord
-    );
+      await sendStartRound(
+        server.wsConnection,
+        session.sessionId,
+        nextPlayer,
+        gameWord
+      );
+    }
+
+    if (
+      session.isHost &&
+      fiveSeconds.roundStarted &&
+      !fiveSeconds.roundRoundStarted &&
+      fiveSeconds.gameQuestion !== 'RoundEnd'
+    ) {
+      nextUp();
+    }
+  }, [fiveSeconds.roundRoundStarted]);
+
+  const handleBegin = async () => {
+    if (session.isHost) {
+      const nextPlayer = await getNextPlayer(livePlayers);
+      const gameWord = await getNewWord();
+
+      await sendStartRound(
+        server.wsConnection,
+        session.sessionId,
+        nextPlayer,
+        gameWord,
+        fiveSeconds.gameRound
+      );
+    } else {
+      await setAlert('Only the host can start rounds!', 'neutral');
+    }
+  };
+
+  const handleNextRound = async () => {
+    if (session.isHost) {
+      const nextPlayer = await getNextPlayer(survivedPlayers);
+      const gameWord = await getNewWord();
+      const newRound = fiveSeconds.gameRound + 1;
+
+      await sendStartRound(
+        server.wsConnection,
+        session.sessionId,
+        nextPlayer,
+        gameWord,
+        newRound
+      );
+    } else {
+      await setAlert('Only the host can start rounds!', 'neutral');
+    }
   };
 
   return (
@@ -101,12 +150,16 @@ const GameRound = ({ server, session, fiveSeconds, sendStartRound }) => {
             <GameButton color="#d66e31" onMouseDown={() => handleBegin()}>
               <h1>Begin!</h1>
             </GameButton>
+          ) : fiveSeconds.roundComplete ? (
+            <GameButton color="#d66e31" onMouseDown={() => handleNextRound()}>
+              <h1>Next Round...</h1>
+            </GameButton>
           ) : fiveSeconds.roundRoundStarted &&
             !fiveSeconds.roundRoundComplete ? (
             <GameQuestion />
-          ) : (
+          ) : !fiveSeconds.roundComplete ? (
             <GameVote />
-          )}
+          ) : null}
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', width: '10%' }}>
           <div
@@ -155,4 +208,6 @@ const mapStateToProps = (state) => ({
   fiveSeconds: state.fiveSeconds,
 });
 
-export default connect(mapStateToProps, { sendStartRound })(GameRound);
+export default connect(mapStateToProps, { sendStartRound, setAlert })(
+  GameRound
+);

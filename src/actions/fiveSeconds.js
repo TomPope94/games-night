@@ -10,13 +10,13 @@ import {
   FIVESECONDS_SEND_END_GAME,
   FIVESECONDS_END_GAME,
   FIVESECONDS_ROUND_START,
-  ARTICULATE_SEND_ROUND_START,
   FIVESECONDS_SEND_QUESTION_END,
   FIVESECONDS_QUESTION_END,
   FIVESECONDS_VOTE_SEND,
   FIVESECONDS_VOTE_RECEIVE,
   FIVESECONDS_RESULT_SEND,
   FIVESECONDS_RESULT,
+  FIVESECONDS_SEND_ROUND_START,
 } from 'actions/types';
 import { extractMessage } from 'actions/server';
 
@@ -161,7 +161,8 @@ export const sendStartRound = (
   socket,
   sessionId,
   nextPlayer,
-  gameQuestion
+  gameQuestion,
+  gameRound
 ) => async (dispatch) => {
   await socket.json({
     action: 'fivesecondstartround',
@@ -169,11 +170,12 @@ export const sendStartRound = (
       sessionId,
       nextPlayer,
       gameQuestion,
+      gameRound,
     },
   });
 
   await dispatch({
-    type: ARTICULATE_SEND_ROUND_START,
+    type: FIVESECONDS_SEND_ROUND_START,
   });
 };
 

@@ -35,7 +35,11 @@ const GameVote = ({ server, session, fiveSeconds, sendVote, sendResult }) => {
       );
     }
 
-    if (fiveSeconds.pass + fiveSeconds.fail >= fiveSeconds.players.length) {
+    if (
+      fiveSeconds.pass + fiveSeconds.fail >= fiveSeconds.players.length &&
+      fiveSeconds.roundRoundComplete &&
+      session.isHost
+    ) {
       wait();
     }
   }, [fiveSeconds.pass, fiveSeconds.fail]);
