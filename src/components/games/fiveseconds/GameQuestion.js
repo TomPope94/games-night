@@ -5,7 +5,7 @@ import { sendEndQuestion } from 'actions/fiveSeconds';
 
 const GameQuestion = ({ server, session, fiveSeconds, sendEndQuestion }) => {
   const [start, setStart] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(5);
+  const [timeLeft, setTimeLeft] = useState(7);
 
   const styles = {
     pageContainer: {
