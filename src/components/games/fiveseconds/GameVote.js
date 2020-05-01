@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
 import { sendVote, sendResult } from 'actions/fiveSeconds';
@@ -23,6 +23,30 @@ const styles = {
 };
 
 const GameVote = ({ server, session, fiveSeconds, sendVote, sendResult }) => {
+  const [timeLeft, setTimeLeft] = useState(20);
+  const [timeout, setTimeout] = useState(false);
+
+  useEffect(() => {
+    // exit early when we reach 0
+    if (!timeLeft && session.isHost) {
+      setTimeout(true);
+      sendResult(
+        server.wsConnection,
+        session.sessionId,
+        fiveSeconds.pass >= fiveSeconds.fail
+      );
+    }
+
+    const intervalId = setInterval(() => {
+      setTimeLeft(timeLeft - 1);
+    }, 1000);
+
+    // clear interval on re-render to avoid memory leaks
+    return () => clearInterval(intervalId);
+    // add timeLeft as a dependency to re-rerun the effect
+    // when we update it
+  }, [timeLeft]);
+
   const delay = (ms) => new Promise((res) => setTimeout(res, ms));
   useEffect(() => {
     async function wait() {
@@ -38,7 +62,8 @@ const GameVote = ({ server, session, fiveSeconds, sendVote, sendResult }) => {
     if (
       fiveSeconds.pass + fiveSeconds.fail >= fiveSeconds.players.length &&
       fiveSeconds.roundRoundComplete &&
-      session.isHost
+      session.isHost &&
+      !timeout
     ) {
       wait();
     }
@@ -79,6 +104,7 @@ const GameVote = ({ server, session, fiveSeconds, sendVote, sendResult }) => {
             alignItems: 'center',
           }}
         >
+          <h2>{timeLeft}</h2>
           {fiveSeconds.pass >= fiveSeconds.fail ? (
             <h1 style={{ fontSize: '3rem' }}>PASSED!</h1>
           ) : (
