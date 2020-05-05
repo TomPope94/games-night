@@ -7,6 +7,11 @@ import {
   GUESSPEOPLE_STATE_CHANGE_SUCCESS,
   GUESSPEOPLE_NAMES,
   GUESSPEOPLE_SEND_NAMES,
+  GUESSPEOPLE_NEXT_ROUND_SUCCESS,
+  GUESSPEOPLE_ROTA_SUCCESS,
+  GUESSPEOPLE_ROUND_START_SUCCESS,
+  GUESSPEOPLE_SUMMARY_SUCCESS,
+  GUESSPEOPLE_SCORE_SUCCESS,
 } from 'actions/types';
 
 const initialState = {
@@ -114,6 +119,46 @@ export default function (state = initialState, action) {
         ...state,
         gameData: [...payload.names],
         completedSubmits: payload.submitsComplete,
+      };
+    case GUESSPEOPLE_NEXT_ROUND_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        gameState: payload.gameState,
+        teamTurn: payload.team,
+        playerTurn: payload.player,
+        yourTurn: payload.yourTurn,
+      };
+    case GUESSPEOPLE_ROTA_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        gameRota: payload,
+      };
+    case GUESSPEOPLE_ROUND_START_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        roundStart: true,
+      };
+    case GUESSPEOPLE_ROUND_START_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        roundStart: true,
+      };
+    case GUESSPEOPLE_SCORE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        roundScore: payload.score,
+        wordsCorrect: payload.words,
+      };
+    case GUESSPEOPLE_SUMMARY_SUCCESS:
+      return {
+        ...state,
+        ...payload.data.GuessPeople,
+        loading: false,
       };
     default:
       return state;

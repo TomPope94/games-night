@@ -6,6 +6,7 @@ import Header from 'components/games/guessPeople/Header';
 import GameSetup from 'components/games/guessPeople/GameSetup';
 import PeopleSetup from 'components/games/guessPeople/PeopleSetup';
 import GameBoard from 'components/games/guessPeople/GameBoard';
+import GameRound from 'components/games/guessPeople/GameRound';
 
 const styles = {
   gameContainer: {
@@ -30,6 +31,8 @@ const GuessPeopleHome = ({ guessPeople }) => {
           <GameSetup />
         ) : !guessPeople.completedSubmits ? (
           <PeopleSetup />
+        ) : guessPeople.gameState === 'RoundInProgress' ? (
+          <GameRound />
         ) : (
           <GameBoard />
         )}

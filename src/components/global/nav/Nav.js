@@ -32,20 +32,13 @@ const Nav = ({ server }) => {
   return (
     <div style={styles.navContainer}>
       <div style={{ display: 'flex' }}>
-        <img
+        <h1
           onMouseDown={() =>
             server.inGame ? history.push(LIBRARY) : history.push(HOME)
           }
-          src={logo}
-          style={{
-            height: 25,
-            top: 0,
-            left: 0,
-            margin: 25,
-            cursor: 'pointer',
-          }}
-          alt="Station 10 Company Logo"
-        />
+        >
+          CC Gaming
+        </h1>
         {server.inGame ? <SessionNav /> : null}
       </div>
       <div style={{ display: 'flex', paddingRight: 20, alignItems: 'center' }}>

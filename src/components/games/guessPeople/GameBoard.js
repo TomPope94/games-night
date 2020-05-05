@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import BoardQuadrant from 'components/games/articulate/BoardQuadrant';
 import GameButton from 'components/global/GameButton';
 
-import { sendNextRound, addRota } from 'actions/articulate';
+import { sendNextRound, addRota } from 'actions/guessPeople';
 
 const styles = {
   gameContainer: {
