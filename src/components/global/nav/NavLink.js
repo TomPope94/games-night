@@ -15,7 +15,6 @@ const NavLink = ({ text, route, ...props }) => {
       position: 'relative',
       display: 'flex',
       justifyContent: 'center',
-      marginRight: 30,
     },
     underline: {
       position: 'absolute',

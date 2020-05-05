@@ -44,11 +44,55 @@ const GuestNavSmall = () => {
     <div style={styles.navContainer}>
       <MenuIcon closed={closed} onMouseDown={() => setClosed(!closed)} />
       <div style={styles.dropDownContainer}>
-        <NavLink text="Product" onMouseDown={() => handleLinkClick('/')} />
-        <NavLink text="Pricing" onMouseDown={() => handleLinkClick('/')} />
-        <NavLink text="About" onMouseDown={() => handleLinkClick('/')} />
-        <NavLink text="Join" onMouseDown={() => handleLinkClick(JOIN)} />
-        <NavLink text="Host" onMouseDown={() => handleLinkClick(HOST)} />
+        <div
+          style={{
+            display: 'flex',
+            width: '100%',
+            flexDirection: 'column',
+            justifyContent: 'space-evenly',
+            alignItems: 'center',
+            flexGrow: 10,
+          }}
+        >
+          <NavLink text="Product" onMouseDown={() => handleLinkClick('/')} />
+          <NavLink text="Pricing" onMouseDown={() => handleLinkClick('/')} />
+          <NavLink text="About" onMouseDown={() => handleLinkClick('/')} />
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            width: '100%',
+            justifyContent: 'center',
+            flexGrow: 1,
+          }}
+        >
+          <div
+            style={{
+              width: '50%',
+              background: '#2a2773',
+              color: '#fff',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            onMouseDown={() => handleLinkClick(JOIN)}
+          >
+            <NavLink text="Join" />
+          </div>
+          <div
+            style={{
+              width: '50%',
+              background: '#273859',
+              color: '#fff',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            onMouseDown={() => handleLinkClick(HOST)}
+          >
+            <NavLink text="Host" />
+          </div>
+        </div>
       </div>
     </div>
   );
