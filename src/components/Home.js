@@ -22,7 +22,7 @@ const Home = () => {
   return (
     <div>
       <HeroBanner background="rgba(0,0,0,0)">
-        <h1 style={{ color: 'black' }}>Welcome to Games Night!</h1>
+        <h1 style={{ color: 'black' }}>Welcome to Collective Cloud Gaming!</h1>
       </HeroBanner>
       <div style={styles.buttonsContainer}>
         <GameButton onMouseDown={() => history.push(JOIN)} color="#d66e31">

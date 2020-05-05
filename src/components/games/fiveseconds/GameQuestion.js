@@ -5,7 +5,7 @@ import { sendEndQuestion } from 'actions/fiveSeconds';
 
 const GameQuestion = ({ server, session, fiveSeconds, sendEndQuestion }) => {
   const [start, setStart] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(7);
+  const [timeLeft, setTimeLeft] = useState(6);
 
   const styles = {
     pageContainer: {
@@ -15,8 +15,8 @@ const GameQuestion = ({ server, session, fiveSeconds, sendEndQuestion }) => {
       width: '100vw',
       height: '100vh',
       zIndex: 9999,
-      background: start ? 'red' : '#fff',
-      transition: '4s linear',
+      background: timeLeft % 2 === 0 ? '#fff' : 'red',
+      transition: '.1s linear',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
