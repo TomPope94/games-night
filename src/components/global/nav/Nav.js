@@ -2,14 +2,11 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import logo from 'components/imageAssets/s10Icon.png';
-
 import { HOME, LIBRARY } from 'constants/routes';
 import ServerConnectButtons from 'components/global/nav/ServerConnectButtons';
-import GuestNavButtons from 'components/global/nav/GuestNavButtons';
-import Username from './Username';
 import SessionNav from './SessionNav';
 import PlayersDropdown from './PlayersDropdown';
+import GuestNavLinks from 'components/global/nav/GuestNavLinks';
 
 const styles = {
   navContainer: {
@@ -18,7 +15,6 @@ const styles = {
     left: 0,
     zIndex: 999,
     width: '100vw',
-    boxShadow: '0 3px 5px rgba(1,1,1,0.2)',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -31,25 +27,23 @@ const Nav = ({ server }) => {
 
   return (
     <div style={styles.navContainer}>
-      <div style={{ display: 'flex' }}>
+      <div style={{ display: 'flex', width: '100%' }}>
         <h1
           onMouseDown={() =>
             server.inGame ? history.push(LIBRARY) : history.push(HOME)
           }
         >
-          CC Gaming
+          logo
         </h1>
-        {server.inGame ? <SessionNav /> : null}
+        {server.inGame ? <SessionNav /> : <GuestNavLinks />}
       </div>
       <div style={{ display: 'flex', paddingRight: 20, alignItems: 'center' }}>
-        <Username />
+        {/* <Username /> */}
         {!server.onServer ? (
           <ServerConnectButtons />
-        ) : !server.inGame ? (
-          <GuestNavButtons />
-        ) : (
+        ) : server.inGame ? (
           <PlayersDropdown />
-        )}
+        ) : null}
       </div>
     </div>
   );
