@@ -25,10 +25,10 @@ const Home = () => {
         <h1 style={{ color: 'black' }}>Welcome to Collective Cloud Gaming!</h1>
       </HeroBanner>
       <div style={styles.buttonsContainer}>
-        <GameButton onMouseDown={() => history.push(JOIN)} color="#d66e31">
+        <GameButton onMouseDown={() => history.push(JOIN)} color="#d9145c">
           <h1>Join</h1>
         </GameButton>
-        <GameButton onMouseDown={() => history.push(HOST)} color="#d66e31">
+        <GameButton onMouseDown={() => history.push(HOST)} color="#d9145c">
           <h1>Host</h1>
         </GameButton>
       </div>

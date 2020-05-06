@@ -5,7 +5,8 @@ const GameButton = ({ children, ...props }) => {
 
   const styles = {
     buttonContainer: {
-      padding: 25,
+      paddingLeft: 25,
+      paddingRight: 25,
       borderRadius: 10,
       margin: 25,
       background: props.background,

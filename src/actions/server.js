@@ -169,7 +169,7 @@ export const sendChangeUsername = (socket, username) => async (dispatch) => {
 };
 
 export const changeUsername = (username) => async (dispatch) => {
-  await dispatch(setAlert('Username changed', 'positive'));
+  // await dispatch(setAlert('Username changed', 'positive'));
 
   await dispatch({
     type: SERVER_USERNAME_SUCCESS,

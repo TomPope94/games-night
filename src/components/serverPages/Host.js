@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import { sendChangeUsername } from 'actions/server';
 import GameButton from 'components/global/GameButton';
 
 import { hostSession } from 'actions/server';
@@ -15,32 +16,62 @@ const styles = {
     alignItems: 'center',
   },
   textInput: {
-    marginTop: 50,
-    fontSize: '2rem',
+    fontSize: '1.5rem',
     borderRadius: 5,
     padding: 10,
     boxShadow: '0 0 10px rgba(1,1,1,0.1) inset',
   },
 };
 
-const Host = ({ server, hostSession }) => {
+const Host = ({ server, hostSession, sendChangeUsername }) => {
   const history = useHistory();
+  const [username, setUsername] = useState('');
+  const [codeState, setCodeState] = useState(false);
+
+  useEffect(() => {
+    setUsername(server.username);
+  }, [server.username]);
 
   return (
     <div>
       <h1>Host a Server.</h1>
       <h4>Start a server to enjoy the games with your friends!</h4>
       <form>
+        <div
+          style={{
+            marginTop: 25,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <h4 style={{ textAlign: 'right', paddingRight: 20 }}>Username:</h4>
+          <input
+            type="text"
+            value={username}
+            style={styles.textInput}
+            onChange={(e) => setUsername(e.target.value)}
+            onBlur={async () =>
+              await sendChangeUsername(server.wsConnection, username)
+            }
+          />
+        </div>
         <div style={styles.inputContainer}>
-          <GameButton
-            onMouseDown={async () => {
-              await hostSession(server.wsConnection);
-              history.push(LIBRARY);
-            }}
-            background="#d66e31"
-          >
-            <h2>Create Server.</h2>
-          </GameButton>
+          {!codeState ? (
+            <GameButton color="#273859" onMouseDown={() => setCodeState(true)}>
+              <h2>Set name.</h2>
+            </GameButton>
+          ) : (
+            <GameButton
+              onMouseDown={async () => {
+                await hostSession(server.wsConnection);
+                history.push(LIBRARY);
+              }}
+              background="#273859"
+            >
+              <h2>Create Server.</h2>
+            </GameButton>
+          )}
         </div>
       </form>
     </div>
@@ -51,4 +82,6 @@ const mapStateToProps = (state) => ({
   server: state.server,
 });
 
-export default connect(mapStateToProps, { hostSession })(Host);
+export default connect(mapStateToProps, { hostSession, sendChangeUsername })(
+  Host
+);

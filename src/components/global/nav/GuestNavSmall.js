@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import NavLink from 'components/global/nav/NavLink';
 import MenuIcon from 'components/global/nav/MenuIcon';
 
-import { JOIN, HOST } from 'constants/routes';
+import { JOIN, HOST, PRODUCT, PRICING, ABOUT } from 'constants/routes';
 
 const GuestNavSmall = () => {
   const history = useHistory();
@@ -54,9 +54,15 @@ const GuestNavSmall = () => {
             flexGrow: 10,
           }}
         >
-          <NavLink text="Product" onMouseDown={() => handleLinkClick('/')} />
-          <NavLink text="Pricing" onMouseDown={() => handleLinkClick('/')} />
-          <NavLink text="About" onMouseDown={() => handleLinkClick('/')} />
+          <NavLink
+            text="Product"
+            onMouseDown={() => handleLinkClick(PRODUCT)}
+          />
+          <NavLink
+            text="Pricing"
+            onMouseDown={() => handleLinkClick(PRICING)}
+          />
+          <NavLink text="About" onMouseDown={() => handleLinkClick(ABOUT)} />
         </div>
         <div
           style={{

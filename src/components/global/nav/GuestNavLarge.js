@@ -1,7 +1,7 @@
 import React from 'react';
 import NavLink from 'components/global/nav/NavLink';
 
-import { JOIN, HOST } from 'constants/routes';
+import { JOIN, HOST, PRICING, PRODUCT, ABOUT } from 'constants/routes';
 
 const GuestNavLarge = () => {
   const styles = {
@@ -21,12 +21,12 @@ const GuestNavLarge = () => {
 
   return (
     <div style={styles.navLinks}>
-      <div style={styles.buttonsContainer}>
-        <NavLink text="Product" route="/" />
-        <NavLink text="Pricing" route="/" />
-        <NavLink text="About" route="/" />
+      <div style={{ ...styles.buttonsContainer, width: '40%' }}>
+        <NavLink text="Product" route={PRODUCT} />
+        <NavLink text="Pricing" route={PRICING} />
+        <NavLink text="About" route={ABOUT} />
       </div>
-      <div style={styles.buttonsContainer}>
+      <div style={{ ...styles.buttonsContainer, width: '20%' }}>
         <NavLink text="Join" route={JOIN} />
         <NavLink text="Host" route={HOST} />
       </div>

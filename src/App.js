@@ -9,6 +9,9 @@ import Alert from 'components/global/Alert';
 import GamesHome from 'components/Home';
 import Join from 'components/serverPages/Join';
 import Host from 'components/serverPages/Host';
+import Product from 'components/serverPages/Product';
+import Pricing from 'components/serverPages/Pricing';
+import About from 'components/serverPages/About';
 import Library from 'components/games/Library';
 import CodenamesHome from 'components/games/codenames/CodenamesHome';
 import ArticulateHome from 'components/games/articulate/AriculateHome';
@@ -19,6 +22,9 @@ import {
   HOME,
   JOIN,
   HOST,
+  PRODUCT,
+  PRICING,
+  ABOUT,
   LIBRARY,
   CODENAMES,
   ARTICULATE,
@@ -32,10 +38,10 @@ import store from 'store';
 
 const styles = {
   appContainer: {
-    marginTop: 80,
+    marginTop: 100,
     paddingLeft: 50,
     paddingRight: 50,
-    background: 'rgba(0,0,0,.03)',
+    background: '#fff',
     height: '100vh',
     overflow: 'overlay',
   },
@@ -73,6 +79,9 @@ const App = () => {
             <Route exact path={HOME} component={GamesHome} />
             <Route exact path={JOIN} component={Join} />
             <Route exact path={HOST} component={Host} />
+            <Route exact path={PRODUCT} component={Product} />
+            <Route exact path={PRICING} component={Pricing} />
+            <Route exact path={ABOUT} component={About} />
             <GameRoute exact path={LIBRARY} component={Library} />
             <Route exact path={CODENAMES} component={CodenamesHome} />
             <GameRoute exact path={ARTICULATE} component={ArticulateHome} />
