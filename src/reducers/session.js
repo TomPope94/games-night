@@ -12,6 +12,7 @@ const initialState = {
   players: [],
   loading: true,
   isHost: false,
+  messages: [],
 };
 
 export default function (state = initialState, action) {
@@ -24,6 +25,7 @@ export default function (state = initialState, action) {
         loading: false,
         sessionId: payload.SessionID,
         players: payload.Players,
+        messages: payload.Messages,
         isHost: true,
       };
     case JOIN_SESSION_SUCCESS:
@@ -32,11 +34,13 @@ export default function (state = initialState, action) {
         loading: false,
         sessionId: payload.SessionID,
         players: payload.Players,
+        messages: payload.Messages,
       };
     case NEW_PLAYER_JOINED:
       return {
         ...state,
         players: [...state.players, payload],
+        messages: payload.Messages,
       };
     case PLAYER_LEFT:
       return {

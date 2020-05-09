@@ -12,7 +12,7 @@ import Host from 'components/serverPages/Host';
 import Product from 'components/serverPages/Product';
 import Pricing from 'components/serverPages/Pricing';
 import About from 'components/serverPages/About';
-import Library from 'components/games/Library';
+import Library from 'components/games/library/Library';
 import CodenamesHome from 'components/games/codenames/CodenamesHome';
 import ArticulateHome from 'components/games/articulate/AriculateHome';
 import FiveSecondsHome from 'components/games/fiveseconds/FiveSecondsHome';
@@ -82,7 +82,7 @@ const App = () => {
             <Route exact path={PRODUCT} component={Product} />
             <Route exact path={PRICING} component={Pricing} />
             <Route exact path={ABOUT} component={About} />
-            <GameRoute exact path={LIBRARY} component={Library} />
+            <Route exact path={LIBRARY} component={Library} />
             <Route exact path={CODENAMES} component={CodenamesHome} />
             <GameRoute exact path={ARTICULATE} component={ArticulateHome} />
             <GameRoute exact path={FIVESECONDS} component={FiveSecondsHome} />

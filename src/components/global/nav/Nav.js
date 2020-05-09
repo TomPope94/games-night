@@ -27,7 +27,13 @@ const Nav = ({ server }) => {
 
   return (
     <div style={styles.navContainer}>
-      <div style={{ display: 'flex', width: '100%' }}>
+      <div
+        style={{
+          display: 'flex',
+          width: '100%',
+          justifyContent: 'space-between',
+        }}
+      >
         <h1
           onMouseDown={() =>
             server.inGame ? history.push(LIBRARY) : history.push(HOME)
@@ -39,11 +45,7 @@ const Nav = ({ server }) => {
       </div>
       <div style={{ display: 'flex', paddingRight: 20, alignItems: 'center' }}>
         {/* <Username /> */}
-        {!server.onServer ? (
-          <ServerConnectButtons />
-        ) : server.inGame ? (
-          <PlayersDropdown />
-        ) : null}
+        {!server.onServer ? <ServerConnectButtons /> : null}
       </div>
     </div>
   );

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 const SessionNav = ({ session }) => {
   return (
-    <div style={{ display: 'flex' }}>
+    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
       <h1 style={{ marginRight: 20 }}>Code: {session.sessionId}</h1>
     </div>
   );
