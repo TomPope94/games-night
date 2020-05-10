@@ -14,6 +14,7 @@ const styles = {
   },
 };
 const Library = ({ server }) => {
+  const [focus, setFocus] = useState(false);
   const [dimensions, setDimensions] = useState({
     width: window.innerWidth,
   });
@@ -40,10 +41,15 @@ const Library = ({ server }) => {
           {width >= 1000 ? (
             <Fragment>
               <GamesList styling={{ width: '75%' }} mobile={false} />
-              <SocialContainer styling={{ width: '25%' }} mobile={false} />
+              <SocialContainer
+                styling={{ width: '25%' }}
+                mobile={false}
+                focus={focus}
+                setfocus={setFocus}
+              />
             </Fragment>
           ) : (
-            <LibraryMobile />
+            <LibraryMobile focus={focus} setfocus={setFocus} />
           )}
         </Fragment>
       )}

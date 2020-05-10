@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 
 import { sendChatMessage } from 'actions/user';
@@ -36,10 +36,13 @@ const styles = {
 
 const MessageForm = ({ server, session, sendChatMessage, focus, setfocus }) => {
   const [message, setMessage] = useState('');
+  // const inputRef = useRef();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     await sendChatMessage(server.wsConnection, session.sessionId, message);
+    // inputRef.classList.remove('active');
+    // setfocus(false);
     setMessage('');
   };
 
@@ -49,6 +52,7 @@ const MessageForm = ({ server, session, sendChatMessage, focus, setfocus }) => {
         style={styles.textInput}
         type="text"
         value={message}
+        // ref={inputRef}
         onChange={(e) => setMessage(e.target.value)}
         onFocus={() => setfocus(true)}
         onBlur={() => setfocus(false)}

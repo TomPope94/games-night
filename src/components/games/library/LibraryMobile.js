@@ -3,12 +3,11 @@ import React, { useState, useEffect } from 'react';
 import GamesList from 'components/games/library/GamesList';
 import SocialContainer from 'components/games/library/SocialContainer';
 
-const LibraryMobile = () => {
+const LibraryMobile = ({ focus, setfocus }) => {
   const [dimensions, setDimensions] = useState({
     height: window.innerHeight,
   });
   const [tabSelected, setTabSelected] = useState('games');
-  const [focus, setFocus] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -52,7 +51,7 @@ const LibraryMobile = () => {
           styling={{ width: '100%' }}
           mobile={true}
           focus={focus}
-          setfocus={setFocus}
+          setfocus={setfocus}
         />
       ) : null}
       <div style={styles.buttonsRow}>
