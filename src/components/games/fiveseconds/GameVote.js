@@ -24,12 +24,12 @@ const styles = {
 
 const GameVote = ({ server, session, fiveSeconds, sendVote, sendResult }) => {
   const [timeLeft, setTimeLeft] = useState(20);
-  const [timeout, setTimeout] = useState(false);
+  const [timeout, setVoteTimeout] = useState(false);
 
   useEffect(() => {
     // exit early when we reach 0
     if (!timeLeft && session.isHost) {
-      setTimeout(true);
+      setVoteTimeout(true);
       sendResult(
         server.wsConnection,
         session.sessionId,
@@ -50,6 +50,7 @@ const GameVote = ({ server, session, fiveSeconds, sendVote, sendResult }) => {
   const delay = (ms) => new Promise((res) => setTimeout(res, ms));
   useEffect(() => {
     async function wait() {
+      console.log('waiting...');
       await delay(3000);
       console.log('result: ', fiveSeconds.pass >= fiveSeconds.fail);
       sendResult(
