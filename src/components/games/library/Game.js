@@ -5,7 +5,7 @@ const Game = ({ title, ...props }) => {
 
   const styles = {
     gameContainer: {
-      width: '33%',
+      width: 400,
     },
     innerGameContainer: {
       margin: 25,

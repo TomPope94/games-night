@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Players from 'components/games/library/Players';
 import Chat from 'components/games/library/Chat';
 
-const SocialContainer = ({ session, ...props }) => {
+const SocialContainer = ({ session, mobile, focus, setfocus, ...props }) => {
   const [dimensions, setDimensions] = useState({
     height: window.innerHeight,
   });
@@ -21,7 +21,7 @@ const SocialContainer = ({ session, ...props }) => {
     return (_) => {
       window.removeEventListener('resize', handleResize);
     };
-  });
+  }, [window.innerHeight]);
 
   const styles = {
     socialContainer: {
@@ -33,18 +33,20 @@ const SocialContainer = ({ session, ...props }) => {
       borderRadius: 10,
       color: '#fff',
       height: dimensions.height - 100,
+      position: 'relative',
       ...props.styling,
     },
     buttonsRow: {
-      display: 'flex',
+      display: mobile && focus ? 'none' : 'flex',
+      position: mobile ? 'absolute' : 'auto',
+      top: 0,
+      minHeight: mobile ? 0 : 100,
       width: '100%',
-      minHeight: 100,
     },
     button: {
       display: 'flex',
       height: '100%',
       justifyContent: 'center',
-      alignItems: 'center',
       width: '50%',
       color: '#fff',
       cursor: 'pointer',
@@ -53,29 +55,31 @@ const SocialContainer = ({ session, ...props }) => {
 
   return (
     <div style={styles.socialContainer}>
-      {tabSelected === 'players' ? <Players /> : <Chat />}
-      <div>
-        <div style={styles.buttonsRow}>
-          <div
-            style={{
-              ...styles.button,
-              background: tabSelected === 'players' ? '#273859' : '#fff',
-              color: tabSelected === 'players' ? '#fff' : '#d9145c',
-            }}
-            onMouseDown={() => setTabSelected('players')}
-          >
-            <h3>Players</h3>
-          </div>
-          <div
-            style={{
-              ...styles.button,
-              background: tabSelected === 'feed' ? '#273859' : '#fff',
-              color: tabSelected === 'feed' ? '#fff' : '#d9145c',
-            }}
-            onMouseDown={() => setTabSelected('feed')}
-          >
-            <h3>Feed</h3>
-          </div>
+      {tabSelected === 'players' ? (
+        <Players mobile={mobile} />
+      ) : (
+        <Chat mobile={mobile} setfocus={setfocus} focus={focus} />
+      )}
+      <div style={styles.buttonsRow}>
+        <div
+          style={{
+            ...styles.button,
+            background: tabSelected === 'players' ? '#273859' : '#fff',
+            color: tabSelected === 'players' ? '#fff' : '#d9145c',
+          }}
+          onMouseDown={() => setTabSelected('players')}
+        >
+          <h3>Players</h3>
+        </div>
+        <div
+          style={{
+            ...styles.button,
+            background: tabSelected === 'feed' ? '#273859' : '#fff',
+            color: tabSelected === 'feed' ? '#fff' : '#d9145c',
+          }}
+          onMouseDown={() => setTabSelected('feed')}
+        >
+          <h3>Feed</h3>
         </div>
       </div>
     </div>

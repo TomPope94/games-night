@@ -19,6 +19,7 @@ import { setAlert } from 'actions/alert';
 import { handleArticulateMessage } from 'actions/articulate';
 import { handleFivesecondsMessage } from 'actions/fiveSeconds';
 import { handleGuessPeopleMessage } from 'actions/guessPeople';
+import { handleUserMessage } from 'actions/user';
 
 export const extractMessage = (data) => {
   // debugger;
@@ -37,6 +38,8 @@ const handleMessage = (data) => async (dispatch) => {
     await dispatch(handleFivesecondsMessage(dataArr));
   } else if (dataArr[0].includes('guesspeople')) {
     await dispatch(handleGuessPeopleMessage(dataArr));
+  } else if (dataArr[0].includes('user')) {
+    await dispatch(handleUserMessage(dataArr));
   } else if (dataArr[0].includes('host')) {
     const messageData = extractMessage(dataArr[1]);
     await dispatch(connectSession(messageData));

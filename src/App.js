@@ -36,20 +36,36 @@ import { connectServer, ping } from 'actions/server';
 import { Provider } from 'react-redux';
 import store from 'store';
 
-const styles = {
-  appContainer: {
-    marginTop: 100,
-    paddingLeft: 50,
-    paddingRight: 50,
-    background: '#fff',
-    height: '100vh',
-    overflow: 'overlay',
-  },
-};
-
 const App = () => {
   const [timeActive, setTimeActive] = useState(0);
+  const [dimensions, setDimensions] = useState({
+    width: window.innerWidth,
+  });
+  const { width } = dimensions;
+  useEffect(() => {
+    const handleResize = () => {
+      setDimensions({
+        width: window.innerWidth,
+      });
+    };
 
+    window.addEventListener('resize', handleResize);
+    return (_) => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [window.innerWidth]);
+
+  const styles = {
+    appContainer: {
+      marginTop: 100,
+      paddingLeft: width >= 1000 ? 50 : 0,
+      paddingRight: width >= 1000 ? 50 : 0,
+      background: '#fff',
+      width: width >= 1000 ? 'auto' : '100vw',
+      height: '100vh',
+      overflow: 'overlay',
+    },
+  };
   useEffect(() => {
     store.dispatch(connectServer());
   }, []);

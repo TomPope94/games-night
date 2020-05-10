@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-const Players = ({ session }) => {
+const Players = ({ session, mobile }) => {
   const styles = {
     playersContainer: {
       paddingLeft: 40,
@@ -12,7 +12,7 @@ const Players = ({ session }) => {
 
   return (
     <div style={styles.playersContainer}>
-      <h2>The Players:</h2>
+      {mobile ? null : <h2>The Players:</h2>}
       {session.players.map((player) => (
         <p>{player.Username}</p>
       ))}

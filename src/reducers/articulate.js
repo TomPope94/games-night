@@ -74,7 +74,7 @@ export default function (state = initialState, action) {
     case PLAYER_LEFT:
       return {
         ...state,
-        ...payload.Data.Articulate,
+        ...payload.Data.gameData.Articulate,
       };
     case ARTICULATE_END_GAME_SUCCESS:
       return {

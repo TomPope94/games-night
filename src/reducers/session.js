@@ -5,6 +5,7 @@ import {
   HOST_SESSION_SEND,
   NEW_PLAYER_JOINED,
   PLAYER_LEFT,
+  USER_CHAT_MESSAGE,
 } from 'actions/types';
 
 const initialState = {
@@ -46,12 +47,18 @@ export default function (state = initialState, action) {
       return {
         ...state,
         players: state.players.filter((player) => player.ID !== payload.ID),
+        messages: payload.Data.messageList,
       };
     case HOST_SESSION_SEND:
     case JOIN_SESSION_SEND:
       return {
         ...state,
         loading: true,
+      };
+    case USER_CHAT_MESSAGE:
+      return {
+        ...state,
+        messages: payload.Messages,
       };
     default:
       return state;

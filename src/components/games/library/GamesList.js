@@ -11,7 +11,7 @@ import {
 
 import Game from 'components/games/library/Game';
 
-const GamesList = ({ server, ...props }) => {
+const GamesList = ({ server, mobile, ...props }) => {
   const history = useHistory();
   const styles = {
     libraryContainer: {
@@ -23,12 +23,13 @@ const GamesList = ({ server, ...props }) => {
       display: 'flex',
       width: '100%',
       flexWrap: 'wrap',
+      overflow: 'auto',
     },
   };
 
   return (
     <div style={styles.libraryContainer}>
-      <h2>Games:</h2>
+      {mobile ? null : <h2>Games:</h2>}
       <div style={styles.gamesContainer}>
         <Game onMouseDown={() => history.push(ARTICULATE)} title="Articulate" />
         <Game

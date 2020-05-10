@@ -21,7 +21,7 @@ const GuestNavLinks = () => {
     return (_) => {
       window.removeEventListener('resize', handleResize);
     };
-  });
+  }, [window.innerWidth]);
 
   return width >= 650 ? <GuestNavLarge /> : <GuestNavSmall />;
 };
