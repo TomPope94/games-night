@@ -1,19 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { connect } from 'react-redux';
 
 import BoardQuadrant from 'components/games/articulate/BoardQuadrant';
 import GameButton from 'components/global/GameButton';
 
-import { sendNextRound, addRota } from 'actions/articulate';
-
-const styles = {
-  gameContainer: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    width: '100%',
-    height: '100vh',
-  },
-};
+import { sendNextRound, addRota, sendEndGame } from 'actions/articulate';
 
 const ArticulateBoard = ({
   articulate,
@@ -21,9 +12,43 @@ const ArticulateBoard = ({
   server,
   sendNextRound,
   addRota,
+  sendEndGame,
 }) => {
   const [teamState, setTeamState] = useState([]);
   const [numTeams, setNumTeams] = useState(0);
+
+  const [dimensions, setDimensions] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
+  const { width, height } = dimensions;
+
+  useEffect(() => {
+    const handleResize = () => {
+      setDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+
+    window.addEventListener('resize', handleResize);
+    return (_) => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [window.innerHeight, window.innerWidth]);
+
+  const styles = {
+    gameContainer: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexWrap: 'wrap',
+      width: '100%',
+      overflow: 'auto',
+      height: height - 100,
+    },
+  };
 
   const getTeams = (teams) => {
     const arr = Object.values(teams);
@@ -114,17 +139,37 @@ const ArticulateBoard = ({
     <div style={styles.gameContainer}>
       {teamState
         ? teamState.map((team) => (
-            <BoardQuadrant name={team} details={articulate.gameTeams[team]} />
+            <BoardQuadrant
+              name={team}
+              mobile={width < 1000}
+              details={articulate.gameTeams[team]}
+            />
           ))
         : null}
       {session.isHost ? (
-        <GameButton
-          color="#d66e31"
-          styling={{ position: 'absolute', top: '50%', right: 0, zIndex: 999 }}
-          onMouseDown={() => handleNextRound()}
-        >
-          <h3>Next Round</h3>
-        </GameButton>
+        <Fragment>
+          <GameButton
+            color="#d9145c"
+            styling={{ position: 'absolute', top: 100, left: 0, zIndex: 999 }}
+            onMouseDown={async () =>
+              await sendEndGame(server.wsConnection, session.sessionId)
+            }
+          >
+            <h3>End Game.</h3>
+          </GameButton>
+          <GameButton
+            color="#d9145c"
+            styling={{
+              position: 'absolute',
+              top: '50%',
+              right: 0,
+              zIndex: 999,
+            }}
+            onMouseDown={() => handleNextRound()}
+          >
+            <h3>Next Round</h3>
+          </GameButton>
+        </Fragment>
       ) : null}
     </div>
   );
@@ -136,6 +181,8 @@ const mapStateToProps = (state) => ({
   server: state.server,
 });
 
-export default connect(mapStateToProps, { sendNextRound, addRota })(
-  ArticulateBoard
-);
+export default connect(mapStateToProps, {
+  sendNextRound,
+  addRota,
+  sendEndGame,
+})(ArticulateBoard);

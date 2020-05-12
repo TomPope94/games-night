@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { connect } from 'react-redux';
 
 import ArticulateHeader from 'components/games/articulate/ArticulateHeader';
@@ -30,12 +30,14 @@ const ArticulateHome = ({ articulate }) => {
 
   return (
     <div>
-      {width >= 1000 ? <ArticulateHeader /> : null}
       {gameState === 'TeamSelect' ? (
         width < 1000 ? (
           <ArticulateTeamsMobile />
         ) : (
-          <ArticulateTeams />
+          <Fragment>
+            <ArticulateHeader />
+            <ArticulateTeams />
+          </Fragment>
         )
       ) : gameState === 'GameInProgress' || gameState === 'GameBegin' ? (
         <ArticulateBoard />

@@ -27,7 +27,7 @@ const initialState = {
   wordsPassed: [],
   wordsCorrect: [],
   gameMode: '',
-  gameState: 'TeamSelect',
+  gameState: 'GameBegin',
   teamTurn: '',
   playerTurn: '',
   yourTurn: false,

@@ -1,30 +1,32 @@
 import React from 'react';
 
-const BoardQuadrant = ({ name, details, ...props }) => {
+const BoardQuadrant = ({ name, mobile, details, ...props }) => {
   const styles = {
     quadContainer: {
-      width: '50%',
+      width: mobile ? '100%' : '40%',
       margin: 20,
       position: 'relative',
-      height: '50%',
       borderRadius: 10,
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
     },
     teamIndicator: {
-      height: '100%',
       width: '100%',
-      background:
+      borderRadius: 10,
+      paddingBottom: 35,
+      borderTop: `15px solid ${
         name === 'Red'
-          ? '#F20732'
+          ? '#A45B5B'
           : name === 'Blue'
-          ? '#0439D9'
+          ? '#4E7EA0'
           : name === 'Orange'
-          ? '#d66e31'
+          ? '#BF8F68'
           : name === 'Green'
-          ? 'green'
-          : 'black',
+          ? '#8DA881'
+          : 'black'
+      }`,
+      boxShadow: '0 1px 3px rgba(1,1,1,0.5)',
     },
     poolRow: {
       display: 'flex',
@@ -36,7 +38,9 @@ const BoardQuadrant = ({ name, details, ...props }) => {
   return (
     <div style={styles.quadContainer} {...props}>
       <div style={styles.teamIndicator}>
-        <div>
+        <div
+          style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
+        >
           <h1>{details.Pos}</h1>
         </div>
         <div style={styles.poolRow}>
