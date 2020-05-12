@@ -64,6 +64,7 @@ const App = () => {
       width: width >= 1000 ? 'auto' : '100vw',
       height: '100vh',
       overflow: 'overlay',
+      color: '#273859',
     },
   };
   useEffect(() => {
@@ -98,9 +99,9 @@ const App = () => {
             <Route exact path={PRODUCT} component={Product} />
             <Route exact path={PRICING} component={Pricing} />
             <Route exact path={ABOUT} component={About} />
-            <Route exact path={LIBRARY} component={Library} />
+            <GameRoute exact path={LIBRARY} component={Library} />
             <Route exact path={CODENAMES} component={CodenamesHome} />
-            <GameRoute exact path={ARTICULATE} component={ArticulateHome} />
+            <Route exact path={ARTICULATE} component={ArticulateHome} />
             <GameRoute exact path={FIVESECONDS} component={FiveSecondsHome} />
             <GameRoute exact path={GUESSPEOPLE} component={GuessPeopleHome} />
           </Switch>

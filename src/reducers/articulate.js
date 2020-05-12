@@ -17,7 +17,7 @@ import {
 
 const initialState = {
   loading: false,
-  gameStarted: false,
+  gameStarted: true,
   teamChosen: false,
   gameStarter: -1,
   gameRound: -1,
@@ -35,27 +35,52 @@ const initialState = {
   gameTeams: {
     Red: {
       Pos: 0,
-      Players: [],
+      Players: [
+        { ID: 'TEST', Username: 'TEST' },
+        { ID: 'TEST', Username: 'TEST' },
+        { ID: 'TEST', Username: 'TEST' },
+      ],
       PlayersGone: [],
-      PlayersLeft: [],
+      PlayersLeft: [
+        { ID: 'TEST', Username: 'TEST' },
+        { ID: 'TEST', Username: 'TEST' },
+      ],
     },
     Blue: {
       Pos: 0,
-      Players: [],
+      Players: [
+        { ID: 'TEST', Username: 'TEST' },
+        { ID: 'TEST', Username: 'TEST' },
+      ],
       PlayersGone: [],
-      PlayersLeft: [],
+      PlayersLeft: [
+        { ID: 'TEST', Username: 'TEST' },
+        { ID: 'TEST', Username: 'TEST' },
+      ],
     },
     Orange: {
       Pos: 0,
-      Players: [],
+      Players: [
+        { ID: 'TEST', Username: 'TEST' },
+        { ID: 'TEST', Username: 'TEST' },
+      ],
       PlayersGone: [],
-      PlayersLeft: [],
+      PlayersLeft: [
+        { ID: 'TEST', Username: 'TEST' },
+        { ID: 'TEST', Username: 'TEST' },
+      ],
     },
     Green: {
       Pos: 0,
-      Players: [],
+      Players: [
+        { ID: 'TEST', Username: 'TEST' },
+        { ID: 'TEST', Username: 'TEST' },
+      ],
       PlayersGone: [],
-      PlayersLeft: [],
+      PlayersLeft: [
+        { ID: 'TEST', Username: 'TEST' },
+        { ID: 'TEST', Username: 'TEST' },
+      ],
     },
   },
   gameData: [],

@@ -8,7 +8,7 @@ const SocialContainer = ({ session, mobile, focus, setfocus, ...props }) => {
   const [dimensions, setDimensions] = useState({
     height: window.innerHeight,
   });
-  const [tabSelected, setTabSelected] = useState('players');
+  const [tabSelected, setTabSelected] = useState('feed');
 
   useEffect(() => {
     const handleResize = () => {

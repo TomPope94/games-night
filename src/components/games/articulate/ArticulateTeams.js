@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { connect } from 'react-redux';
 
 import {
@@ -9,10 +9,10 @@ import {
 
 import { setAlert } from 'actions/alert';
 
-import HeroBanner from 'components/global/HeroBanner';
 import TeamPicker from 'components/games/TeamPicker';
 import GameButton from 'components/global/GameButton';
-import ModePicker from '../ModePicker';
+import SocialContainer from 'components/games/library/SocialContainer';
+import ModePicker from 'components/games/ModePicker';
 
 const ArticulateTeams = ({
   server,
@@ -23,15 +23,40 @@ const ArticulateTeams = ({
   sendModeChange,
   setAlert,
 }) => {
+  const [focus, setFocus] = useState(false);
+  const [dimensions, setDimensions] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
+  const { width, height } = dimensions;
+
+  useEffect(() => {
+    const handleResize = () => {
+      setDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+
+    window.addEventListener('resize', handleResize);
+    return (_) => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [window.innerHeight, window.innerWidth]);
+
   const styles = {
     articulateContainer: {
-      margin: 20,
+      height: dimensions.height - 300,
+      overflow: 'auto',
+      width: '75% ',
     },
     pickerContainer: {
+      width: '100%',
       display: 'flex',
       justifyContent: 'space-evenly',
       alignItems: 'center',
-      displayWrap: 'wrap',
+      flexWrap: 'wrap',
       marginTop: 25,
     },
     startContainer: {
@@ -94,80 +119,97 @@ const ArticulateTeams = ({
   };
 
   return (
-    <div>
-      <h2>Choose your team:</h2>
-      <div style={styles.pickerContainer}>
-        <TeamPicker teamname="Red" onMouseDown={() => handleTeamSelect('Red')}>
-          {articulate.gameTeams.Red.Players.map((player) => (
-            <p>{player.Username}</p>
-          ))}
-        </TeamPicker>
-        <TeamPicker
-          teamname="Blue"
-          onMouseDown={() => handleTeamSelect('Blue')}
-        >
-          {articulate.gameTeams.Blue.Players.map((player) => (
-            <p>{player.Username}</p>
-          ))}
-        </TeamPicker>
-        <TeamPicker
-          teamname="Orange"
-          onMouseDown={() => handleTeamSelect('Orange')}
-        >
-          {articulate.gameTeams.Orange.Players.map((player) => (
-            <p>{player.Username}</p>
-          ))}
-        </TeamPicker>
-        <TeamPicker
-          teamname="Green"
-          onMouseDown={() => handleTeamSelect('Green')}
-        >
-          {articulate.gameTeams.Green.Players.map((player) => (
-            <p>{player.Username}</p>
-          ))}
-        </TeamPicker>
+    <Fragment>
+      <div style={styles.articulateContainer}>
+        <h2>Choose your team:</h2>
+        <SocialContainer
+          styling={{
+            width: '25%',
+            position: 'fixed',
+            right: 0,
+            top: 100,
+            zIndex: 999,
+          }}
+          mobile={false}
+          focus={focus}
+          setfocus={setFocus}
+        />
+        <div style={styles.pickerContainer}>
+          <TeamPicker
+            teamname="Red"
+            onMouseDown={() => handleTeamSelect('Red')}
+          >
+            {articulate.gameTeams.Red.Players.map((player) => (
+              <p>{player.Username}</p>
+            ))}
+          </TeamPicker>
+          <TeamPicker
+            teamname="Blue"
+            onMouseDown={() => handleTeamSelect('Blue')}
+          >
+            {articulate.gameTeams.Blue.Players.map((player) => (
+              <p>{player.Username}</p>
+            ))}
+          </TeamPicker>
+          <TeamPicker
+            teamname="Orange"
+            onMouseDown={() => handleTeamSelect('Orange')}
+          >
+            {articulate.gameTeams.Orange.Players.map((player) => (
+              <p>{player.Username}</p>
+            ))}
+          </TeamPicker>
+          <TeamPicker
+            teamname="Green"
+            onMouseDown={() => handleTeamSelect('Green')}
+          >
+            {articulate.gameTeams.Green.Players.map((player) => (
+              <p>{player.Username}</p>
+            ))}
+          </TeamPicker>
+        </div>
+        <h2>Choose which mode:</h2>
+        <div style={styles.pickerContainer}>
+          <ModePicker
+            modename="Furthest Wins"
+            styling={{ width: '50%' }}
+            active={articulate.gameMode === 'FurthestWins' ? true : false}
+            onMouseDown={() => handleModeChange('FurthestWins')}
+          >
+            <ul>
+              <li>Each player get's one turn.</li>
+              <li>The team with the most points at the end wins.</li>
+            </ul>
+          </ModePicker>
+          <ModePicker
+            modename="Buzz to Win"
+            styling={{ width: '50%' }}
+            active={articulate.gameMode === 'BuzzToWin' ? true : false}
+            onMouseDown={() => handleModeChange('BuzzToWin')}
+          >
+            <ul>
+              <li>Once a team reaches the end, they enter the "Buzz Round".</li>
+              <li>
+                One word comes up to which every player (including opposition)
+                can buzz in.
+              </li>
+              <li>
+                If the first person to buzz is correct AND from the same team -
+                that team wins.
+              </li>
+              <li>
+                If that person is from the opposing team, the game continues.
+              </li>
+            </ul>
+          </ModePicker>
+          <div style={styles.startContainer}>
+            <GameButton onMouseDown={() => handleBegin()} color="#d9145c">
+              <h2>Begin!</h2>
+            </GameButton>
+          </div>
+        </div>
       </div>
-      <h2>Choose which mode:</h2>
-      <div style={styles.pickerContainer}>
-        <ModePicker
-          modename="Furthest Wins"
-          styling={{ width: '50%' }}
-          active={articulate.gameMode === 'FurthestWins' ? true : false}
-          onMouseDown={() => handleModeChange('FurthestWins')}
-        >
-          <ul>
-            <li>Each player get's one turn.</li>
-            <li>The team with the most points at the end wins.</li>
-          </ul>
-        </ModePicker>
-        <ModePicker
-          modename="Buzz to Win"
-          styling={{ width: '50%' }}
-          active={articulate.gameMode === 'BuzzToWin' ? true : false}
-          onMouseDown={() => handleModeChange('BuzzToWin')}
-        >
-          <ul>
-            <li>Once a team reaches the end, they enter the "Buzz Round".</li>
-            <li>
-              One word comes up to which every player (including opposition) can
-              buzz in.
-            </li>
-            <li>
-              If the first person to buzz is correct AND from the same team -
-              that team wins.
-            </li>
-            <li>
-              If that person is from the opposing team, the game continues.
-            </li>
-          </ul>
-        </ModePicker>
-      </div>
-      <div style={styles.startContainer}>
-        <GameButton onMouseDown={() => handleBegin()} color="#d66e31">
-          <h2>Begin!</h2>
-        </GameButton>
-      </div>
-    </div>
+    </Fragment>
   );
 };
 

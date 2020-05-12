@@ -4,6 +4,7 @@ const BoardQuadrant = ({ name, details, ...props }) => {
   const styles = {
     quadContainer: {
       width: '50%',
+      margin: 20,
       position: 'relative',
       height: '50%',
       borderRadius: 10,
@@ -12,8 +13,8 @@ const BoardQuadrant = ({ name, details, ...props }) => {
       alignItems: 'center',
     },
     teamIndicator: {
-      height: 50,
-      width: '75%',
+      height: '100%',
+      width: '100%',
       background:
         name === 'Red'
           ? '#F20732'
@@ -34,22 +35,23 @@ const BoardQuadrant = ({ name, details, ...props }) => {
 
   return (
     <div style={styles.quadContainer} {...props}>
-      <div style={styles.teamIndicator} />
-      <div>
-        <h1>{details.Pos}</h1>
-      </div>
-      <div style={styles.poolRow}>
+      <div style={styles.teamIndicator}>
         <div>
-          <h4>Player Pool</h4>
-          {details.PlayersLeft.map((player) => (
-            <p>{player.Username}</p>
-          ))}
+          <h1>{details.Pos}</h1>
         </div>
-        <div>
-          <h4>Already Been</h4>
-          {details.PlayersGone.map((player) => (
-            <p>{player.Username}</p>
-          ))}
+        <div style={styles.poolRow}>
+          <div>
+            <h4>Player Pool</h4>
+            {details.PlayersLeft.map((player) => (
+              <p>{player.Username}</p>
+            ))}
+          </div>
+          <div>
+            <h4>Already Been</h4>
+            {details.PlayersGone.map((player) => (
+              <p>{player.Username}</p>
+            ))}
+          </div>
         </div>
       </div>
     </div>

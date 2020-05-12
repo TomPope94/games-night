@@ -9,6 +9,7 @@ import { sendRefreshData, sendEndGame } from 'actions/articulate';
 const styles = {
   headerContainer: {
     position: 'relative',
+    width: '70%',
   },
 };
 
@@ -23,7 +24,7 @@ const ArticulateHeader = ({
       {session.isHost ? (
         <GameButton
           styling={{ position: 'absolute', left: 0, top: 10 }}
-          color="#d66e31"
+          color="#d9145c"
           onMouseDown={() =>
             sendEndGame(server.wsConnection, session.sessionId)
           }
@@ -34,7 +35,7 @@ const ArticulateHeader = ({
       {session.isHost ? (
         <GameButton
           styling={{ position: 'absolute', right: 0, top: 10 }}
-          color="#d66e31"
+          color="#d9145c"
           onMouseDown={() =>
             sendRefreshData(server.wsConnection, session.sessionId)
           }

@@ -10,7 +10,7 @@ const GameButton = ({ children, ...props }) => {
       borderRadius: 10,
       margin: 25,
       background: props.background,
-      boxShadow: '0 2px 5px rgba(1,1,1,0.3)',
+      boxShadow: '0 1px 3px rgba(1,1,1,0.5)',
       cursor: 'pointer',
       color: props.color ? props.color : 'white',
       transform: hover ? 'scale(1.1, 1.1)' : 'scale(1, 1)',
