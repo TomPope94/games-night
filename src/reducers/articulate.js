@@ -27,11 +27,11 @@ const initialState = {
   wordsPassed: [],
   wordsCorrect: [],
   gameMode: '',
-  gameState: 'GameBegin',
-  teamTurn: '',
+  gameState: 'RoundInProgress',
+  teamTurn: 'Red',
   playerTurn: '',
   yourTurn: false,
-  gameRota: [],
+  gameRota: ['Red', 'Blue', 'Orange', 'Green'],
   gameTeams: {
     Red: {
       Pos: 0,

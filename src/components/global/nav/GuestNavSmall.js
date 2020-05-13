@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import NavLink from 'components/global/nav/NavLink';
@@ -9,6 +9,26 @@ import { JOIN, HOST, PRODUCT, PRICING, ABOUT } from 'constants/routes';
 const GuestNavSmall = () => {
   const history = useHistory();
   const [closed, setClosed] = useState(true);
+  const [dimensions, setDimensions] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
+  const { width, height } = dimensions;
+
+  useEffect(() => {
+    const handleResize = () => {
+      setDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+
+    window.addEventListener('resize', handleResize);
+    return (_) => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [window.innerHeight, window.innerWidth]);
 
   const styles = {
     navContainer: {
@@ -30,7 +50,7 @@ const GuestNavSmall = () => {
       transformOrigin: 'center top',
       background: '#fff',
       width: '100vw',
-      height: '100vh',
+      height: height,
       boxShadow: '0 3px 5px rgba(1,1,1,0.3)',
     },
   };
