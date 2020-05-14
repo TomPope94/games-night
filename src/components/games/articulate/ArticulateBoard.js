@@ -93,11 +93,24 @@ const ArticulateBoard = ({
     }
   };
 
+  const checkWin = (rota) => {
+    const checkPoolArr = rota.filter(
+      (val) => articulate.gameTeams[val].PlayersLeft.length === 0
+    );
+    if (checkPoolArr.length > 0) {
+      const playersGoneArr = rota.map(
+        (val) => articulate.gameTeams[val].PlayersGone.length
+      );
+      const equalCheck = playersGoneArr.every((val, i, arr) => val === arr[0]);
+      // debugger;
+      return equalCheck;
+    } else return false;
+  };
+
   const handleNextRound = async () => {
     // if round is 0, pick the starter team and start the rota
     // else pick the next team in the rota
     // move the state to in game
-    // will need logic if the final round (not for now...)
     if (articulate.gameRound === 0 && articulate.gameStarter !== -1) {
       const rota = await startRota(teamState);
       const player = await choosePlayer(rota, articulate.gameRound);
@@ -108,13 +121,31 @@ const ArticulateBoard = ({
         server.wsConnection,
         session.sessionId,
         getTeams(articulate.gameTeams)[articulate.gameStarter],
-        player
+        player,
+        false
       );
     } else {
+      // check for end game condition
+      // if a player pool is empty, check to see if all the playersGone arrays are equal in length
+      // if false, continue
+      // if true, move to end of game screen
+      const gameComplete = checkWin(articulate.gameRota);
+
       const player = await choosePlayer(
         articulate.gameRota,
         articulate.gameRound
       );
+      if (gameComplete) {
+        await sendNextRound(
+          server.wsConnection,
+          session.sessionId,
+          articulate.gameRota[
+            articulate.gameRound % articulate.gameRota.length
+          ],
+          player,
+          true
+        );
+      }
 
       if (player !== 'Pool Empty') {
         await sendNextRound(
@@ -123,7 +154,8 @@ const ArticulateBoard = ({
           articulate.gameRota[
             articulate.gameRound % articulate.gameRota.length
           ],
-          player
+          player,
+          false
         );
       }
     }

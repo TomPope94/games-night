@@ -5,6 +5,7 @@ import ArticulateHeader from 'components/games/articulate/ArticulateHeader';
 import ArticulateTeams from 'components/games/articulate/ArticulateTeams';
 import ArticulateBoard from 'components/games/articulate/ArticulateBoard';
 import ArticulateRound from 'components/games/articulate/ArticulateRound';
+import GameComplete from 'components/games/articulate/GameComplete';
 
 import ArticulateTeamsMobile from 'components/games/articulate/ArticulateTeamsMobile';
 
@@ -43,6 +44,8 @@ const ArticulateHome = ({ articulate }) => {
         <ArticulateBoard />
       ) : gameState === 'RoundInProgress' ? (
         <ArticulateRound />
+      ) : gameState === 'GameComplete' ? (
+        <GameComplete />
       ) : null}
     </div>
   );

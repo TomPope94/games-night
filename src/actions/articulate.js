@@ -159,9 +159,13 @@ export const refreshData = (data) => async (dispatch) => {
   });
 };
 
-export const sendNextRound = (socket, sessionId, team, player) => async (
-  dispatch
-) => {
+export const sendNextRound = (
+  socket,
+  sessionId,
+  team,
+  player,
+  gameComplete
+) => async (dispatch) => {
   // debugger;
   await socket.json({
     action: 'articulatenextround',
@@ -169,6 +173,7 @@ export const sendNextRound = (socket, sessionId, team, player) => async (
       sessionId: sessionId,
       team: team,
       player: player,
+      complete: gameComplete,
     },
   });
 

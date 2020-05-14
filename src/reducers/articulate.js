@@ -27,27 +27,27 @@ const initialState = {
   wordsPassed: [],
   wordsCorrect: [],
   gameMode: '',
-  gameState: 'RoundInProgress',
+  gameState: 'GameComplete',
   teamTurn: 'Red',
   playerTurn: '',
   yourTurn: false,
   gameRota: ['Red', 'Blue', 'Orange', 'Green'],
   gameTeams: {
     Red: {
-      Pos: 0,
+      Pos: 10,
       Players: [
         { ID: 'TEST', Username: 'TEST' },
         { ID: 'TEST', Username: 'TEST' },
         { ID: 'TEST', Username: 'TEST' },
       ],
-      PlayersGone: [],
-      PlayersLeft: [
+      PlayersGone: [
         { ID: 'TEST', Username: 'TEST' },
         { ID: 'TEST', Username: 'TEST' },
       ],
+      PlayersLeft: [],
     },
     Blue: {
-      Pos: 0,
+      Pos: 5,
       Players: [
         { ID: 'TEST', Username: 'TEST' },
         { ID: 'TEST', Username: 'TEST' },
@@ -59,7 +59,7 @@ const initialState = {
       ],
     },
     Orange: {
-      Pos: 0,
+      Pos: 33,
       Players: [
         { ID: 'TEST', Username: 'TEST' },
         { ID: 'TEST', Username: 'TEST' },
@@ -71,7 +71,7 @@ const initialState = {
       ],
     },
     Green: {
-      Pos: 0,
+      Pos: 3,
       Players: [
         { ID: 'TEST', Username: 'TEST' },
         { ID: 'TEST', Username: 'TEST' },
