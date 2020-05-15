@@ -17,19 +17,19 @@ const styles = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    boxShadow: '0 1px 3px rgb(1,1,1,0.5)',
     borderRadius: 10,
     cursor: 'pointer',
   },
 };
 
 const GameVote = ({ server, session, fiveSeconds, sendVote, sendResult }) => {
-  const [timeLeft, setTimeLeft] = useState(20);
-  const [timeout, setVoteTimeout] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(0);
+  const [timeStart, setTimeStart] = useState(false);
 
   useEffect(() => {
     // exit early when we reach 0
-    if (!timeLeft && session.isHost) {
-      setVoteTimeout(true);
+    if (!timeLeft && timeStart && session.isHost) {
       sendResult(
         server.wsConnection,
         session.sessionId,
@@ -37,9 +37,11 @@ const GameVote = ({ server, session, fiveSeconds, sendVote, sendResult }) => {
       );
     }
 
-    const intervalId = setInterval(() => {
-      setTimeLeft(timeLeft - 1);
-    }, 1000);
+    const intervalId = timeStart
+      ? setInterval(() => {
+          setTimeLeft(timeLeft - 1);
+        }, 1000)
+      : null;
 
     // clear interval on re-render to avoid memory leaks
     return () => clearInterval(intervalId);
@@ -47,26 +49,15 @@ const GameVote = ({ server, session, fiveSeconds, sendVote, sendResult }) => {
     // when we update it
   }, [timeLeft]);
 
-  const delay = (ms) => new Promise((res) => setTimeout(res, ms));
   useEffect(() => {
-    async function wait() {
-      console.log('waiting...');
-      await delay(3000);
-      console.log('result: ', fiveSeconds.pass >= fiveSeconds.fail);
-      sendResult(
-        server.wsConnection,
-        session.sessionId,
-        fiveSeconds.pass >= fiveSeconds.fail
-      );
-    }
-
     if (
       fiveSeconds.pass + fiveSeconds.fail >= fiveSeconds.players.length &&
       fiveSeconds.roundRoundComplete &&
       session.isHost &&
-      !timeout
+      !timeStart
     ) {
-      wait();
+      setTimeLeft(3);
+      setTimeStart(true);
     }
   }, [fiveSeconds.pass, fiveSeconds.fail]);
 
@@ -79,20 +70,28 @@ const GameVote = ({ server, session, fiveSeconds, sendVote, sendResult }) => {
           ) : (
             <Fragment>
               <div
-                style={{ ...styles.voteBox, background: 'red' }}
+                style={{
+                  ...styles.voteBox,
+                  border: '5px solid #A45B5B',
+                  color: '#A45B5B',
+                }}
                 onMouseDown={() =>
                   sendVote(server.wsConnection, session.sessionId, false)
                 }
               >
-                <h2>FAIL!</h2>
+                <h2 style={{ fontSize: '3rem' }}>FAIL!</h2>
               </div>
               <div
-                style={{ ...styles.voteBox, background: 'green' }}
+                style={{
+                  ...styles.voteBox,
+                  border: '5px solid #8DA881',
+                  color: '#8DA881',
+                }}
                 onMouseDown={() =>
                   sendVote(server.wsConnection, session.sessionId, true)
                 }
               >
-                <h2>PASS!</h2>
+                <h2 style={{ fontSize: '3rem' }}>PASS!</h2>
               </div>
             </Fragment>
           )}
@@ -113,6 +112,21 @@ const GameVote = ({ server, session, fiveSeconds, sendVote, sendResult }) => {
           )}
         </div>
       )}
+      {session.isHost ? (
+        <GameButton
+          color="#d9145c"
+          styling={{ position: 'absolute', bottom: 100, left: 0 }}
+          onMouseDown={() =>
+            sendResult(
+              server.wsConnection,
+              session.sessionId,
+              fiveSeconds.pass >= fiveSeconds.fail
+            )
+          }
+        >
+          <h2>Force Vote!</h2>
+        </GameButton>
+      ) : null}
     </div>
   );
 };

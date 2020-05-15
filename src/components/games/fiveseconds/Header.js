@@ -18,7 +18,7 @@ const Header = ({ server, session, sendDataReset, sendEndGame }) => {
       {session.isHost ? (
         <GameButton
           styling={{ position: 'absolute', left: 0, top: 10 }}
-          color="#d66e31"
+          color="#d9145c"
           onMouseDown={() =>
             sendEndGame(server.wsConnection, session.sessionId)
           }
@@ -29,7 +29,7 @@ const Header = ({ server, session, sendDataReset, sendEndGame }) => {
       {session.isHost ? (
         <GameButton
           styling={{ position: 'absolute', right: 0, top: 10 }}
-          color="#d66e31"
+          color="#d9145c"
           onMouseDown={() =>
             sendDataReset(server.wsConnection, session.sessionId)
           }

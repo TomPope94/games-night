@@ -39,21 +39,17 @@ const GameRound = ({
   sendStartRound,
   setAlert,
 }) => {
-  const data = fiveSeconds.gameData.cards;
+  const [data, setData] = useState(fiveSeconds.gameData.cards);
+  const [livePlayers, setLivePlayers] = useState([]);
+  const [deadPlayers, setDeadPlayers] = useState([]);
+  const [survivedPlayers, setSurvivedPlayers] = useState([]);
 
   const getNewWord = () => {
     const randomNum = Math.floor(Math.random() * data.length);
-    data.splice(randomNum, 1); // Stops you from getting the same word twice
-    return data[randomNum];
+    const word = data[randomNum];
+    setData(data.splice(randomNum, 1)); // Stops you from getting the same word twice
+    return word;
   };
-
-  const deadPlayers = fiveSeconds.players.filter((player) => player.lives <= 0);
-  const livePlayers = fiveSeconds.players.filter(
-    (player) => player.lives > 0 && !player.completed
-  );
-  const survivedPlayers = fiveSeconds.players.filter(
-    (player) => player.lives > 0 && player.completed
-  );
 
   const getNextPlayer = (liveArr) => {
     const randNum = Math.floor(Math.random() * liveArr.length);
@@ -61,6 +57,20 @@ const GameRound = ({
 
     return nextTurn;
   };
+
+  useEffect(() => {
+    setDeadPlayers(fiveSeconds.players.filter((player) => player.lives <= 0));
+    setLivePlayers(
+      fiveSeconds.players.filter(
+        (player) => player.lives > 0 && !player.completed
+      )
+    );
+    setSurvivedPlayers(
+      fiveSeconds.players.filter(
+        (player) => player.lives > 0 && player.completed
+      )
+    );
+  }, [fiveSeconds.players]);
 
   useEffect(() => {
     async function nextUp() {
@@ -147,11 +157,11 @@ const GameRound = ({
           style={{ width: '50%', display: 'flex', justifyContent: 'center' }}
         >
           {!fiveSeconds.roundRoundStarted ? (
-            <GameButton color="#d66e31" onMouseDown={() => handleBegin()}>
+            <GameButton color="#d9145c" onMouseDown={() => handleBegin()}>
               <h1>Begin!</h1>
             </GameButton>
           ) : fiveSeconds.roundComplete ? (
-            <GameButton color="#d66e31" onMouseDown={() => handleNextRound()}>
+            <GameButton color="#d9145c" onMouseDown={() => handleNextRound()}>
               <h1>Next Round...</h1>
             </GameButton>
           ) : fiveSeconds.roundRoundStarted &&

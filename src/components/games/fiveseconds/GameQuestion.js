@@ -4,8 +4,7 @@ import { connect } from 'react-redux';
 import { sendEndQuestion } from 'actions/fiveSeconds';
 
 const GameQuestion = ({ server, session, fiveSeconds, sendEndQuestion }) => {
-  const [start, setStart] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(6);
+  const [timeLeft, setTimeLeft] = useState(5);
 
   const styles = {
     pageContainer: {
@@ -33,20 +32,17 @@ const GameQuestion = ({ server, session, fiveSeconds, sendEndQuestion }) => {
   };
 
   useEffect(() => {
-    setStart(false);
-  }, []);
-
-  useEffect(() => {
     // exit early when we reach 0
-    if (!timeLeft && session.isHost)
+    if (!timeLeft && session.isHost) {
       sendEndQuestion(server.wsConnection, session.sessionId);
-    if (timeLeft === 4) {
-      setStart(true);
     }
+
     const intervalId = setInterval(() => {
       setTimeLeft(timeLeft - 1);
     }, 1000);
-
+    if (timeLeft <= 0) {
+      clearInterval(intervalId);
+    }
     // clear interval on re-render to avoid memory leaks
     return () => clearInterval(intervalId);
     // add timeLeft as a dependency to re-rerun the effect

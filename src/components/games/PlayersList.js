@@ -3,7 +3,7 @@ import React from 'react';
 const PlayersList = ({ ...props }) => {
   const styles = {
     modeContainer: {
-      background: '#fff',
+      background: '#a0b0d0',
       minHeight: 200,
       flexGrow: 1,
       margin: 20,
@@ -22,6 +22,7 @@ const PlayersList = ({ ...props }) => {
   return (
     <div style={styles.modeContainer} {...props}>
       <h2>Players:</h2>
+      <h4>(Click here to join!)</h4>
       {props.children}
     </div>
   );
