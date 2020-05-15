@@ -26,7 +26,7 @@ const styles = {
     display: 'flex',
     justifyContent: 'flex-end',
     alignItems: 'center',
-    width: '100%',
+    width: '75%',
     paddingBottom: 100,
   },
 };

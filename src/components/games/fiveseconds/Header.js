@@ -9,6 +9,7 @@ import GameButton from 'components/global/GameButton';
 const styles = {
   headerContainer: {
     position: 'relative',
+    width: '75%',
   },
 };
 
