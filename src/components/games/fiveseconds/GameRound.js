@@ -47,7 +47,7 @@ const GameRound = ({
   const getNewWord = () => {
     const randomNum = Math.floor(Math.random() * data.length);
     const word = data[randomNum];
-    setData(data.splice(randomNum, 1)); // Stops you from getting the same word twice
+    setData(data.filter((dataWord) => dataWord !== word)); // Stops you from getting the same word twice
     return word;
   };
 
