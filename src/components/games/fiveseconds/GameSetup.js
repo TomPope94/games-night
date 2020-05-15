@@ -36,6 +36,7 @@ const GameSetup = ({
   server,
   session,
   sendPlayerJoin,
+  sendStateChange,
   setAlert,
 }) => {
   const [focus, setFocus] = useState(false);
