@@ -10,11 +10,10 @@ const styles = {
   livesContainer: {
     display: 'flex',
     flexDirection: 'column',
-    width: '25%',
+    width: '100%',
   },
   selectorContainer: {
     display: 'flex',
-    justifyContent: 'center',
     alignItems: 'center',
   },
   buttonsContainer: {
@@ -46,23 +45,25 @@ const LivesPicker = ({
 
   return (
     <div style={styles.livesContainer}>
-      <h1>Number of Lives:</h1>
+      <h3>Number of Lives:</h3>
       <div style={styles.selectorContainer}>
-        <h4>{fiveSeconds.numLives}</h4>
         <div style={styles.buttonsContainer}>
           <GameButton
             color="#d66e31"
+            styling={{ margin: 5, marginRight: 10, padding: '0px 10px' }}
             onMouseDown={() => handleLivesChange(true)}
           >
             <p>+</p>
           </GameButton>
           <GameButton
             color="#d66e31"
+            styling={{ margin: 5, marginRight: 10, padding: '0px 10px' }}
             onMouseDown={() => handleLivesChange(false)}
           >
             <p>-</p>
           </GameButton>
         </div>
+        <h4>{fiveSeconds.numLives}</h4>
       </div>
     </div>
   );

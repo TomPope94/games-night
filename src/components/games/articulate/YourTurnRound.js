@@ -13,17 +13,17 @@ const YourTurnRound = ({
   sendToSummary,
   category,
 }) => {
-  const data = articulate.gameData[category];
-
+  const [data, setData] = useState(articulate.gameData[category]);
+  // const data = articulate.gameData[category];
   // const [data, setData]= useState([])
   const [gameWord, setGameWord] = useState(null);
   const [passedWords, setPassedWords] = useState([]);
   const [correctWords, setCorrectWords] = useState([]);
   const [timeLeft, setTimeLeft] = useState(60);
 
-  // useEffect(() => {
-  //   setData
-  // }, [articulate.gameData])
+  useEffect(() => {
+    setData(articulate.gameData[category]);
+  }, [articulate.gameData]);
 
   const styles = {
     roundContainer: {

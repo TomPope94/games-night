@@ -4,26 +4,14 @@ import { connect } from 'react-redux';
 import { sendVote, sendResult } from 'actions/fiveSeconds';
 import GameButton from 'components/global/GameButton';
 
-const styles = {
-  voterContainer: {
-    display: 'flex',
-    width: '100%',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-  },
-  voteBox: {
-    width: '35%',
-    minHeight: 150,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    boxShadow: '0 1px 3px rgb(1,1,1,0.5)',
-    borderRadius: 10,
-    cursor: 'pointer',
-  },
-};
-
-const GameVote = ({ server, session, fiveSeconds, sendVote, sendResult }) => {
+const GameVote = ({
+  server,
+  session,
+  fiveSeconds,
+  sendVote,
+  sendResult,
+  mobile,
+}) => {
   const [timeLeft, setTimeLeft] = useState(0);
   const [timeStart, setTimeStart] = useState(false);
 
@@ -60,6 +48,31 @@ const GameVote = ({ server, session, fiveSeconds, sendVote, sendResult }) => {
       setTimeStart(true);
     }
   }, [fiveSeconds.pass, fiveSeconds.fail]);
+
+  const styles = {
+    voterContainer: {
+      display: 'flex',
+      flexDirection: mobile ? 'column-reverse' : 'row',
+      width: mobile ? '100vw' : '100%',
+      height: mobile ? '100vh' : '100%',
+      background: mobile ? '#fff' : 'transparent',
+      position: mobile ? 'absolute' : 'relative',
+      top: 0,
+      left: 0,
+      justifyContent: 'space-evenly',
+      alignItems: 'center',
+    },
+    voteBox: {
+      width: '45%',
+      minHeight: 150,
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      boxShadow: '0 1px 3px rgb(1,1,1,0.5)',
+      borderRadius: 10,
+      cursor: 'pointer',
+    },
+  };
 
   return (
     <div style={styles.voterContainer}>
@@ -115,7 +128,7 @@ const GameVote = ({ server, session, fiveSeconds, sendVote, sendResult }) => {
       {session.isHost ? (
         <GameButton
           color="#d9145c"
-          styling={{ position: 'absolute', bottom: 100, left: 0 }}
+          styling={{ position: 'absolute', bottom: 100, left: '50%' }}
           onMouseDown={() =>
             sendResult(
               server.wsConnection,

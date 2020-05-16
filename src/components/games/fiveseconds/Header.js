@@ -6,14 +6,19 @@ import { sendDataReset, sendEndGame } from 'actions/fiveSeconds';
 import HeroBanner from 'components/global/HeroBanner';
 import GameButton from 'components/global/GameButton';
 
-const styles = {
-  headerContainer: {
-    position: 'relative',
-    width: '75%',
-  },
-};
-
-const Header = ({ server, session, sendDataReset, sendEndGame }) => {
+const Header = ({
+  server,
+  session,
+  fiveSeconds,
+  sendDataReset,
+  sendEndGame,
+}) => {
+  const styles = {
+    headerContainer: {
+      position: 'relative',
+      width: fiveSeconds.gameState === 'setup' ? '75%' : '100%',
+    },
+  };
   return (
     <div style={styles.headerContainer}>
       {session.isHost ? (

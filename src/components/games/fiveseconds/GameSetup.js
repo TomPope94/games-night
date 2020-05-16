@@ -20,14 +20,15 @@ const styles = {
   setupContainer: {
     display: 'flex',
     justifyContent: 'flex-start',
-    width: '75%',
+    width: '100%',
+    height: '65%',
   },
   startContainer: {
     display: 'flex',
     justifyContent: 'flex-end',
     alignItems: 'center',
-    width: '75%',
-    paddingBottom: 100,
+    width: '100%',
+    marginTop: 40,
   },
 };
 
@@ -84,7 +85,7 @@ const GameSetup = ({
           <div
             style={{
               height: height - 300,
-              width: '100%',
+              width: '75%',
               display: 'flex',
               flexDirection: 'column',
               overflow: 'auto',
@@ -95,14 +96,14 @@ const GameSetup = ({
             </h3>
             <div style={styles.setupContainer}>
               <ModePicker
-                styling={{ width: '75%' }}
+                styling={{ width: '75%', height: '100%' }}
                 modename="Core Setup"
                 hovereffect={false}
               >
                 <LivesPicker />
               </ModePicker>
               <PlayersList
-                styling={{ width: '25%' }}
+                styling={{ width: '25%', overflow: 'auto', height: '100%' }}
                 onMouseDown={async () => {
                   if (!fiveSeconds.inPool) {
                     await sendPlayerJoin(

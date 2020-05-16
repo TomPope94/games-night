@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Fragment } from 'react';
 import { connect } from 'react-redux';
 import GameButton from 'components/global/GameButton';
 
@@ -6,31 +6,7 @@ import { sendStartRound } from 'actions/fiveSeconds';
 import { setAlert } from 'actions/alert';
 import GameVote from './GameVote';
 import GameQuestion from './GameQuestion';
-
-const styles = {
-  roundContainer: {
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  playersRow: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: '100%',
-  },
-  playersContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: '10%',
-    background: '#fff',
-    padding: 20,
-    borderRadius: 10,
-    boxShadow: '0 3px 5px rgba(1,1,1,0.5)',
-    marginBottom: 15,
-  },
-};
+import GameRoundMobile from './GameRoundMobile';
 
 const GameRound = ({
   server,
@@ -43,6 +19,54 @@ const GameRound = ({
   const [livePlayers, setLivePlayers] = useState([]);
   const [deadPlayers, setDeadPlayers] = useState([]);
   const [survivedPlayers, setSurvivedPlayers] = useState([]);
+
+  const [dimensions, setDimensions] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+  const { width, height } = dimensions;
+  useEffect(() => {
+    const handleResize = () => {
+      setDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+
+    window.addEventListener('resize', handleResize);
+    return (_) => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [window.innerWidth, window.innerHeight]);
+
+  const styles = {
+    roundContainer: {
+      width: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+    },
+    playersRow: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      width: '100%',
+      height: height - 400,
+    },
+    playersContainer: {
+      display: 'flex',
+      flexDirection: 'column',
+      width: '10%',
+      height: '50%',
+      background: '#fff',
+      padding: 20,
+      borderRadius: 10,
+      boxShadow: '0 3px 5px rgba(1,1,1,0.5)',
+      marginBottom: 15,
+      overflowY: 'auto',
+      overflowX: 'hidden',
+    },
+  };
 
   const getNewWord = () => {
     const randomNum = Math.floor(Math.random() * data.length);
@@ -131,84 +155,110 @@ const GameRound = ({
   };
 
   return (
-    <div style={styles.roundContainer}>
-      {fiveSeconds.gameRound < 1 ? (
-        <h2>Are you ready?</h2>
+    <Fragment>
+      {width < 1000 ? (
+        <GameRoundMobile height={height} />
       ) : (
-        <h2>Round {fiveSeconds.gameRound}</h2>
-      )}
-      <div style={styles.playersRow}>
-        <div style={{ ...styles.playersContainer, alignItems: 'flex-start' }}>
-          <h2>Alive:</h2>
-          {livePlayers.map((player) => (
+        <div style={styles.roundContainer}>
+          {fiveSeconds.gameRound < 1 ? (
+            <h2>Are you ready?</h2>
+          ) : (
+            <h2>Round {fiveSeconds.gameRound}</h2>
+          )}
+          <div style={styles.playersRow}>
+            <div
+              style={{
+                ...styles.playersContainer,
+                height: '100%',
+                alignItems: 'flex-start',
+              }}
+            >
+              <h2>Alive:</h2>
+              {livePlayers.map((player) => (
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    width: '100%',
+                  }}
+                >
+                  <h4>{player.Username}</h4>
+                  <h4>{player.lives}</h4>
+                </div>
+              ))}
+            </div>
+            <div
+              style={{
+                width: '50%',
+                display: 'flex',
+                justifyContent: 'center',
+              }}
+            >
+              {!fiveSeconds.roundRoundStarted ? (
+                <GameButton color="#d9145c" onMouseDown={() => handleBegin()}>
+                  <h1>Begin!</h1>
+                </GameButton>
+              ) : fiveSeconds.roundComplete ? (
+                <GameButton
+                  color="#d9145c"
+                  onMouseDown={() => handleNextRound()}
+                >
+                  <h1>Next Round...</h1>
+                </GameButton>
+              ) : fiveSeconds.roundRoundStarted &&
+                !fiveSeconds.roundRoundComplete ? (
+                <GameQuestion />
+              ) : !fiveSeconds.roundComplete ? (
+                <GameVote mobile={false} />
+              ) : null}
+            </div>
             <div
               style={{
                 display: 'flex',
-                justifyContent: 'space-between',
-                width: '100%',
+                flexDirection: 'column',
+                width: '10%',
+                height: '100%',
               }}
             >
-              <h4>{player.Username}</h4>
-              <h4>{player.lives}</h4>
-            </div>
-          ))}
-        </div>
-        <div
-          style={{ width: '50%', display: 'flex', justifyContent: 'center' }}
-        >
-          {!fiveSeconds.roundRoundStarted ? (
-            <GameButton color="#d9145c" onMouseDown={() => handleBegin()}>
-              <h1>Begin!</h1>
-            </GameButton>
-          ) : fiveSeconds.roundComplete ? (
-            <GameButton color="#d9145c" onMouseDown={() => handleNextRound()}>
-              <h1>Next Round...</h1>
-            </GameButton>
-          ) : fiveSeconds.roundRoundStarted &&
-            !fiveSeconds.roundRoundComplete ? (
-            <GameQuestion />
-          ) : !fiveSeconds.roundComplete ? (
-            <GameVote />
-          ) : null}
-        </div>
-        <div style={{ display: 'flex', flexDirection: 'column', width: '10%' }}>
-          <div
-            style={{
-              ...styles.playersContainer,
-              alignItems: 'flex-start',
-              width: '100%',
-            }}
-          >
-            <h2>Dead:</h2>
-            {deadPlayers.map((player) => (
-              <h4 style={{ color: 'red' }}>{player.Username}</h4>
-            ))}
-          </div>
-          <div
-            style={{
-              ...styles.playersContainer,
-              alignItems: 'flex-start',
-              width: '100%',
-            }}
-          >
-            <h2>Survived:</h2>
-            {survivedPlayers.map((player) => (
               <div
                 style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
+                  ...styles.playersContainer,
+                  alignItems: 'flex-start',
                   width: '100%',
-                  color: 'green',
                 }}
               >
-                <h4>{player.Username}</h4>
-                <h4>{player.lives}</h4>
+                <h2>Dead:</h2>
+                {deadPlayers.map((player) => (
+                  <h4 style={{ color: 'red' }}>{player.Username}</h4>
+                ))}
               </div>
-            ))}
+              <div
+                style={{
+                  ...styles.playersContainer,
+                  alignItems: 'flex-start',
+                  width: '100%',
+                }}
+              >
+                <h2>Survived:</h2>
+                {survivedPlayers.map((player) => (
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      width: '100%',
+                      color: 'green',
+                    }}
+                  >
+                    <h4>{player.Username}</h4>
+                    <h4>{player.lives}</h4>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      )}
+    </Fragment>
   );
 };
 

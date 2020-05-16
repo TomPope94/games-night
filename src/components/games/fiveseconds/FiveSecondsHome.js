@@ -12,7 +12,6 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center',
   },
   setupContainer: {
     display: 'flex',
