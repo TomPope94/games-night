@@ -38,14 +38,14 @@ const handleMessage = (data) => async (dispatch) => {
     await dispatch(handleFivesecondsMessage(dataArr));
   } else if (dataArr[0].includes('guesspeople')) {
     await dispatch(handleGuessPeopleMessage(dataArr));
-  } else if (dataArr[0].includes('user')) {
+  } else if (dataArr[0].includes('user_action')) {
     await dispatch(handleUserMessage(dataArr));
   } else if (dataArr[0].includes('host')) {
     const messageData = extractMessage(dataArr[1]);
     await dispatch(connectSession(messageData));
   } else if (dataArr[0].includes('username')) {
     const messageArr = dataArr.filter((val) => val.includes('message'));
-    const value = messageArr[0].split(': ');
+    const value = messageArr[0].split(':');
 
     await dispatch(changeUsername(value[1]));
   } else if (dataArr[0].includes('player_join')) {
@@ -172,8 +172,6 @@ export const sendChangeUsername = (socket, username) => async (dispatch) => {
 };
 
 export const changeUsername = (username) => async (dispatch) => {
-  // await dispatch(setAlert('Username changed', 'positive'));
-
   await dispatch({
     type: SERVER_USERNAME_SUCCESS,
     payload: username,

@@ -29,7 +29,7 @@ const initialState = {
   wordsCorrect: [],
   modeRound: -1,
   gameMode: 'Articulate',
-  gameState: 'peopleInput',
+  gameState: 'setup',
   teamTurn: '',
   playerTurn: '',
   yourTurn: false,

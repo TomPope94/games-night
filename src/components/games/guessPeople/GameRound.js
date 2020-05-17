@@ -68,7 +68,7 @@ const GameRound = ({ session, server, guessPeople }) => {
               {guessPeople.playerTurn.Username} is about to go! Get your game
               faces on!
             </h1>
-            <h2>The round is: Articulate</h2>
+            <h2>The round is: {guessPeople.gameMode}</h2>
             <div style={{ width: '100%' }}>
               <h3>Team:</h3>
               {teamState !== ''

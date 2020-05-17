@@ -34,6 +34,7 @@ const YourTurnReady = ({
   return (
     <div style={styles.readyContainer}>
       <h1>It's your turn!</h1>
+      <h2>This round is: {guessPeople.gameMode}</h2>
       {guessPeople.gameMode === 'Articulate' ? (
         <p>
           You will have 1 minute to explain as many people as possible. You can

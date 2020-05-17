@@ -102,8 +102,8 @@ const App = () => {
             <GameRoute exact path={LIBRARY} component={Library} />
             <Route exact path={CODENAMES} component={CodenamesHome} />
             <GameRoute exact path={ARTICULATE} component={ArticulateHome} />
-            <Route exact path={FIVESECONDS} component={FiveSecondsHome} />
-            <GameRoute exact path={GUESSPEOPLE} component={GuessPeopleHome} />
+            <GameRoute exact path={FIVESECONDS} component={FiveSecondsHome} />
+            <Route exact path={GUESSPEOPLE} component={GuessPeopleHome} />
           </Switch>
         </div>
       </Router>
