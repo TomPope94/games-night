@@ -28,13 +28,44 @@ const Join = ({ server, sendJoinSession, sendChangeUsername }) => {
   const [session, setSession] = useState('');
   const [codeState, setCodeState] = useState(false);
   const [username, setUsername] = useState('');
+  const [dimensions, setDimensions] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
+  const { width, height } = dimensions;
+
+  useEffect(() => {
+    const handleResize = () => {
+      setDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+
+    window.addEventListener('resize', handleResize);
+    return (_) => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [window.innerHeight, window.innerWidth]);
+
+  useEffect(() => {
+    setUsername(server.username);
+  }, [server.username]);
 
   useEffect(() => {
     setUsername(server.username);
   }, [server.username]);
 
   return (
-    <div>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        padding: 25,
+      }}
+    >
       <h1>Join a Server.</h1>
       <h4>Pick a name... Enter the server code... enjoy the games!</h4>
       <form style={{ display: 'flex', justifyContent: 'center' }}>

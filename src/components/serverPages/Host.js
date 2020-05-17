@@ -8,32 +8,60 @@ import GameButton from 'components/global/GameButton';
 import { hostSession } from 'actions/server';
 import { LIBRARY } from 'constants/routes';
 
-const styles = {
-  inputContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  textInput: {
-    fontSize: '1.5rem',
-    borderRadius: 5,
-    padding: 10,
-    boxShadow: '0 0 10px rgba(1,1,1,0.1) inset',
-  },
-};
-
 const Host = ({ server, hostSession, sendChangeUsername }) => {
   const history = useHistory();
   const [username, setUsername] = useState('');
   const [codeState, setCodeState] = useState(false);
 
+  const [dimensions, setDimensions] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
+  const { width, height } = dimensions;
+
+  useEffect(() => {
+    const handleResize = () => {
+      setDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+
+    window.addEventListener('resize', handleResize);
+    return (_) => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [window.innerHeight, window.innerWidth]);
+
   useEffect(() => {
     setUsername(server.username);
   }, [server.username]);
 
+  const styles = {
+    inputContainer: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    textInput: {
+      fontSize: '1.5rem',
+      borderRadius: 5,
+      padding: 10,
+      boxShadow: '0 0 10px rgba(1,1,1,0.1) inset',
+    },
+  };
+
   return (
-    <div>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        padding: 25,
+      }}
+    >
       <h1>Host a Server.</h1>
       <h4>Start a server to enjoy the games with your friends!</h4>
       <form>
@@ -41,6 +69,7 @@ const Host = ({ server, hostSession, sendChangeUsername }) => {
           style={{
             marginTop: 25,
             display: 'flex',
+            flexDirection: width < 1000 ? 'column' : 'row',
             alignItems: 'center',
             justifyContent: 'center',
           }}
