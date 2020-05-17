@@ -27,7 +27,8 @@ const initialState = {
   roundStart: false,
   wordsPassed: [],
   wordsCorrect: [],
-  gameMode: '',
+  modeRound: -1,
+  gameMode: 'Articulate',
   gameState: 'peopleInput',
   teamTurn: '',
   playerTurn: '',
@@ -60,6 +61,7 @@ const initialState = {
     },
   },
   gameData: [],
+  namesInPlay: [],
 };
 
 export default function (state = initialState, action) {
@@ -124,9 +126,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         loading: false,
-        gameState: payload.gameState,
-        teamTurn: payload.team,
-        playerTurn: payload.player,
+        ...payload.data.GuessPeople,
         yourTurn: payload.yourTurn,
       };
     case GUESSPEOPLE_ROTA_SUCCESS:

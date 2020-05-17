@@ -13,12 +13,12 @@ const YourTurnRound = ({
   sendToSummary,
   category,
 }) => {
-  const data = guessPeople.gameData;
-
-  const [gameWord, setGameWord] = useState(null);
+  const [data, setData] = useState(guessPeople.namesInPlay);
+  const [gameWord, setGameWord] = useState({ name: null, id: null });
   const [passedWords, setPassedWords] = useState([]);
   const [correctWords, setCorrectWords] = useState([]);
-  const [timeLeft, setTimeLeft] = useState(60);
+  const [timeLeft, setTimeLeft] = useState(20);
+  const [roundEnd, setRoundEnd] = useState(false);
 
   const styles = {
     roundContainer: {
@@ -38,13 +38,13 @@ const YourTurnRound = ({
       justifyContent: 'center',
       alignItems: 'center',
       flexDirection: 'column',
-      pointerEvents: timeLeft <= 0 ? 'none' : 'all',
+      pointerEvents: roundEnd ? 'none' : 'all',
     },
     correctButton: {
-      background: timeLeft > 0 ? 'green' : 'red',
+      background: !roundEnd > 0 ? 'green' : 'red',
     },
     passButton: {
-      background: timeLeft > 0 ? 'orange' : 'red',
+      background: !roundEnd > 0 ? 'orange' : 'red',
     },
     score: {
       fontSize: '4rem',
@@ -73,10 +73,15 @@ const YourTurnRound = ({
   };
 
   const getNewWord = () => {
+    if (data.length <= 0) {
+      setRoundEnd(true);
+      return;
+    }
     const randomNum = Math.floor(Math.random() * data.length);
     setGameWord(data[randomNum]);
-    data.splice(randomNum, 1); // Stops you from getting the same word twice
-    return data[randomNum];
+    const chosenWord = data[randomNum];
+    setData(data.filter((wordObj) => wordObj.id !== chosenWord.id));
+    return chosenWord;
   };
   const correct = (word) => {
     setCorrectWords([...correctWords, word]);
@@ -106,7 +111,9 @@ const YourTurnRound = ({
 
   useEffect(() => {
     // exit early when we reach 0
-    if (!timeLeft) return;
+    if (!timeLeft) {
+      setRoundEnd(true);
+    }
 
     // save intervalId to clear the interval when the
     // component re-renders
@@ -125,11 +132,11 @@ const YourTurnRound = ({
         <div
           style={{
             ...styles.bigButton,
-            pointerEvents: !timeLeft ? 'all' : 'none',
+            pointerEvents: roundEnd ? 'all' : 'none',
             zIndex: 999999,
           }}
         >
-          {!timeLeft ? (
+          {roundEnd ? (
             <GameButton
               background="#fff"
               color="red"
@@ -148,7 +155,7 @@ const YourTurnRound = ({
           ) : (
             passedWords.map((word) => (
               <PassedWord correct={correct} word={word}>
-                <p style={{ fontSize: '2rem' }}>{word}</p>
+                <p style={{ fontSize: '2rem' }}>{word.name}</p>
               </PassedWord>
             ))
           )}
@@ -168,13 +175,13 @@ const YourTurnRound = ({
         >
           <p style={styles.score}>{guessPeople.roundScore}</p>
           {correctWords.map((word) => (
-            <p style={{ color: 'white' }}>{word}</p>
+            <p style={{ color: 'white' }}>{word.name}</p>
           ))}
         </div>
-        {timeLeft > 0 ? (
+        {!roundEnd ? (
           <div style={styles.wordOuterContainer}>
             <div style={styles.wordInnerContainer}>
-              <h1>{gameWord}</h1>
+              <h1>{gameWord.name}</h1>
               <h4>{timeLeft}</h4>
               <p style={styles.discardButton} onMouseDown={() => getNewWord()}>
                 <em>X</em>

@@ -54,10 +54,15 @@ const GameBoard = ({
 
     return rota;
   };
-  const choosePlayer = (rota, round) => {
+  const choosePlayer = (rota, round, refresh) => {
     const teamTurn = rota[round % rota.length];
+    let players;
 
-    const players = guessPeople.gameTeams[teamTurn].PlayersLeft;
+    if (!refresh) {
+      players = guessPeople.gameTeams[teamTurn].PlayersLeft;
+    } else {
+      players = guessPeople.gameTeams[teamTurn].PlayersGone;
+    }
     if (players.length > 0) {
       const randNum = Math.floor(Math.random() * players.length);
 
@@ -67,6 +72,20 @@ const GameBoard = ({
     }
   };
 
+  const checkPools = (rota) => {
+    const checkPoolArr = rota.filter(
+      (val) => guessPeople.gameTeams[val].PlayersLeft.length === 0
+    );
+    if (checkPoolArr.length > 0) {
+      const playersGoneArr = rota.map(
+        (val) => guessPeople.gameTeams[val].PlayersGone.length
+      );
+      const equalCheck = playersGoneArr.every((val, i, arr) => val === arr[0]);
+
+      return equalCheck;
+    } else return false;
+  };
+
   const handleNextRound = async () => {
     // if round is 0, pick the starter team and start the rota
     // else pick the next team in the rota
@@ -74,7 +93,7 @@ const GameBoard = ({
     // will need logic if the final round (not for now...)
     if (guessPeople.gameRound === 0 && guessPeople.gameStarter !== -1) {
       const rota = await startRota(teamState);
-      const player = await choosePlayer(rota, guessPeople.gameRound);
+      const player = await choosePlayer(rota, guessPeople.gameRound, false);
       await addRota(rota);
 
       // debugger;
@@ -82,12 +101,17 @@ const GameBoard = ({
         server.wsConnection,
         session.sessionId,
         getTeams(guessPeople.gameTeams)[guessPeople.gameStarter],
-        player
+        player,
+        false
       );
     } else {
+      // check if the player pools need refreshing
+      const poolsCheck = checkPools(guessPeople.gameRota);
+
       const player = await choosePlayer(
         guessPeople.gameRota,
-        guessPeople.gameRound
+        guessPeople.gameRound,
+        poolsCheck
       );
 
       if (player !== 'Pool Empty') {
@@ -97,7 +121,8 @@ const GameBoard = ({
           guessPeople.gameRota[
             guessPeople.gameRound % guessPeople.gameRota.length
           ],
-          player
+          player,
+          poolsCheck
         );
       }
     }

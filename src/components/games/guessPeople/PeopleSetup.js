@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import { connect } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
 
 import { setAlert } from 'actions/alert';
 import { sendNames } from 'actions/guessPeople';
@@ -27,11 +28,11 @@ const styles = {
 
 const PeopleSetup = ({ session, server, guessPeople, setAlert, sendNames }) => {
   const [formData, setFormData] = useState({
-    nameOne: '',
-    nameTwo: '',
-    nameThree: '',
-    nameFour: '',
-    nameFive: '',
+    nameOne: { name: '', id: uuidv4() },
+    nameTwo: { name: '', id: uuidv4() },
+    nameThree: { name: '', id: uuidv4() },
+    nameFour: { name: '', id: uuidv4() },
+    nameFive: { name: '', id: uuidv4() },
   });
 
   const checkInput = (dataObj) => {
@@ -47,7 +48,10 @@ const PeopleSetup = ({ session, server, guessPeople, setAlert, sendNames }) => {
   };
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({
+      ...formData,
+      [e.target.name]: { ...formData[e.target.name], name: e.target.value },
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -55,7 +59,7 @@ const PeopleSetup = ({ session, server, guessPeople, setAlert, sendNames }) => {
 
     const check = checkInput(formData);
     if (check) {
-      await sendNames(server.wsConnection, session.sessionId, formData);
+      await sendNames(server.wsConnection, session.sessionId, formData, false);
     } else {
       await setAlert('Need to enter 5 names!', 'neutral');
     }
@@ -64,42 +68,59 @@ const PeopleSetup = ({ session, server, guessPeople, setAlert, sendNames }) => {
   return (
     <div>
       {guessPeople.submittedPeople ? (
-        <h4>Waiting for everyone to submit...</h4>
+        <Fragment>
+          <h4>Waiting for everyone to submit...</h4>
+          {session.isHost ? (
+            <GameButton
+              color="#d9145c"
+              onMouseDown={async () =>
+                await sendNames(
+                  server.wsConnection,
+                  session.sessionId,
+                  formData,
+                  true
+                )
+              }
+            >
+              <h4>Force Next.</h4>
+            </GameButton>
+          ) : null}
+        </Fragment>
       ) : (
         <div style={styles.submitContainer}>
           <div style={styles.inputContainer}>
             <input
               style={styles.textInput}
               type="text"
-              value={formData.nameOne}
+              value={formData.nameOne.name}
               name="nameOne"
               onChange={(e) => handleChange(e)}
             />
             <input
               style={styles.textInput}
               type="text"
-              value={formData.nameTwo}
+              value={formData.nameTwo.name}
               name="nameTwo"
               onChange={(e) => handleChange(e)}
             />
             <input
               style={styles.textInput}
               type="text"
-              value={formData.nameThree}
+              value={formData.nameThree.name}
               name="nameThree"
               onChange={(e) => handleChange(e)}
             />
             <input
               style={styles.textInput}
               type="text"
-              value={formData.nameFour}
+              value={formData.nameFour.name}
               name="nameFour"
               onChange={(e) => handleChange(e)}
             />
             <input
               style={styles.textInput}
               type="text"
-              value={formData.nameFive}
+              value={formData.nameFive.name}
               name="nameFive"
               onChange={(e) => handleChange(e)}
             />

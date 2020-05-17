@@ -113,12 +113,15 @@ export const endGame = (data) => async (dispatch) => {
   });
 };
 
-export const sendNames = (socket, sessionId, names) => async (dispatch) => {
+export const sendNames = (socket, sessionId, names, override) => async (
+  dispatch
+) => {
   await socket.json({
     action: 'guesspeoplenames',
     data: {
       sessionId,
       names,
+      override,
     },
   });
 
@@ -134,16 +137,20 @@ export const names = (data) => async (dispatch) => {
   });
 };
 
-export const sendNextRound = (socket, sessionId, team, player) => async (
-  dispatch
-) => {
-  // debugger;
+export const sendNextRound = (
+  socket,
+  sessionId,
+  team,
+  player,
+  refreshPools
+) => async (dispatch) => {
   await socket.json({
     action: 'guesspeoplenextround',
     data: {
-      sessionId: sessionId,
-      team: team,
-      player: player,
+      sessionId,
+      team,
+      player,
+      refreshPools,
     },
   });
 
@@ -153,6 +160,7 @@ export const sendNextRound = (socket, sessionId, team, player) => async (
 };
 
 export const moveToNextRound = (data) => async (dispatch) => {
+  debugger;
   await dispatch({
     type: GUESSPEOPLE_NEXT_ROUND_SUCCESS,
     payload: data,

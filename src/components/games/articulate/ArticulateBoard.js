@@ -102,7 +102,7 @@ const ArticulateBoard = ({
         (val) => articulate.gameTeams[val].PlayersGone.length
       );
       const equalCheck = playersGoneArr.every((val, i, arr) => val === arr[0]);
-      // debugger;
+
       return equalCheck;
     } else return false;
   };

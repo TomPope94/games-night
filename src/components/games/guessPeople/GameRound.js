@@ -34,11 +34,50 @@ const GameRound = ({ session, server, guessPeople }) => {
       {guessPeople.yourTurn && !guessPeople.roundComplete ? (
         <YourTurnReady />
       ) : (
-        <div>
-          <div style={styles.teamIndicator} />
-          <h1>
-            {guessPeople.playerTurn} is about to go! Get your game faces on!
-          </h1>
+        <div
+          style={{
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              boxShadow: '0 1px 3px rgba(1,1,1,0.5)',
+              padding: 50,
+              borderTop: `25px solid ${
+                teamState === 'Red'
+                  ? '#A45B5B'
+                  : teamState === 'Blue'
+                  ? '#4E7EA0'
+                  : teamState === 'Orange'
+                  ? '#BF8F68'
+                  : teamState === 'Green'
+                  ? '#8DA881'
+                  : 'black'
+              }`,
+              borderRadius: 10,
+            }}
+          >
+            <h1>
+              {guessPeople.playerTurn.Username} is about to go! Get your game
+              faces on!
+            </h1>
+            <h2>The round is: Articulate</h2>
+            <div style={{ width: '100%' }}>
+              <h3>Team:</h3>
+              {teamState !== ''
+                ? guessPeople.gameTeams[teamState].Players.map((player) => (
+                    <p style={{ marginLeft: 100 }}>{player.Username}</p>
+                  ))
+                : null}
+            </div>
+          </div>
         </div>
       )}
     </Fragment>
@@ -52,7 +91,7 @@ const GameRound = ({ session, server, guessPeople }) => {
           <h2>Correct Words: </h2>
           <ol>
             {guessPeople.wordsCorrect.map((word) => (
-              <li>{word}</li>
+              <li>{word.name}</li>
             ))}
           </ol>
         </div>
