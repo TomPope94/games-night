@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 const NavLink = ({ text, route, ...props }) => {
   const history = useHistory();
@@ -8,24 +8,24 @@ const NavLink = ({ text, route, ...props }) => {
 
   const styles = {
     link: {
-      fontSize: '1rem',
-      cursor: 'pointer',
+      fontSize: "1rem",
+      cursor: "pointer",
     },
     linkContainer: {
-      position: 'relative',
-      display: 'flex',
-      justifyContent: 'center',
+      position: "relative",
+      display: "flex",
+      justifyContent: "center",
     },
     underline: {
-      position: 'absolute',
+      position: "absolute",
       bottom: 0,
       left: 0,
-      width: '100%',
+      width: "100%",
       height: 5,
-      transform: hover ? 'scaleX(1)' : 'scaleX(0)',
-      transformOrigin: 'left',
-      transition: '0.25s linear',
-      background: '#D9145C',
+      transform: hover ? "scaleX(1)" : "scaleX(0)",
+      transformOrigin: "left",
+      transition: "0.25s linear",
+      background: "#D94711",
     },
   };
 

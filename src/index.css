@@ -1,7 +1,8 @@
 body {
-  font-family: 'Roboto Mono', monospace;
+  font-family: mortise, serif;
+  font-style: normal;
   font-weight: 200;
   margin: 0;
   overflow: hidden;
-  color: '#273859';
+  color: #0396a6;
 }

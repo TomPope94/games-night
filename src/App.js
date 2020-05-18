@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { Router, Route, Switch } from 'react-router-dom';
-import history from './history';
+import React, { useEffect, useState } from "react";
+import { Router, Route, Switch } from "react-router-dom";
+import history from "./history";
 
-import GameRoute from 'components/routing/GameRoute';
+import GameRoute from "components/routing/GameRoute";
 
-import Nav from 'components/global/nav/Nav';
-import Alert from 'components/global/Alert';
-import GamesHome from 'components/Home';
-import Join from 'components/serverPages/Join';
-import Host from 'components/serverPages/Host';
-import Product from 'components/serverPages/Product';
-import Pricing from 'components/serverPages/Pricing';
-import About from 'components/serverPages/About';
-import Library from 'components/games/library/Library';
-import CodenamesHome from 'components/games/codenames/CodenamesHome';
-import ArticulateHome from 'components/games/articulate/AriculateHome';
-import FiveSecondsHome from 'components/games/fiveseconds/FiveSecondsHome';
-import GuessPeopleHome from 'components/games/guessPeople/GuessPeopleHome';
+import Nav from "components/global/nav/Nav";
+import Alert from "components/global/Alert";
+import GamesHome from "components/Home";
+import Join from "components/serverPages/Join";
+import Host from "components/serverPages/Host";
+import Product from "components/serverPages/Product";
+import Pricing from "components/serverPages/Pricing";
+import About from "components/serverPages/About";
+import Library from "components/games/library/Library";
+import CodenamesHome from "components/games/codenames/CodenamesHome";
+import ArticulateHome from "components/games/articulate/AriculateHome";
+import FiveSecondsHome from "components/games/fiveseconds/FiveSecondsHome";
+import GuessPeopleHome from "components/games/guessPeople/GuessPeopleHome";
 
 import {
   HOME,
@@ -30,11 +30,11 @@ import {
   ARTICULATE,
   FIVESECONDS,
   GUESSPEOPLE,
-} from 'constants/routes';
+} from "constants/routes";
 
-import { connectServer, ping } from 'actions/server';
-import { Provider } from 'react-redux';
-import store from 'store';
+import { connectServer, ping } from "actions/server";
+import { Provider } from "react-redux";
+import store from "store";
 
 const App = () => {
   const [timeActive, setTimeActive] = useState(0);
@@ -49,9 +49,9 @@ const App = () => {
       });
     };
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
     return (_) => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, [window.innerWidth]);
 
@@ -60,11 +60,11 @@ const App = () => {
       marginTop: 100,
       paddingLeft: width >= 1000 ? 50 : 0,
       paddingRight: width >= 1000 ? 50 : 0,
-      background: '#fff',
-      width: width >= 1000 ? 'auto' : '100vw',
-      height: '100vh',
-      overflow: 'overlay',
-      color: '#273859',
+      background: "#fff",
+      width: width >= 1000 ? "auto" : "100vw",
+      height: "100vh",
+      overflow: "overlay",
+      color: "#0396a6",
     },
   };
   useEffect(() => {

@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { connect } from 'react-redux';
+import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { connect } from "react-redux";
 
-import { sendChangeUsername } from 'actions/server';
-import GameButton from 'components/global/GameButton';
+import { sendChangeUsername } from "actions/server";
+import GameButton from "components/global/GameButton";
 
-import { hostSession } from 'actions/server';
-import { LIBRARY } from 'constants/routes';
+import { hostSession } from "actions/server";
+import { LIBRARY } from "constants/routes";
 
 const Host = ({ server, hostSession, sendChangeUsername }) => {
   const history = useHistory();
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState("");
   const [codeState, setCodeState] = useState(false);
 
   const [dimensions, setDimensions] = useState({
@@ -28,9 +28,9 @@ const Host = ({ server, hostSession, sendChangeUsername }) => {
       });
     };
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
     return (_) => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, [window.innerHeight, window.innerWidth]);
 
@@ -40,41 +40,46 @@ const Host = ({ server, hostSession, sendChangeUsername }) => {
 
   const styles = {
     inputContainer: {
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
     },
     textInput: {
-      fontSize: '1.5rem',
+      fontSize: "1.5rem",
       borderRadius: 5,
       padding: 10,
-      boxShadow: '0 0 10px rgba(1,1,1,0.1) inset',
+      boxShadow: "0 0 10px rgba(1,1,1,0.1) inset",
     },
   };
 
   return (
     <div
       style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
         padding: 25,
       }}
     >
-      <h1>Host a Server.</h1>
-      <h4>Start a server to enjoy the games with your friends!</h4>
+      <h1>
+        Host a Server<span style={{ color: "#D95A11" }}>.</span>
+      </h1>
+      <h4>
+        Start a server to enjoy the games with your friends
+        <span style={{ color: "#D95A11" }}>!</span>
+      </h4>
       <form>
         <div
           style={{
             marginTop: 25,
-            display: 'flex',
-            flexDirection: width < 1000 ? 'column' : 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
+            display: "flex",
+            flexDirection: width < 1000 ? "column" : "row",
+            alignItems: "center",
+            justifyContent: "center",
           }}
         >
-          <h4 style={{ textAlign: 'right', paddingRight: 20 }}>Username:</h4>
+          <h4 style={{ textAlign: "right", paddingRight: 20 }}>Username:</h4>
           <input
             type="text"
             value={username}
@@ -87,8 +92,8 @@ const Host = ({ server, hostSession, sendChangeUsername }) => {
         </div>
         <div style={styles.inputContainer}>
           {!codeState ? (
-            <GameButton color="#273859" onMouseDown={() => setCodeState(true)}>
-              <h2>Set name.</h2>
+            <GameButton color="#D95A11" onMouseDown={() => setCodeState(true)}>
+              <h2>Set name</h2>
             </GameButton>
           ) : (
             <GameButton
@@ -96,7 +101,7 @@ const Host = ({ server, hostSession, sendChangeUsername }) => {
                 await hostSession(server.wsConnection);
                 history.push(LIBRARY);
               }}
-              background="#273859"
+              background="#D95A11"
             >
               <h2>Create Server.</h2>
             </GameButton>
