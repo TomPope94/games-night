@@ -1,14 +1,14 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React from "react";
+import { connect } from "react-redux";
 
-import { sendEndGame } from 'actions/guessPeople';
+import { sendEndGame } from "actions/guessPeople";
 
-import HeroBanner from 'components/global/HeroBanner';
-import GameButton from 'components/global/GameButton';
+import HeroBanner from "components/global/HeroBanner";
+import GameButton from "components/global/GameButton";
 
 const styles = {
   headerContainer: {
-    position: 'relative',
+    position: "relative",
   },
 };
 
@@ -17,7 +17,7 @@ const Header = ({ server, session, sendEndGame }) => {
     <div style={styles.headerContainer}>
       {session.isHost ? (
         <GameButton
-          styling={{ position: 'absolute', left: 0, top: 10 }}
+          styling={{ position: "absolute", left: 0, top: 10 }}
           color="#d66e31"
           onMouseDown={() =>
             sendEndGame(server.wsConnection, session.sessionId)
@@ -27,7 +27,7 @@ const Header = ({ server, session, sendEndGame }) => {
         </GameButton>
       ) : null}
       <HeroBanner background="transparent">
-        <h1 style={{ color: 'black' }}>Guess the People!</h1>
+        <h1 style={{ color: "#0396A6" }}>Guess the People</h1>
       </HeroBanner>
     </div>
   );

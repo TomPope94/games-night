@@ -1,15 +1,15 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React from "react";
+import { connect } from "react-redux";
 
-import HeroBanner from 'components/global/HeroBanner';
-import GameButton from 'components/global/GameButton';
+import HeroBanner from "components/global/HeroBanner";
+import GameButton from "components/global/GameButton";
 
-import { sendRefreshData, sendEndGame } from 'actions/articulate';
+import { sendRefreshData, sendEndGame } from "actions/articulate";
 
 const styles = {
   headerContainer: {
-    position: 'relative',
-    width: '70%',
+    position: "relative",
+    width: "70%",
   },
 };
 
@@ -23,7 +23,7 @@ const ArticulateHeader = ({
     <div style={styles.headerContainer}>
       {session.isHost ? (
         <GameButton
-          styling={{ position: 'absolute', left: 0, top: 10 }}
+          styling={{ position: "absolute", left: 0, top: 10 }}
           color="#d9145c"
           onMouseDown={() =>
             sendEndGame(server.wsConnection, session.sessionId)
@@ -34,7 +34,7 @@ const ArticulateHeader = ({
       ) : null}
       {session.isHost ? (
         <GameButton
-          styling={{ position: 'absolute', right: 0, top: 10 }}
+          styling={{ position: "absolute", right: 0, top: 10 }}
           color="#d9145c"
           onMouseDown={() =>
             sendRefreshData(server.wsConnection, session.sessionId)
@@ -44,7 +44,7 @@ const ArticulateHeader = ({
         </GameButton>
       ) : null}
       <HeroBanner background="transparent">
-        <h1 style={{ color: 'black' }}>Articulate!</h1>
+        <h1 style={{ color: "#0396A6" }}>Articulate</h1>
       </HeroBanner>
     </div>
   );

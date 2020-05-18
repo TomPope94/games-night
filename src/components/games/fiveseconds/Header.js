@@ -1,10 +1,10 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React from "react";
+import { connect } from "react-redux";
 
-import { sendDataReset, sendEndGame } from 'actions/fiveSeconds';
+import { sendDataReset, sendEndGame } from "actions/fiveSeconds";
 
-import HeroBanner from 'components/global/HeroBanner';
-import GameButton from 'components/global/GameButton';
+import HeroBanner from "components/global/HeroBanner";
+import GameButton from "components/global/GameButton";
 
 const Header = ({
   server,
@@ -15,15 +15,15 @@ const Header = ({
 }) => {
   const styles = {
     headerContainer: {
-      position: 'relative',
-      width: fiveSeconds.gameState === 'setup' ? '75%' : '100%',
+      position: "relative",
+      width: fiveSeconds.gameState === "setup" ? "75%" : "100%",
     },
   };
   return (
     <div style={styles.headerContainer}>
       {session.isHost ? (
         <GameButton
-          styling={{ position: 'absolute', left: 0, top: 10 }}
+          styling={{ position: "absolute", left: 0, top: 10 }}
           color="#d9145c"
           onMouseDown={() =>
             sendEndGame(server.wsConnection, session.sessionId)
@@ -34,7 +34,7 @@ const Header = ({
       ) : null}
       {session.isHost ? (
         <GameButton
-          styling={{ position: 'absolute', right: 0, top: 10 }}
+          styling={{ position: "absolute", right: 0, top: 10 }}
           color="#d9145c"
           onMouseDown={() =>
             sendDataReset(server.wsConnection, session.sessionId)
@@ -44,7 +44,7 @@ const Header = ({
         </GameButton>
       ) : null}
       <HeroBanner background="transparent">
-        <h1 style={{ color: 'black' }}>Five Second Rule</h1>
+        <h1 style={{ color: "#0396A6" }}>Five Second Rule</h1>
       </HeroBanner>
     </div>
   );

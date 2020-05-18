@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
 
-import Players from 'components/games/library/Players';
-import Chat from 'components/games/library/Chat';
+import Players from "components/games/library/Players";
+import Chat from "components/games/library/Chat";
 
 const SocialContainer = ({ session, mobile, focus, setfocus, ...props }) => {
   const [dimensions, setDimensions] = useState({
     height: window.innerHeight,
   });
-  const [tabSelected, setTabSelected] = useState('feed');
+  const [tabSelected, setTabSelected] = useState("feed");
 
   useEffect(() => {
     const handleResize = () => {
@@ -17,45 +17,45 @@ const SocialContainer = ({ session, mobile, focus, setfocus, ...props }) => {
       });
     };
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
     return (_) => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, [window.innerHeight]);
 
   const styles = {
     socialContainer: {
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'space-between',
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between",
       paddingTop: 20,
-      background: '#273859',
+      background: "#D95A11",
       borderRadius: 10,
-      color: '#fff',
+      color: "#fff",
       height: dimensions.height - 100,
-      position: 'relative',
+      position: "relative",
       ...props.styling,
     },
     buttonsRow: {
-      display: mobile && focus ? 'none' : 'flex',
-      position: mobile ? 'absolute' : 'auto',
+      display: mobile && focus ? "none" : "flex",
+      position: mobile ? "absolute" : "auto",
       top: 0,
       minHeight: mobile ? 0 : 100,
-      width: '100%',
+      width: "100%",
     },
     button: {
-      display: 'flex',
-      height: '100%',
-      justifyContent: 'center',
-      width: '50%',
-      color: '#fff',
-      cursor: 'pointer',
+      display: "flex",
+      height: "100%",
+      justifyContent: "center",
+      width: "50%",
+      color: "#fff",
+      cursor: "pointer",
     },
   };
 
   return (
     <div style={styles.socialContainer}>
-      {tabSelected === 'players' ? (
+      {tabSelected === "players" ? (
         <Players mobile={mobile} />
       ) : (
         <Chat mobile={mobile} setfocus={setfocus} focus={focus} />
@@ -64,20 +64,20 @@ const SocialContainer = ({ session, mobile, focus, setfocus, ...props }) => {
         <div
           style={{
             ...styles.button,
-            background: tabSelected === 'players' ? '#273859' : '#fff',
-            color: tabSelected === 'players' ? '#fff' : '#d9145c',
+            background: tabSelected === "players" ? "#D95A11" : "#fff",
+            color: tabSelected === "players" ? "#fff" : "#D95A11",
           }}
-          onMouseDown={() => setTabSelected('players')}
+          onMouseDown={() => setTabSelected("players")}
         >
           <h3>Players</h3>
         </div>
         <div
           style={{
             ...styles.button,
-            background: tabSelected === 'feed' ? '#273859' : '#fff',
-            color: tabSelected === 'feed' ? '#fff' : '#d9145c',
+            background: tabSelected === "feed" ? "#D95A11" : "#fff",
+            color: tabSelected === "feed" ? "#fff" : "#D95A11",
           }}
-          onMouseDown={() => setTabSelected('feed')}
+          onMouseDown={() => setTabSelected("feed")}
         >
           <h3>Feed</h3>
         </div>

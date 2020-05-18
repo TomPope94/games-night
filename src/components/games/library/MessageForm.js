@@ -1,45 +1,45 @@
-import React, { useState, useRef } from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useRef } from "react";
+import { connect } from "react-redux";
 
-import { sendChatMessage } from 'actions/user';
+import { sendChatMessage } from "actions/user";
 
 const styles = {
   formContainer: {
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-    position: 'relative',
+    width: "100%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexWrap: "wrap",
+    position: "relative",
   },
   textInput: {
-    fontSize: '1.25rem',
-    width: '100%',
+    fontSize: "1.25rem",
+    width: "100%",
     padding: 15,
     paddingRight: 100,
     borderRadius: 5,
   },
   button: {
-    display: 'flex',
-    position: 'absolute',
+    display: "flex",
+    position: "absolute",
     right: 0,
-    height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
     minWidth: 50,
-    cursor: 'pointer',
+    cursor: "pointer",
     marginLeft: 10,
-    borderRadius: '0 5px 5px 0',
-    background: '#d9145c',
+    borderRadius: "0 5px 5px 0",
+    background: "#038C5A",
     padding: 10,
-    color: '#fff',
-    fontSize: '1.2rem',
-    border: 'none',
+    color: "#fff",
+    fontSize: "1.2rem",
+    border: "none",
   },
 };
 
 const MessageForm = ({ server, session, sendChatMessage, focus, setfocus }) => {
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   // const inputRef = useRef();
 
   const handleSubmit = async (e) => {
@@ -47,7 +47,7 @@ const MessageForm = ({ server, session, sendChatMessage, focus, setfocus }) => {
     await sendChatMessage(server.wsConnection, session.sessionId, message);
     // inputRef.classList.remove('active');
     // setfocus(false);
-    setMessage('');
+    setMessage("");
   };
 
   return (

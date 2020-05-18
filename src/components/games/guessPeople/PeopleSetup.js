@@ -1,44 +1,52 @@
-import React, { useState, Fragment } from 'react';
-import { connect } from 'react-redux';
-import { v4 as uuidv4 } from 'uuid';
+import React, { useState, Fragment } from "react";
+import { connect } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
 
-import { setAlert } from 'actions/alert';
-import { sendNames } from 'actions/guessPeople';
-import GameButton from 'components/global/GameButton';
+import { setAlert } from "actions/alert";
+import { sendNames } from "actions/guessPeople";
+import GameButton from "components/global/GameButton";
 
 const styles = {
   submitContainer: {
-    display: 'flex',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
+    display: "flex",
+    justifyContent: "space-evenly",
+    alignItems: "center",
   },
   inputContainer: {
-    display: 'flex',
-    flexDirection: 'column',
+    display: "flex",
+    flexDirection: "column",
     padding: 20,
     borderRadius: 10,
-    background: '#fff',
-    boxShadow: '0 3px 5px rgba(1,1,1,0.5)',
+    background: "#fff",
+    boxShadow: "0 3px 5px rgba(1,1,1,0.5)",
   },
   textInput: {
-    fontSize: '1.5rem',
+    fontSize: "1.5rem",
+  },
+  nameRow: {
     marginBottom: 15,
+    display: "flex",
+    alignItems: "center",
+    height: "100%",
+  },
+  nameHeader: {
+    margin: 0,
+    marginRight: 15,
   },
 };
 
 const PeopleSetup = ({ session, server, guessPeople, setAlert, sendNames }) => {
   const [formData, setFormData] = useState({
-    nameOne: { name: '', id: uuidv4() },
-    nameTwo: { name: '', id: uuidv4() },
-    nameThree: { name: '', id: uuidv4() },
-    nameFour: { name: '', id: uuidv4() },
-    nameFive: { name: '', id: uuidv4() },
+    nameOne: { name: "", id: uuidv4() },
+    nameTwo: { name: "", id: uuidv4() },
+    nameThree: { name: "", id: uuidv4() },
+    nameFour: { name: "", id: uuidv4() },
+    nameFive: { name: "", id: uuidv4() },
   });
 
   const checkInput = (dataObj) => {
     const values = Object.values(dataObj);
-    const noVal = values.filter((val) => val.length < 1);
-    // debugger;
+    const noVal = values.filter((val) => val.name.length < 1);
 
     if (noVal.length > 0) {
       return false;
@@ -61,7 +69,7 @@ const PeopleSetup = ({ session, server, guessPeople, setAlert, sendNames }) => {
     if (check) {
       await sendNames(server.wsConnection, session.sessionId, formData, false);
     } else {
-      await setAlert('Need to enter 5 names!', 'neutral');
+      await setAlert("Need to enter 5 names!", "neutral");
     }
   };
 
@@ -89,42 +97,58 @@ const PeopleSetup = ({ session, server, guessPeople, setAlert, sendNames }) => {
       ) : (
         <div style={styles.submitContainer}>
           <div style={styles.inputContainer}>
-            <input
-              style={styles.textInput}
-              type="text"
-              value={formData.nameOne.name}
-              name="nameOne"
-              onChange={(e) => handleChange(e)}
-            />
-            <input
-              style={styles.textInput}
-              type="text"
-              value={formData.nameTwo.name}
-              name="nameTwo"
-              onChange={(e) => handleChange(e)}
-            />
-            <input
-              style={styles.textInput}
-              type="text"
-              value={formData.nameThree.name}
-              name="nameThree"
-              onChange={(e) => handleChange(e)}
-            />
-            <input
-              style={styles.textInput}
-              type="text"
-              value={formData.nameFour.name}
-              name="nameFour"
-              onChange={(e) => handleChange(e)}
-            />
-            <input
-              style={styles.textInput}
-              type="text"
-              value={formData.nameFive.name}
-              name="nameFive"
-              onChange={(e) => handleChange(e)}
-            />
+            <div style={styles.nameRow}>
+              <h4 style={styles.nameHeader}>Person 1:</h4>
+              <input
+                style={styles.textInput}
+                type="text"
+                value={formData.nameOne.name}
+                name="nameOne"
+                onChange={(e) => handleChange(e)}
+              />
+            </div>
+            <div style={styles.nameRow}>
+              <h4 style={styles.nameHeader}>Person 2:</h4>
+              <input
+                style={styles.textInput}
+                type="text"
+                value={formData.nameTwo.name}
+                name="nameTwo"
+                onChange={(e) => handleChange(e)}
+              />
+            </div>
+            <div style={styles.nameRow}>
+              <h4 style={styles.nameHeader}>Person 3:</h4>
+              <input
+                style={styles.textInput}
+                type="text"
+                value={formData.nameThree.name}
+                name="nameThree"
+                onChange={(e) => handleChange(e)}
+              />
+            </div>
+            <div style={styles.nameRow}>
+              <h4 style={styles.nameHeader}>Person 4:</h4>
+              <input
+                style={styles.textInput}
+                type="text"
+                value={formData.nameFour.name}
+                name="nameFour"
+                onChange={(e) => handleChange(e)}
+              />
+            </div>{" "}
+            <div style={styles.nameRow}>
+              <h4 style={styles.nameHeader}>Person 5:</h4>
+              <input
+                style={styles.textInput}
+                type="text"
+                value={formData.nameFive.name}
+                name="nameFive"
+                onChange={(e) => handleChange(e)}
+              />
+            </div>
           </div>
+
           <GameButton color="#d66e31" onMouseDown={(e) => handleSubmit(e)}>
             <h3>Submit.</h3>
           </GameButton>

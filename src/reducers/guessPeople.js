@@ -12,7 +12,7 @@ import {
   GUESSPEOPLE_ROUND_START_SUCCESS,
   GUESSPEOPLE_SUMMARY_SUCCESS,
   GUESSPEOPLE_SCORE_SUCCESS,
-} from 'actions/types';
+} from "actions/types";
 
 const initialState = {
   loading: false,
@@ -28,10 +28,10 @@ const initialState = {
   wordsPassed: [],
   wordsCorrect: [],
   modeRound: -1,
-  gameMode: 'Articulate',
-  gameState: 'setup',
-  teamTurn: '',
-  playerTurn: '',
+  gameMode: "Articulate",
+  gameState: "GameBegin",
+  teamTurn: "",
+  playerTurn: "",
   yourTurn: false,
   gameRota: [],
   gameTeams: {
