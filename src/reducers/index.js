@@ -4,6 +4,7 @@ import session from 'reducers/session';
 import articulate from 'reducers/articulate';
 import fiveSeconds from 'reducers/fiveSeconds';
 import guessPeople from 'reducers/guessPeople';
+import namesOf from 'reducers/namesOf';
 import alert from 'reducers/alert';
 
 export default combineReducers({
@@ -13,4 +14,5 @@ export default combineReducers({
   articulate,
   fiveSeconds,
   guessPeople,
+  namesOf,
 });

@@ -13,11 +13,6 @@ const styles = {
     flexDirection: 'column',
     justifyContent: 'center',
   },
-  setupContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    width: '100%',
-  },
 };
 
 const FiveSecondsHome = ({ fiveSeconds }) => {

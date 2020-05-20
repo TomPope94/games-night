@@ -3,10 +3,10 @@ import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import {
-  CODENAMES,
   ARTICULATE,
   FIVESECONDS,
   GUESSPEOPLE,
+  NAMESOF,
 } from 'constants/routes';
 
 import Game from 'components/games/library/Game';
@@ -40,7 +40,10 @@ const GamesList = ({ server, mobile, ...props }) => {
           onMouseDown={() => history.push(GUESSPEOPLE)}
           title="Who's the Person?"
         />
-        <Game title="Names of, Types of" />
+        <Game
+          onMouseDown={() => history.push(NAMESOF)}
+          title="Names of, Types of"
+        />
       </div>
     </div>
   );
