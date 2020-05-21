@@ -101,12 +101,12 @@ const App = () => {
             <Route exact path={PRODUCT} component={Product} />
             <Route exact path={PRICING} component={Pricing} />
             <Route exact path={ABOUT} component={About} />
-            <Route exact path={LIBRARY} component={Library} />
+            <GameRoute exact path={LIBRARY} component={Library} />
             <Route exact path={CODENAMES} component={CodenamesHome} />
             <GameRoute exact path={ARTICULATE} component={ArticulateHome} />
             <GameRoute exact path={FIVESECONDS} component={FiveSecondsHome} />
             <GameRoute exact path={GUESSPEOPLE} component={GuessPeopleHome} />
-            <Route exact path={NAMESOF} component={NamesOfHome} />
+            <GameRoute exact path={NAMESOF} component={NamesOfHome} />
           </Switch>
         </div>
       </Router>
