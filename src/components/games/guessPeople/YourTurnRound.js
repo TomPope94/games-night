@@ -17,7 +17,7 @@ const YourTurnRound = ({
   const [gameWord, setGameWord] = useState({ name: null, id: null });
   const [passedWords, setPassedWords] = useState([]);
   const [correctWords, setCorrectWords] = useState([]);
-  const [timeLeft, setTimeLeft] = useState(20);
+  const [timeLeft, setTimeLeft] = useState(60);
   const [roundEnd, setRoundEnd] = useState(false);
 
   const styles = {
