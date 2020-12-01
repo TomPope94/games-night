@@ -5,7 +5,7 @@ import GameRound from 'components/games/fiveseconds/GameRound';
 
 import Header from 'components/games/fiveseconds/Header';
 
-import GameSetup from './GameSetup';
+import GameSetup from '../games/fiveseconds/GameSetup';
 
 const styles = {
   gameContainer: {

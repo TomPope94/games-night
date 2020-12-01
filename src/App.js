@@ -12,12 +12,12 @@ import Host from 'components/serverPages/Host';
 import Product from 'components/serverPages/Product';
 import Pricing from 'components/serverPages/Pricing';
 import About from 'components/serverPages/About';
-import Library from 'components/games/library/Library';
+import Library from 'components/pages/Library';
 import CodenamesHome from 'components/games/codenames/CodenamesHome';
-import ArticulateHome from 'components/games/articulate/AriculateHome';
-import FiveSecondsHome from 'components/games/fiveseconds/FiveSecondsHome';
-import GuessPeopleHome from 'components/games/guessPeople/GuessPeopleHome';
-import NamesOfHome from 'components/games/namesOf/NamesOfHome';
+import ArticulateHome from 'components/pages/AriculateHome';
+import FiveSecondsHome from 'components/pages/FiveSecondsHome';
+import GuessPeopleHome from 'components/pages/GuessPeopleHome';
+import NamesOfHome from 'components/pages/NamesOfHome';
 
 import {
   HOME,
