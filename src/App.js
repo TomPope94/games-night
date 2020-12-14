@@ -18,6 +18,8 @@ import ArticulateHome from 'components/pages/AriculateHome';
 import FiveSecondsHome from 'components/pages/FiveSecondsHome';
 import GuessPeopleHome from 'components/pages/GuessPeopleHome';
 import NamesOfHome from 'components/pages/NamesOfHome';
+import Decipher from 'components/pages/Decipher';
+import EpicCrackers from 'components/pages/EpicCrackers';
 
 import {
   HOME,
@@ -32,6 +34,8 @@ import {
   FIVESECONDS,
   GUESSPEOPLE,
   NAMESOF,
+  DECIPHER,
+  CRACKERS,
 } from 'constants/routes';
 
 import { connectServer, ping } from 'actions/server';
@@ -107,6 +111,8 @@ const App = () => {
             <GameRoute exact path={FIVESECONDS} component={FiveSecondsHome} />
             <GameRoute exact path={GUESSPEOPLE} component={GuessPeopleHome} />
             <GameRoute exact path={NAMESOF} component={NamesOfHome} />
+            <GameRoute exact path={DECIPHER} component={Decipher} />
+            <GameRoute exact path={CRACKERS} component={EpicCrackers} />
           </Switch>
         </div>
       </Router>

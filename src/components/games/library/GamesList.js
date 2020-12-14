@@ -8,6 +8,7 @@ import {
   GUESSPEOPLE,
   NAMESOF,
   DECIPHER,
+  CRACKERS,
 } from 'constants/routes';
 
 import Game from 'components/games/library/Game';
@@ -46,6 +47,10 @@ const GamesList = ({ server, mobile, ...props }) => {
           title="Names of, Types of"
         />
         <Game onMouseDown={() => history.push(DECIPHER)} title="Decipher" />
+        <Game
+          onMouseDown={() => history.push(CRACKERS)}
+          title="Epic Crackers"
+        />
       </div>
     </div>
   );

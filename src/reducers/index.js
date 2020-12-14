@@ -5,6 +5,7 @@ import articulate from 'reducers/articulate';
 import fiveSeconds from 'reducers/fiveSeconds';
 import guessPeople from 'reducers/guessPeople';
 import namesOf from 'reducers/namesOf';
+import epicCrackers from 'reducers/epicCrackers';
 import alert from 'reducers/alert';
 
 export default combineReducers({
@@ -15,4 +16,5 @@ export default combineReducers({
   fiveSeconds,
   guessPeople,
   namesOf,
+  epicCrackers,
 });
