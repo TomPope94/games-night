@@ -15,7 +15,7 @@ const initialState = {
   gameRound: -1,
   roundStarted: false,
   roundComplete: false,
-  gameState: "setup",
+  gameState: "BeginGame",
   yourTurn: false,
   gameQuestion: "",
   gameOptions: [],

@@ -11,7 +11,7 @@ import {
 
 const initialState = {
   onServer: false,
-  inGame: false,
+  inGame: true,
   username: "",
   wsConnection: null,
   loading: true,

@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useRef } from "react";
 import { connect } from "react-redux";
 import introVideo from "components/games/epicCrackers/LetsGetCrackin.mp4";
 
 import { finishIntro } from "actions/epicCrackers";
 
 const GameRound = ({ epicCrackers, finishIntro }) => {
+  const vidRef = useRef("video");
+
   const styles = {
     videoContainer: {
       position: "absolute",
@@ -22,11 +24,15 @@ const GameRound = ({ epicCrackers, finishIntro }) => {
     <div>
       {!epicCrackers.introPlayed ? (
         <video
+          ref={vidRef}
           style={styles.videoContainer}
-          autoPlay="autoplay"
           onEnded={finishIntro}
+          onCanPlayThrough={() => vidRef.current.play()}
         >
-          <source src={introVideo} type="video/mp4" />
+          <source
+            src="https://games-night-data.s3-eu-west-1.amazonaws.com/epicCrackers/LetsGetCrackin.mp4"
+            type="video/mp4"
+          />
         </video>
       ) : null}
       <h1>Game round goes here!</h1>
