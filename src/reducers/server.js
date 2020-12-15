@@ -7,12 +7,12 @@ import {
   JOIN_SESSION_SEND,
   SERVER_USERNAME_SEND,
   SERVER_USERNAME_SUCCESS,
-} from 'actions/types';
+} from "actions/types";
 
 const initialState = {
   onServer: false,
   inGame: false,
-  username: '',
+  username: "",
   wsConnection: null,
   loading: true,
 };
@@ -26,7 +26,7 @@ export default function (state = initialState, action) {
         ...state,
         wsConnection: { ...payload },
         onServer: true,
-        username: 'Guest',
+        username: "Guest",
         loading: false,
       };
     case HOST_SESSION_SEND:

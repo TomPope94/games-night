@@ -6,10 +6,10 @@ import {
   NEW_PLAYER_JOINED,
   PLAYER_LEFT,
   USER_CHAT_MESSAGE,
-} from 'actions/types';
+} from "actions/types";
 
 const initialState = {
-  sessionId: '',
+  sessionId: "",
   players: [],
   loading: true,
   isHost: false,

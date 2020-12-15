@@ -7,18 +7,19 @@ import {
   CRACKER_STATE_CHANGE,
   CRACKER_ROUND_START,
   CRACKER_SEND_ROUND_START,
-} from 'actions/types';
+  CRACKER_FINISH_INTRO,
+} from "actions/types";
 
-import { extractMessage } from 'actions/server';
+import { extractMessage } from "actions/server";
 
 export const handleCrackerMessage = (dataArr) => async (dispatch) => {
-  if (dataArr[0].includes('_join')) {
+  if (dataArr[0].includes("_join")) {
     const message = extractMessage(dataArr[1]);
     await dispatch(handlePlayerChange(message));
-  } else if (dataArr[0].includes('_end_game')) {
+  } else if (dataArr[0].includes("_end_game")) {
     const message = extractMessage(dataArr[1]);
     await dispatch(endGame(message));
-  } else if (dataArr[0].includes('_state_change')) {
+  } else if (dataArr[0].includes("_state_change")) {
     const message = extractMessage(dataArr[1]);
     await dispatch(handleStateChange(message));
   }
@@ -26,7 +27,7 @@ export const handleCrackerMessage = (dataArr) => async (dispatch) => {
 
 export const sendPlayerChange = (socket, sessionId) => async (dispatch) => {
   await socket.json({
-    action: 'crackersplayerchange',
+    action: "crackersplayerchange",
     data: {
       sessionId,
     },
@@ -48,7 +49,7 @@ export const sendStateChange = (socket, sessionId, state) => async (
   dispatch
 ) => {
   await socket.json({
-    action: 'crackersstatechange',
+    action: "crackersstatechange",
     data: {
       sessionId,
       state,
@@ -69,7 +70,7 @@ export const handleStateChange = (data) => async (dispatch) => {
 
 export const sendEndGame = (socket, sessionId) => async (dispatch) => {
   await socket.json({
-    action: 'crackersendgame',
+    action: "crackersendgame",
     data: {
       sessionId,
     },
@@ -91,7 +92,7 @@ export const sendStartRound = (socket, sessionId, playerTurn) => async (
   dispatch
 ) => {
   await socket.json({
-    action: 'crackersstartround',
+    action: "crackersstartround",
     data: {
       sessionId,
     },
@@ -106,5 +107,11 @@ export const startRound = (data) => async (dispatch) => {
   await dispatch({
     type: CRACKER_ROUND_START,
     payload: data,
+  });
+};
+
+export const finishIntro = () => async (dispatch) => {
+  await dispatch({
+    type: CRACKER_FINISH_INTRO,
   });
 };

@@ -1,15 +1,16 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React from "react";
+import { connect } from "react-redux";
 
-import GameSetup from 'components/games/epicCrackers/GameSetup';
-import Header from 'components/games/epicCrackers/Header';
+import GameSetup from "components/games/epicCrackers/GameSetup";
+import GameRound from "components/games/epicCrackers/GameRound";
+import Header from "components/games/epicCrackers/Header";
 
-const EpicCrackers = () => {
+const EpicCrackers = ({ epicCrackers }) => {
   const styles = {
     gameContainer: {
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
     },
   };
 
@@ -17,15 +18,19 @@ const EpicCrackers = () => {
     <div>
       <Header />
       <div style={styles.gameContainer}>
-        {/* {namesOf.gameState === 'setup' ? ( */}
-        <GameSetup />
-        {/* ) : namesOf.gameState === 'BeginGame' ||
-          namesOf.gameState === 'GameInProgress' ? (
+        {epicCrackers.gameState === "setup" ? (
+          <GameSetup />
+        ) : epicCrackers.gameState === "BeginGame" ||
+          epicCrackers.gameState === "GameInProgress" ? (
           <GameRound />
-        ) : null} */}
+        ) : null}
       </div>
     </div>
   );
 };
 
-export default EpicCrackers;
+const mapStateToProps = (state) => ({
+  epicCrackers: state.epicCrackers,
+});
+
+export default connect(mapStateToProps)(EpicCrackers);

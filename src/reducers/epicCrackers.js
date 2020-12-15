@@ -5,7 +5,9 @@ import {
   CRACKER_STATE_CHANGE,
   CRACKER_END_GAME,
   CRACKER_PLAYER_CHANGE,
-} from 'actions/types';
+  CRACKER_SEND_PLAYER_CHANGE,
+  CRACKER_FINISH_INTRO,
+} from "actions/types";
 
 const initialState = {
   loading: false,
@@ -13,15 +15,16 @@ const initialState = {
   gameRound: -1,
   roundStarted: false,
   roundComplete: false,
-  gameState: 'setup',
+  gameState: "setup",
   yourTurn: false,
-  gameQuestion: '',
+  gameQuestion: "",
   gameOptions: [],
   players: [],
   matchups: [],
   pastMatchups: [],
   gameData: [],
   introPlayed: false,
+  inPool: false,
 };
 
 export default function (state = initialState, action) {
@@ -39,6 +42,11 @@ export default function (state = initialState, action) {
         ...state,
         players: [...state.players, payload],
       };
+    case CRACKER_SEND_PLAYER_CHANGE:
+      return {
+        ...state,
+        inPool: true,
+      };
     case CRACKER_END_GAME:
       return {
         ...initialState,
@@ -48,6 +56,11 @@ export default function (state = initialState, action) {
       return {
         ...initialState,
         ...payload.gameData.Crackers,
+      };
+    case CRACKER_FINISH_INTRO:
+      return {
+        ...state,
+        introPlayed: true,
       };
     default:
       return state;
