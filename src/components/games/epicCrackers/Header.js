@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 // TODO: CHANGE TO EPIC CRACKERS
-import { sendEndGame } from 'actions/namesOf';
+import { sendEndGame } from 'actions/epicCrackers';
 
 import GameButton from 'components/global/GameButton';
 import HeroBanner from 'components/global/HeroBanner';

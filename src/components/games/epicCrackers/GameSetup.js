@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
 import ModePicker from 'components/games/ModePicker';
@@ -6,7 +6,17 @@ import PlayersList from 'components/games/PlayersList';
 import GameButton from 'components/global/GameButton';
 import SocialContainer from 'components/games/library/SocialContainer';
 
-const GameSetup = ({ server, session }) => {
+import { sendPlayerChange, sendStateChange } from 'actions/epicCrackers';
+import { setAlert } from 'actions/alert';
+
+const GameSetup = ({
+  server,
+  session,
+  epicCrackers,
+  sendPlayerChange,
+  sendStateChange,
+  setAlert,
+}) => {
   const styles = {
     gameContainer: {
       display: 'flex',
@@ -28,6 +38,20 @@ const GameSetup = ({ server, session }) => {
     },
   };
 
+  const [focus, setFocus] = useState(false);
+
+  const handleBegin = async () => {
+    if (epicCrackers.players.length < 2) {
+      setAlert('Need at least two players to play...', 'neutral');
+    } else {
+      await sendStateChange(
+        server.wsConnection,
+        session.sessionId,
+        'BeginGame'
+      );
+    }
+  };
+
   return (
     <div>
       <div
@@ -47,22 +71,20 @@ const GameSetup = ({ server, session }) => {
           />
           <PlayersList
             styling={{ width: '25%', overflow: 'auto', height: '100%' }}
-            // onMouseDown={async () => {
-            //   if (!namesOf.inPool) {
-            //     await sendPlayerJoin(
-            //       server.wsConnection,
-            //       session.sessionId
-            //     );
-            //   }
-            // }}
-          />
+            onMouseDown={async () => {
+              if (!epicCrackers.inPool) {
+                await sendPlayerChange(server.wsConnection, session.sessionId);
+              }
+            }}
+          >
+            {epicCrackers.players.map((player) => (
+              <h4>{player.Username}</h4>
+            ))}
+          </PlayersList>
         </div>
         {session.isHost ? (
           <div style={styles.startContainer}>
-            <GameButton
-              color="#d9145c"
-              onMouseDown={() => console.log('BUTTON')}
-            >
+            <GameButton color="#d9145c" onMouseDown={handleBegin}>
               <h2>Begin!</h2>
             </GameButton>
           </div>
@@ -77,8 +99,8 @@ const GameSetup = ({ server, session }) => {
           zIndex: 999,
         }}
         mobile={false}
-        //   focus={focus}
-        //   setfocus={setFocus}
+        focus={focus}
+        setfocus={setFocus}
       />
     </div>
   );
@@ -87,6 +109,11 @@ const GameSetup = ({ server, session }) => {
 const mapStateToProps = (state) => ({
   server: state.server,
   session: state.session,
+  epicCrackers: state.epicCrackers,
 });
 
-export default connect(mapStateToProps)(GameSetup);
+export default connect(mapStateToProps, {
+  sendStateChange,
+  sendPlayerChange,
+  setAlert,
+})(GameSetup);

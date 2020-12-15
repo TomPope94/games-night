@@ -20,6 +20,7 @@ import { handleArticulateMessage } from 'actions/articulate';
 import { handleFivesecondsMessage } from 'actions/fiveSeconds';
 import { handleGuessPeopleMessage } from 'actions/guessPeople';
 import { handleNamesOfMessage } from 'actions/namesOf';
+import { handleCrackerMessage } from 'actions/epicCrackers';
 import { handleUserMessage } from 'actions/user';
 
 export const extractMessage = (data) => {
@@ -37,6 +38,8 @@ const handleMessage = (data) => async (dispatch) => {
     await dispatch(handleArticulateMessage(dataArr));
   } else if (dataArr[0].includes('fiveseconds')) {
     await dispatch(handleFivesecondsMessage(dataArr));
+  } else if (dataArr[0].includes('crackers')) {
+    await dispatch(handleCrackerMessage(dataArr));
   } else if (dataArr[0].includes('guesspeople')) {
     await dispatch(handleGuessPeopleMessage(dataArr));
   } else if (dataArr[0].includes('user_action')) {
