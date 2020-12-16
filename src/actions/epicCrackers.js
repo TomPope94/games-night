@@ -8,7 +8,12 @@ import {
   CRACKER_ROUND_START,
   CRACKER_SEND_ROUND_START,
   CRACKER_FINISH_INTRO,
+  CRACKER_SEND_SHOW_QUESTION,
+  CRACKER_SHOW_QUESTION,
+  CRACKERS_DATA_RESET,
+  CRACKERS_SEND_DATA_RESET,
 } from "actions/types";
+import { crackerQuestions, jokes } from "constants/CrackerData.json";
 
 import { extractMessage } from "actions/server";
 
@@ -22,7 +27,36 @@ export const handleCrackerMessage = (dataArr) => async (dispatch) => {
   } else if (dataArr[0].includes("_state_change")) {
     const message = extractMessage(dataArr[1]);
     await dispatch(handleStateChange(message));
+  } else if (dataArr[0].includes("_start_round")) {
+    const message = extractMessage(dataArr[1]);
+    await dispatch(startRound(message));
+  } else if (dataArr[0].includes("_data_reset")) {
+    const message = extractMessage(dataArr[1]);
+    await dispatch(dataReset(message));
   }
+};
+export const sendResetData = (socket, sessionId) => async (dispatch) => {
+  await socket.json({
+    action: "crackerdatareset",
+    data: {
+      sessionId,
+    },
+  });
+
+  await dispatch({
+    type: CRACKERS_DATA_RESET,
+    // payload: {
+    //   crackerQuestions,
+    //   jokes,
+    // },
+  });
+};
+
+export const dataReset = (data) => async (dispatch) => {
+  await dispatch({
+    type: CRACKERS_DATA_RESET,
+    payload: data,
+  });
 };
 
 export const sendPlayerChange = (socket, sessionId) => async (dispatch) => {
@@ -88,9 +122,7 @@ export const endGame = (data) => async (dispatch) => {
   });
 };
 
-export const sendStartRound = (socket, sessionId, playerTurn) => async (
-  dispatch
-) => {
+export const sendStartRound = (socket, sessionId) => async (dispatch) => {
   await socket.json({
     action: "crackersstartround",
     data: {
@@ -113,5 +145,24 @@ export const startRound = (data) => async (dispatch) => {
 export const finishIntro = () => async (dispatch) => {
   await dispatch({
     type: CRACKER_FINISH_INTRO,
+  });
+};
+
+export const sendShowQuestion = (socket, sessionId) => async (dispatch) => {
+  await socket.json({
+    action: "crackersshowquestion",
+    data: {
+      sessionId,
+    },
+  });
+
+  await dispatch({
+    type: CRACKER_SEND_SHOW_QUESTION,
+  });
+};
+
+export const showQuestion = (data) => async (dispatch) => {
+  await dispatch({
+    type: CRACKER_SHOW_QUESTION,
   });
 };

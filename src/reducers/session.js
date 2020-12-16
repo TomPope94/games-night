@@ -12,7 +12,7 @@ const initialState = {
   sessionId: "",
   players: [],
   loading: true,
-  isHost: true,
+  isHost: false,
   messages: [],
 };
 

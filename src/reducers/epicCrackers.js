@@ -7,20 +7,45 @@ import {
   CRACKER_PLAYER_CHANGE,
   CRACKER_SEND_PLAYER_CHANGE,
   CRACKER_FINISH_INTRO,
+  CRACKER_SHOW_QUESTION,
+  CRACKERS_DATA_RESET,
 } from "actions/types";
 
 const initialState = {
   loading: false,
   gameStarted: false,
-  gameRound: -1,
-  roundStarted: false,
+  roundNum: -1,
+  roundStart: false,
   roundComplete: false,
-  gameState: "BeginGame",
+  gameState: "setup",
   yourTurn: false,
-  gameQuestion: "",
-  gameOptions: [],
-  players: [],
-  matchups: [],
+  gameQuestion: {},
+  players: [
+    // {
+    //   Username: "Guest",
+    //   inPool: true,
+    //   ID: "asdgsagasg",
+    // },
+    // {
+    //   Username: "Guest2",
+    //   inPool: true,
+    //   ID: "asgasdgas",
+    // },
+  ],
+  matchups: [
+    // [
+    //   {
+    //     Username: "Guest",
+    //     inPool: true,
+    //     ID: "asdgsagasg",
+    //   },
+    //   {
+    //     Username: "Guest2",
+    //     inPool: true,
+    //     ID: "asgasdgas",
+    //   },
+    // ],
+  ],
   pastMatchups: [],
   gameData: [],
   introPlayed: false,
@@ -61,6 +86,22 @@ export default function (state = initialState, action) {
       return {
         ...state,
         introPlayed: true,
+      };
+    case CRACKER_ROUND_START:
+      return {
+        ...state,
+        ...payload.Data.Crackers,
+        yourTurn: payload.YourTurn,
+      };
+    case CRACKER_SHOW_QUESTION:
+      return {
+        ...state,
+        gameQuestion: payload.GameQuestion,
+      };
+    case CRACKERS_DATA_RESET:
+      return {
+        ...state,
+        gameData: payload,
       };
     default:
       return state;

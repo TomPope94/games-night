@@ -1,0 +1,184 @@
+{
+  "crackerQuestions": [
+    {
+      "question": "Who tries to stop Christmas from coming, by stealing all things of Christmas from “the Who’s”?",
+      "answer": "The Grinch",
+      "options": ["The Grinch", "Scrooge", "Donald Trump", "The Dalai Lama"]
+    },
+    {
+      "question": "What is the first name of Scrooge, the principal character of the novel, A Christmas Carol?",
+      "answer": "Ebenezer",
+      "options": ["Gerald", "Ebenezer", "The", "Huge"]
+    },
+    {
+      "question": "Why did the other reindeer pick on Rudolph?",
+      "answer": "His red nose",
+      "options": [
+        "He smelled",
+        "His red nose",
+        "His political opinions",
+        "He didn't believe in Santa"
+      ]
+    },
+    {
+      "question": "What name is given to small sausages wrapped in bacon, a staple at a British Christmas dinner?",
+      "answer": "Pigs in blankets",
+      "options": [
+        "Baconages",
+        "Double the pig, twice the fun",
+        "Pigs in blankets",
+        "Pig squared"
+      ]
+    },
+    {
+      "question": "What does feliz navidad translate to in English?",
+      "answer": "Happy Christmas",
+      "options": [
+        "Happy Easter",
+        "Happy Christmas",
+        "Happy Happy",
+        "I feel for my dad in the navy"
+      ]
+    },
+    {
+      "question": "Who sang the hit single - All I want for Christmas is you",
+      "answer": "Mariah Carey",
+      "options": [
+        "Mariah dont Care",
+        "Mariah cares very much",
+        "Mariah Carey",
+        "Mariah carries the bags"
+      ]
+    },
+    {
+      "question": "Canada, The U.K., and most other Commonwealth countries officially celebrate the day after Christmas as what holiday?",
+      "answer": "Boxing Day",
+      "options": ["Boxing day", "Christmas Morrow", "Easter", "Thanksgiving"]
+    },
+    {
+      "question": "The legend of Santa Claus is associated with which saint?",
+      "answer": "Saint Nicholas",
+      "options": [
+        "Southampton FC",
+        "Saint Nicholas",
+        "Joan of Arc",
+        "Saint Santa"
+      ]
+    },
+    {
+      "question": "Which company made the concept of Santa Claus popular worldwide?",
+      "answer": "Coca Cola",
+      "options": ["Coca Cola", "Station 10", ""]
+    },
+    {
+      "question": "According to the Holy Bible, Jesus Christ was born in a?",
+      "answer": "Stable",
+      "options": ["Hiltons", "Van", "Stable", "Hurry"]
+    },
+    {
+      "question": "Which of these is NOT one of the eight original reindeer?",
+      "answer": "Dave",
+      "options": ["Dasher", "Dave", "Dancer", "Donner"]
+    },
+    {
+      "question": "Which of these was a gift given to Jesus from one of the Three Wise Men?",
+      "answer": "Gold",
+      "options": ["PS5", "A brand new car", "Gold", "Apple Watch"]
+    },
+    {
+      "question": "Which song begins with “Joy to the World, the Saviour reigns!”?",
+      "answer": "Joy to the World",
+      "options": [
+        "Joy to the World",
+        "Hit me baby one more time",
+        "Backstreets back",
+        "Jingle Bells"
+      ]
+    },
+    {
+      "question": "In Elf, what is considered the first rule of The Code of Elves?",
+      "answer": "Treat every day like it's Christmas",
+      "options": [
+        "We do NOT talk about elf club!",
+        "Treat every day like it's Christmas",
+        "Never eat yellow snow",
+        "Nothing in this world is free"
+      ]
+    },
+    {
+      "question": "What film features the line \"I made my family disappear.\"",
+      "answer": "Home Alone",
+      "options": ["Harry Potter", "Die Hard", "Home Alone", "Star Wars"]
+    }
+  ],
+  "jokes": [
+    {
+      "question": "What does Santa suffer from if he gets stuck in a chimney?",
+      "answer": "Claustrophobia!"
+    },
+    {
+      "question": "What kind of motorbike does Santa ride?",
+      "answer": "A Holly Davidson!"
+    },
+    { "question": "Who delivers presents to cats?", "answer": "Santa Paws!" },
+    {
+      "question": "What did the sea Say to Santa?",
+      "answer": "Nothing! It just waved!"
+    },
+    {
+      "question": "How you can tell that Santa is real?",
+      "answer": "You can always sense his presents!"
+    },
+    {
+      "question": "What do you get if you cross Santa with a duck?",
+      "answer": "A Christmas Quacker!"
+    },
+    {
+      "question": "Why does Santa go down the chimney on Christmas Eve?",
+      "answer": "Because it 'soots' him!"
+    },
+    { "question": "What's Santa's favorite type of music?", "answer": "Wrap!" },
+    {
+      "question": "What do Santa's little helpers learn at school?",
+      "answer": "The elf-abet!"
+    },
+    {
+      "question": "What did Santa say to the smoker?",
+      "answer": "Please don't smoke, it's bad for my elf!"
+    },
+    {
+      "question": "What do you call a man who claps at Christmas?",
+      "answer": "Santapplause!"
+    },
+    {
+      "question": "What kind of cars do elves like to drive?",
+      "answer": "A Toy-ota!"
+    },
+    { "question": "What do elves post on Social Media?", "answer": "Elf-ies!" },
+    {
+      "question": "What do you call Rudolph with lots of snow in his ears?",
+      "answer": "Anything you want, he can't hear you!"
+    },
+    {
+      "question": "What does Santa clean his hands with?",
+      "answer": "Santatizer!"
+    },
+    {
+      "question": "Why did the turkey join the band?",
+      "answer": "Because it had the drumsticks!"
+    },
+    { "question": "How does a snowman get to work?", "answer": "By icicle!" },
+    {
+      "question": "What did one snowman say to the other?",
+      "answer": "I couldn't hear them, so I have snow-idea!"
+    },
+    {
+      "question": "What do snowmen like to do on the weekend?",
+      "answer": "Chill!"
+    },
+    {
+      "question": "What do you call a snowman who has a holiday in the tropics?",
+      "answer": "A puddle!"
+    }
+  ]
+}
